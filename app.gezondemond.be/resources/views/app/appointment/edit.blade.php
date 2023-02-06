@@ -27,21 +27,24 @@
 
                 <div class="card">
 
-                    <div class="card-header">Create Debug item</div>
+                    <div class="card-header">
+                        <h1 class="mt-2">Edit Debug item</h1>
+                    </div>
 
                     <div class="card-body">
 
-                        <form action="{{ route('debug.store') }}" method="POST"
+                        <form action="{{ route('debug.update', $debug->id) }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf
+                            @method('PUT')
 
                             <div class="row mb-3">
                                 <label for="nameString" class="col-sm-2 col-form-label">nameString *</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="nameString"
                                            name="nameString"
-                                           value="{{ old('nameString') }}">
+                                           value="{{ $debug->nameString }}">
                                     @error('nameString')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -54,7 +57,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="nameChar"
                                            name="nameChar"
-                                           value="{{ old('nameChar') }}">
+                                           value="{{ $debug->nameChar }}">
                                     @error('nameChar')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -66,7 +69,7 @@
                                 <div class="col-sm-10">
                                     <input type="number" class="form-control" id="integer"
                                            name="integer"
-                                           value="{{ old('integer') }}">
+                                           value="{{ $debug->integer }}">
                                     @error('integer')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -78,7 +81,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="decimal"
                                            name="decimal"
-                                           value="{{ old('decimal') }}">
+                                           value="{{ $debug->decimal }}">
                                     @error('decimal')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -90,7 +93,7 @@
                                 <div class="col-sm-10">
                                     <input type="date" class="form-control" id="date"
                                            name="date"
-                                           value="{{ old('date') }}">
+                                           value="{{ $debug->date }}">
                                     @error('date')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -102,7 +105,7 @@
                                 <div class="col-sm-10">
                                     <input type="datetime-local" class="form-control" id="dateTime"
                                            name="dateTime"
-                                           value="{{ old('dateTime') }}">
+                                           value="{{ $debug->dateTime }}">
                                     @error('dateTime')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -126,7 +129,7 @@
                                      </select>--}}
                                     <input type="text" class="form-control" id="enum"
                                            name="enum"
-                                           value="{{ old('enum') }}">
+                                           value="{{ $debug->enum }}">
                                     @error('enum')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -138,7 +141,7 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="uuidColumn"
                                            name="uuidColumn"
-                                           value="{{ old('uuidColumn') }}">
+                                           value="{{ $debug->uuidColumn }}">
                                     @error('uuidColumn')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -150,7 +153,8 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="uploadedFile"
                                            name="uploadedFile"
-                                           value="{{ old('uploadedFile') }}">
+                                           value="{{ $debug->uploadedFile }}">
+                                    <input type="hidden" name="copyUploadedImage" value="{{ $debug->uploadedFile }}"/>
                                     @error('uploadedFile')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -167,8 +171,8 @@
 
                                 <button type="submit"
                                         class="btn btn-success">
-                                    <i class="fa-solid fa-floppy-disk mr-2"></i>
-                                    Save
+                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
+                                    Update
                                 </button>
                             </div>
 

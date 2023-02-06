@@ -6,9 +6,7 @@ use App\Models\Debug;
 use App\Http\Requests\StoreDebugRequest;
 use App\Http\Requests\UpdateDebugRequest;
 
-use Illuminate\Database\Eloquent\Model;
-
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Response;
 
 class DebugController extends Controller
 {
@@ -30,7 +28,9 @@ class DebugController extends Controller
             ->take(50)
             ->get();
 
-        //dd($debugs);
+        //$newDate = $debugs->dateTime->format('d-m-Y');
+
+        //dd($newDate);
         //return response()->json($debugs, 200);
 
         return view('app.debug.index', compact('debugs'));
@@ -163,7 +163,8 @@ class DebugController extends Controller
 
     public function returnDebugsJson()
     {
-        return Debug::all();
-        response()->json(['success' => true]);
+        $debugs = Debug::all();
+        return Response::json($debugs, 200);
     }
+
 }

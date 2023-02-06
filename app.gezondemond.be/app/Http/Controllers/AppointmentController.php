@@ -16,6 +16,14 @@ class AppointmentController extends Controller
     public function index()
     {
         //
+        $appointments = Appointment::all();
+
+        //$newDate = $debugs->dateTime->format('d-m-Y');
+
+        //dd($appointments);
+        //return response()->json($debugs, 200);
+
+        return view('app.appointment.index', compact('appointments'));
     }
 
     /**
@@ -31,7 +39,7 @@ class AppointmentController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreAppointmentRequest  $request
+     * @param \App\Http\Requests\StoreAppointmentRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreAppointmentRequest $request)
@@ -42,7 +50,7 @@ class AppointmentController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Appointment  $appointment
+     * @param \App\Models\Appointment $appointment
      * @return \Illuminate\Http\Response
      */
     public function show(Appointment $appointment)
@@ -53,7 +61,7 @@ class AppointmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Appointment  $appointment
+     * @param \App\Models\Appointment $appointment
      * @return \Illuminate\Http\Response
      */
     public function edit(Appointment $appointment)
@@ -64,8 +72,8 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateAppointmentRequest  $request
-     * @param  \App\Models\Appointment  $appointment
+     * @param \App\Http\Requests\UpdateAppointmentRequest $request
+     * @param \App\Models\Appointment $appointment
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
@@ -76,11 +84,12 @@ class AppointmentController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Appointment  $appointment
+     * @param \App\Models\Appointment $appointment
      * @return \Illuminate\Http\Response
      */
     public function destroy(Appointment $appointment)
     {
         //
     }
+
 }
