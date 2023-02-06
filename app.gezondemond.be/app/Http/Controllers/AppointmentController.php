@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+use Illuminate\Support\Facades\Response;
 
 class AppointmentController extends Controller
 {
@@ -34,6 +35,7 @@ class AppointmentController extends Controller
     public function create()
     {
         //
+        return view('app.appointment.create');
     }
 
     /**
@@ -45,6 +47,29 @@ class AppointmentController extends Controller
     public function store(StoreAppointmentRequest $request)
     {
         //
+
+        $appointment = new Appointment;
+
+        $appointment->title = $request->title;
+        $appointment->details = $request->details;
+        $appointment->app_code_id = $request->app_code_id;
+        $appointment->app_status_id = $request->app_status_id;
+        $appointment->created_by_user_id = $request->created_by_user_id;
+        $appointment->assigned_with_user_id = $request->assigned_with_user_id;
+        $appointment->assigned_with_person_id = $request->assigned_with_person_id;
+        $appointment->start_date = $request->start_date;
+        $appointment->start_time = $request->start_time;
+        $appointment->end_date = $request->end_date;
+        $appointment->end_time = $request->end_time;
+        $appointment->attachment = $request->attachment;
+        $appointment->archived = $request->archived;
+
+        $appointment->save();
+
+        return redirect()
+            ->route('appointment.index')
+            ->with('success', 'Appointment has been created successfully.');
+
     }
 
     /**
@@ -56,6 +81,7 @@ class AppointmentController extends Controller
     public function show(Appointment $appointment)
     {
         //
+        return view('app.appointment.show', compact('appointment'));
     }
 
     /**
@@ -67,6 +93,8 @@ class AppointmentController extends Controller
     public function edit(Appointment $appointment)
     {
         //
+        $appointment = Appointment::findOrFail($appointment->id);
+        return view('app.appointment.edit', compact('appointment'));
     }
 
     /**
@@ -91,5 +119,18 @@ class AppointmentController extends Controller
     {
         //
     }
+
+    public function returnAppointmentsJson()
+    {
+        $appointments = Appointment::latest()
+            ->with([
+                'appCode',
+                'appStatus',
+                'assignedWithPerson',
+            ])
+            ->get();;
+        return Response::json($appointments, 200);
+    }
+
 
 }

@@ -15,6 +15,11 @@ return new class extends Migration
     {
         Schema::create('appointment_statuses', function (Blueprint $table) {
             $table->id();
+
+            $table->string('title');
+            $table->string('details');
+            $table->boolean('is_active')->default(1);
+
             $table->timestamps();
         });
     }
@@ -26,6 +31,14 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointment_statuses');
+        Schema::dropIfExists('appointment_statuses', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('title');
+            $table->string('details');
+            $table->boolean('is_active')->default(1);
+
+            $table->timestamps();
+        });
     }
 };

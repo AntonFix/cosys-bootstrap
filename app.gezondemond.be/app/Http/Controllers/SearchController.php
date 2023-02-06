@@ -49,7 +49,7 @@ class SearchController extends Controller
                 })
                 ->where('archived', false)
                 ->orderBy('start_date', 'DESC')
-                ->dd();
+                ->get();
 
         } else {
 

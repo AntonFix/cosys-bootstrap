@@ -39,6 +39,7 @@ Route::resource('dictionary-language', App\Http\Controllers\DictionaryLanguageCo
 
 /*Return JSON*/
 Route::get('/json/debugs.json', [App\Http\Controllers\DebugController::class, 'returnDebugsJson']);
+Route::get('/json/appointments.json', [App\Http\Controllers\AppointmentController::class, 'returnAppointmentsJson']);
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

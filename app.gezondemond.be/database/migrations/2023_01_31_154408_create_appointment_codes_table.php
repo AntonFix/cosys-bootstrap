@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      *
@@ -15,6 +14,11 @@ return new class extends Migration
     {
         Schema::create('appointment_codes', function (Blueprint $table) {
             $table->id();
+
+            $table->string('title');
+            $table->string('details');
+            $table->boolean('is_active')->default(1);
+
             $table->timestamps();
         });
     }
@@ -26,6 +30,14 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('appointment_codes');
+        Schema::dropIfExists('appointment_codes', function (Blueprint $table) {
+            $table->id();
+
+            $table->string('title');
+            $table->string('details');
+            $table->boolean('is_active')->default(1);
+
+            $table->timestamps();
+        });
     }
 };
