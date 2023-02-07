@@ -11,4 +11,39 @@ class Person extends Model
 
     protected $table = 'persons'; //select exact table "persons"
 
+    public function personAddresses()
+    {
+        return $this->hasManyThrough(
+            Address::class, // we need info from the table 'addresses'
+            PersonAddress::class, // here are relation with the table 'persons_addresses' (id, person_id, address_id)
+            'person_id', // we search field 'person_id' in the table 'persons_addresses'
+            'id',
+            'id',
+            'address_id' // match by field 'address_id' in the table 'addresses'
+        );
+
+    }
+
+    public function spokenLanguages()
+    {
+
+        return $this->hasManyThrough(
+            DictionaryLanguage::class,
+            PersonLanguage::class,
+            'person_id',
+            'id',
+            'id',
+            'language_id'
+        );
+    }
+
+    public function createdByUser()
+    {
+        return $this->hasOne(
+            User::class,
+            'id',
+            'created_by_user_id'
+        );
+    }
+
 }

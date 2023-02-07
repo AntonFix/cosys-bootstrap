@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
 
 class PersonController extends Controller
 {
@@ -31,7 +33,7 @@ class PersonController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StorePersonRequest  $request
+     * @param \App\Http\Requests\StorePersonRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StorePersonRequest $request)
@@ -42,18 +44,20 @@ class PersonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Person  $person
+     * @param \App\Models\Person $person
      * @return \Illuminate\Http\Response
      */
     public function show(Person $person)
     {
         //
+
+
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Person  $person
+     * @param \App\Models\Person $person
      * @return \Illuminate\Http\Response
      */
     public function edit(Person $person)
@@ -64,8 +68,8 @@ class PersonController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdatePersonRequest  $request
-     * @param  \App\Models\Person  $person
+     * @param \App\Http\Requests\UpdatePersonRequest $request
+     * @param \App\Models\Person $person
      * @return \Illuminate\Http\Response
      */
     public function update(UpdatePersonRequest $request, Person $person)
@@ -76,11 +80,38 @@ class PersonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Person  $person
+     * @param \App\Models\Person $person
      * @return \Illuminate\Http\Response
      */
     public function destroy(Person $person)
     {
         //
+    }
+
+    public function returnPersonsJson()
+    {
+        $persons = Person::latest()
+            ->with([
+                'personAddresses',
+                'spokenLanguages',
+                'createdByUser',
+            ])
+            ->get();
+        return Response::json($persons, 200);
+    }
+
+    public function returnPersonByIdJson(Request $request, $id)
+    {
+
+        //return 'User' . $id;
+
+        $person = Person::where('id', $id)
+            ->with([
+                'personAddresses',
+                'spokenLanguages',
+                'createdByUser',
+            ])
+            ->firstOrFail();
+        return response()->json($person, 200);
     }
 }

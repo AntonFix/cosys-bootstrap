@@ -40,6 +40,11 @@ Route::resource('dictionary-language', App\Http\Controllers\DictionaryLanguageCo
 /*Return JSON*/
 Route::get('/json/debugs.json', [App\Http\Controllers\DebugController::class, 'returnDebugsJson']);
 Route::get('/json/appointments.json', [App\Http\Controllers\AppointmentController::class, 'returnAppointmentsJson']);
+Route::get('/json/appointment-{id}.json', [App\Http\Controllers\AppointmentController::class, 'returnAppointmentByIdJson']);
+Route::get('/json/persons.json', [App\Http\Controllers\PersonController::class, 'returnPersonsJson']);
+Route::get('/json/person-{id}.json', [App\Http\Controllers\PersonController::class, 'returnPersonByIdJson']);
+Route::get('/json/addresses.json', [App\Http\Controllers\AddressController::class, 'returnAddressesJson']);
+Route::get('/json/address-{id}.json', [App\Http\Controllers\AddressController::class, 'returnAddressByIdJson']);
 
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

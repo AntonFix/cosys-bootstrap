@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 
 class AppointmentController extends Controller
@@ -81,6 +82,19 @@ class AppointmentController extends Controller
     public function show(Appointment $appointment)
     {
         //
+        $appointment = Appointment::where('id', $appointment->id)
+            ->with([
+                'appCode',
+                'appStatus',
+                'assignedWithPerson',
+                'assignedWithPersonAddresses',
+                'assignedWithPersonSpokenLanguages',
+                'assignedWithUser',
+                'createdByUser',
+                //'addressRegion',
+            ])
+            ->firstOrFail();
+        //dd($appointment);
         return view('app.appointment.show', compact('appointment'));
     }
 
@@ -95,6 +109,8 @@ class AppointmentController extends Controller
         //
         $appointment = Appointment::findOrFail($appointment->id);
         return view('app.appointment.edit', compact('appointment'));
+
+
     }
 
     /**
@@ -127,8 +143,27 @@ class AppointmentController extends Controller
                 'appCode',
                 'appStatus',
                 'assignedWithPerson',
+                'assignedWithUser',
+                'createdByUser',
             ])
-            ->get();;
+            ->get();
+        return Response::json($appointments, 200);
+    }
+
+    public function returnAppointmentByIdJson(Request $request, $id)
+    {
+        $appointments = Appointment::where('id', $id)
+            ->with([
+                'appCode',
+                'appStatus',
+                'assignedWithPerson',
+                'assignedWithPersonAddresses',
+                'assignedWithPersonSpokenLanguages',
+                'assignedWithUser',
+                'createdByUser',
+                //'addressRegion',
+            ])
+            ->firstOrFail();
         return Response::json($appointments, 200);
     }
 
