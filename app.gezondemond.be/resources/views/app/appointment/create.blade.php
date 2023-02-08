@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -16,150 +16,220 @@
                 @endif
 
                 @if(session('status'))
-
                     <div class="alert alert-success mb-1 mt-1">
-
                         {{ session('status') }}
-
                     </div>
-
                 @endif
 
                 <div class="card">
 
-                    <div class="card-header">Create Debug item</div>
+                    <div class="card-header">
+                        <h1>
+                            Create new appointment
+                        </h1>
+                    </div>
 
                     <div class="card-body">
 
-                        <form action="{{ route('debug.store') }}" method="POST"
+                        <hr>
+
+
+                        <hr>
+
+
+                        <form action="{{ route('appointment.store') }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf
 
-                            <div class="row mb-3">
-                                <label for="nameString" class="col-sm-2 col-form-label">nameString *</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="nameString"
-                                           name="nameString"
-                                           value="{{ old('nameString') }}">
-                                    @error('nameString')
+                            <div class="row">
+
+                                <div class="col-md-12 mb-3">
+                                    <label for="title">Titel</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="title">
+                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        </span>
+                                        <input type="text" class="form-control"
+                                               name="title"
+                                               aria-label="title"
+                                               aria-describedby="title"
+                                               value="{{ old('title') }}">
+                                        @error('title')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <i class="fa-solid fa-list mr-2"></i>
+                                    <label for="app_code_id">Code</label>
+
+                                    <select class="form-control"
+                                            name="app_code_id">
+                                        <option disabled selected value="">Kies een item...</option>
+                                        @foreach ($appointmentCodes as $appointmentCode)
+                                            <option value="{{ $appointmentCode->id }}">
+                                                {{ $appointmentCode->title }} ({{ $appointmentCode->details }})
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('app_code_id')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <i class="fa-solid fa-list mr-2"></i>
+                                    <label for="app_status_id">Statuut</label>
+
+                                    <select class="form-control"
+                                            name="app_status_id">
+                                        <option disabled selected value="">Kies een item...</option>
+                                        @foreach ($appointmentStatuses as $appointmentStatus)
+                                            <option value="{{ $appointmentStatus->id }}">
+                                                {{ $appointmentStatus->title }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('app_status_id')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <i class="fa-solid fa-id-card mr-2"></i>
+                                    <label for="assigned_with_person_id">Contactpersoon</label>
+
+                                    <select class="form-control"
+                                            name="assigned_with_person_id">
+                                        <option disabled selected value="">Kies een item...</option>
+                                        @foreach ($persons as $person)
+                                            <option value="{{ $person->id }}">
+                                                {{ $person->forename }} {{ $person->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('assigned_with_person_id')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <i class="fa-solid fa-user-plus"></i>
+                                    <label for="assigned_with_user_id">Toegewezen aan medewerker</label>
+
+                                    <select class="form-control"
+                                            name="assigned_with_user_id">
+                                        <option disabled selected value="">Kies een item...</option>
+                                        @foreach ($users as $user)
+                                            <option value="{{ $user->id }}">
+                                                {{ $user->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+
+                                    @error('assigned_with_user_id')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
 
+                                <div class="col-md-6 mb-3">
+                                    <label for="start_date">Datum</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="start_date">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                        </span>
+                                        <input type="date" class="form-control"
+                                               name="start_date"
+                                               aria-label="start_date"
+                                               aria-describedby="start_date"
+                                               value="{{ old('start_date') }}">
+                                        @error('start_date')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                            <div class="row mb-3">
-                                <label for="nameChar" class="col-sm-2 col-form-label">nameChar</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="nameChar"
-                                           name="nameChar"
-                                           value="{{ old('nameChar') }}">
-                                    @error('nameChar')
+                                <div class="col-md-6 mb-3">
+                                    <label for="start_time">Tijd</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="start_time">
+                                            <i class="fa-regular fa-clock"></i>
+                                        </span>
+                                        <input type="time" class="form-control"
+                                               name="start_time"
+                                               aria-label="start_time"
+                                               aria-describedby="start_time"
+                                               value="{{ old('start_time') }}">
+                                        @error('start_time')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 mb-3">
+                                    <label for="details">Details</label>
+                                    <textarea class="form-control"
+                                              id="details"
+                                              name="details"
+                                              rows="10">{{ old('details') }}</textarea>
+                                    @error('details')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="integer" class="col-sm-2 col-form-label">integer</label>
-                                <div class="col-sm-10">
-                                    <input type="number" class="form-control" id="integer"
-                                           name="integer"
-                                           value="{{ old('integer') }}">
-                                    @error('integer')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
+                                <div class="col-md-12 mb-3">
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="attachment">
+                                            <i class="fa-solid fa-paperclip"></i>
+                                        </span>
+                                        <input type="file"
+                                               class="form-control form-control-sm"
+                                               name="attachment"
+                                               aria-label="attachment"
+                                               aria-describedby="attachment"
+                                               value="{{ old('attachment') }}">
+                                        @error('attachment')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="decimal" class="col-sm-2 col-form-label">decimal</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="decimal"
-                                           name="decimal"
-                                           value="{{ old('decimal') }}">
-                                    @error('decimal')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="created_by_user_id">Aangemaaakt door</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="created_by_user_id">
+                                            <i class="fa-solid fa-user-pen"></i>
+                                        </span>
+                                        <input type="text" class="form-control form-control-sm"
+                                               name=""
+                                               aria-label="created_by_user_id"
+                                               aria-describedby="created_by_user_id"
+                                               value="{{ $currentUser->name }}"
+                                               disabled>
 
-                            <div class="row mb-3">
-                                <label for="date" class="col-sm-2 col-form-label">date</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" id="date"
-                                           name="date"
-                                           value="{{ old('date') }}">
-                                    @error('date')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
+                                        <input type="hidden"
+                                               name="created_by_user_id"
+                                               value="{{ $currentUser->id }}">
 
-                            <div class="row mb-3">
-                                <label for="dateTime" class="col-sm-2 col-form-label">dateTime</label>
-                                <div class="col-sm-10">
-                                    <input type="datetime-local" class="form-control" id="dateTime"
-                                           name="dateTime"
-                                           value="{{ old('dateTime') }}">
-                                    @error('dateTime')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
+                                    </div>
                                 </div>
-                            </div>
 
-                            <div class="row mb-3">
-                                <label for="enum" class="col-sm-2 col-form-label">enum</label>
-                                <div class="col-sm-10">
-                                    {{-- <select class="form-select" aria-label="enum" name="enum">
-                                         @foreach ($debug->enum as $oneItemEnum)
-                                             <option value="{{ $oneItemEnum }}" @selected(old('oneItemEnum') ==
-                                             $oneItemEnum)>
-                                             {{ $oneItemEnum }}
-                                             </option>
-                                         @endforeach
-                                         <option selected>Open this select menu</option>
-                                         <option value="1">One</option>
-                                         <option value="2">Two</option>
-                                         <option value="3">Three</option>
-                                     </select>--}}
-                                    <input type="text" class="form-control" id="enum"
-                                           name="enum"
-                                           value="{{ old('enum') }}">
-                                    @error('enum')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="uuidColumn" class="col-sm-2 col-form-label">uuidColumn</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="uuidColumn"
-                                           name="uuidColumn"
-                                           value="{{ old('uuidColumn') }}">
-                                    @error('uuidColumn')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-
-                            <div class="row mb-3">
-                                <label for="uploadedFile" class="col-sm-2 col-form-label">uploadedFile</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="uploadedFile"
-                                           name="uploadedFile"
-                                           value="{{ old('uploadedFile') }}">
-                                    @error('uploadedFile')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
                             </div>
 
                             <div class="text-center">
 
-                                <a href="{{ route('debug.index') }}"
+                                <a href="{{ route('appointment.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
                                     Go back

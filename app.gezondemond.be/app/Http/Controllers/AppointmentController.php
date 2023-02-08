@@ -5,6 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
+
+use App\Models\AppointmentCode;
+use App\Models\AppointmentStatus;
+use App\Models\Person;
+use App\Models\User;
+
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -18,7 +26,9 @@ class AppointmentController extends Controller
     public function index()
     {
         //
-        $appointments = Appointment::all();
+        $appointments = Appointment::latest()
+            ->orderBy('start_date', 'desc')
+            ->get();
 
         //$newDate = $debugs->dateTime->format('d-m-Y');
 
@@ -36,7 +46,32 @@ class AppointmentController extends Controller
     public function create()
     {
         //
-        return view('app.appointment.create');
+        $appointmentCodes = DB::table('appointment_codes')
+            ->get();
+
+        $appointmentStatuses = DB::table('appointment_statuses')
+            ->get();
+
+        $persons = DB::table('persons')
+            ->orderBy('forename')
+            ->get();
+
+        $users = DB::table('users')
+            ->orderBy('name')
+            ->get();
+
+        $currentUser = Auth::user();
+
+        /*return view('app.appointment.create',
+            compact('appointmentCodes2', 'appointmentCodes'));*/
+        return view('app.appointment.create', compact(
+                'appointmentCodes',
+                'appointmentStatuses',
+                'users',
+                'currentUser',
+                'persons')
+        );
+
     }
 
     /**
@@ -60,8 +95,8 @@ class AppointmentController extends Controller
         $appointment->assigned_with_person_id = $request->assigned_with_person_id;
         $appointment->start_date = $request->start_date;
         $appointment->start_time = $request->start_time;
-        $appointment->end_date = $request->end_date;
-        $appointment->end_time = $request->end_time;
+        /*$appointment->end_date = $request->end_date;
+        $appointment->end_time = $request->end_time;*/
         $appointment->attachment = $request->attachment;
         $appointment->archived = $request->archived;
 
@@ -91,7 +126,6 @@ class AppointmentController extends Controller
                 'assignedWithPersonSpokenLanguages',
                 'assignedWithUser',
                 'createdByUser',
-                //'addressRegion',
             ])
             ->firstOrFail();
         //dd($appointment);
@@ -109,8 +143,6 @@ class AppointmentController extends Controller
         //
         $appointment = Appointment::findOrFail($appointment->id);
         return view('app.appointment.edit', compact('appointment'));
-
-
     }
 
     /**
@@ -134,8 +166,16 @@ class AppointmentController extends Controller
     public function destroy(Appointment $appointment)
     {
         //
+        $appointment->delete();
+
+        return redirect()
+            ->route('appointment.index')
+            ->with('success', 'Appointment has been deleted successfully');
     }
 
+    /*Extra functions*/
+
+    /*JSON*/
     public function returnAppointmentsJson()
     {
         $appointments = Appointment::latest()
@@ -143,6 +183,8 @@ class AppointmentController extends Controller
                 'appCode',
                 'appStatus',
                 'assignedWithPerson',
+                'assignedWithPersonAddresses',
+                'assignedWithPersonSpokenLanguages',
                 'assignedWithUser',
                 'createdByUser',
             ])
@@ -161,10 +203,10 @@ class AppointmentController extends Controller
                 'assignedWithPersonSpokenLanguages',
                 'assignedWithUser',
                 'createdByUser',
-                //'addressRegion',
             ])
             ->firstOrFail();
         return Response::json($appointments, 200);
+
     }
 
 

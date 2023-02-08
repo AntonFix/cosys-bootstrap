@@ -46,5 +46,10 @@ Route::get('/json/person-{id}.json', [App\Http\Controllers\PersonController::cla
 Route::get('/json/addresses.json', [App\Http\Controllers\AddressController::class, 'returnAddressesJson']);
 Route::get('/json/address-{id}.json', [App\Http\Controllers\AddressController::class, 'returnAddressByIdJson']);
 
+Route::get('/generate-passsword', function () {
+    $password = Hash::make('anton@ictoplossing.be');
+    return $password;
+});
+
 Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

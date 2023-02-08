@@ -16,6 +16,5 @@ class Address extends Model
             'id',
             'dictionary_geos_id'
         );
-
     }
 }

@@ -13,7 +13,7 @@ class StoreAppointmentRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,19 +26,17 @@ class StoreAppointmentRequest extends FormRequest
         return [
             //
             'title' => 'string|max:255',
-            'details' => 'text|nullable',
-            'app_code_id' => 'unsignedBigInteger|nullable',
-            'app_status_id' => 'unsignedBigInteger|nullable',
-            'created_by_user_id' => 'unsignedBigInteger|nullable',
-            'assigned_with_user_id' => 'unsignedBigInteger|nullable',
-            'assigned_with_person_id' => 'unsignedBigInteger|nullable',
+            'details' => 'string|nullable',
+            'app_code_id' => 'integer|nullable',
+            'app_status_id' => 'integer|nullable',
+            'created_by_user_id' => 'integer|nullable',
+            'assigned_with_user_id' => 'integer|nullable',
+            'assigned_with_person_id' => 'integer|nullable',
             'start_date' => 'date|nullable',
-            'start_time' => 'time|nullable',
+            'start_time' => 'string|nullable',
             'end_date' => 'date|nullable',
-            'end_time' => 'time|nullable',
-
+            'end_time' => 'string|nullable',
             'attachment' => 'string|nullable',
-
             'archived' => 'boolean',
         ];
     }

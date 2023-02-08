@@ -101,9 +101,7 @@ class AddressController extends Controller
 
         $address = Address::where('id', $id)
             ->with([
-                'personAddresses',
-                'spokenLanguages',
-                'createdByUser',
+                'region',
             ])
             ->firstOrFail();
         return response()->json($address, 200);

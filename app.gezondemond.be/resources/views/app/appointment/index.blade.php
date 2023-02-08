@@ -109,7 +109,7 @@
                     <div class="card-body">
                         {{--debug.blade.php--}}
 
-                        <a href="{{ route('debug.create') }}" class="btn btn-outline-primary mb-3 float-end">
+                        <a href="{{ route('appointment.create') }}" class="btn btn-outline-primary mb-3 float-end">
                             <i class="fa-regular fa-square-plus mr-2"></i>
                             Add
                         </a>

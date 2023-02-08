@@ -64,12 +64,12 @@ class Appointment extends Model
     /*public function addressRegion()
     {
         return $this->hasManyThrough(
-            DictionaryGeo::class,
+            Address::class,
             PersonAddress::class,
             'person_id',
             'id',
             'id',
-            'id'
+            'address_id'
         );
     }*/
 

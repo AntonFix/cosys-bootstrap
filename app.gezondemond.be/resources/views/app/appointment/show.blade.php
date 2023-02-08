@@ -139,13 +139,15 @@
                                                         @endif
 
                                                         @if($appointment->assignedWithPerson->coordinator)
-                                                            <span class="badge mb-3 text-bg-primary p-2">Coordinator</span>
+                                                            <span
+                                                                class="badge mb-3 text-bg-primary p-2">Coordinator</span>
                                                         @endif
                                                         @if($appointment->assignedWithPerson->oral_coach)
                                                             <span class="badge mb-3 text-bg-info p-2">Oral coach</span>
                                                         @endif
                                                         @if($appointment->assignedWithPerson->volunteer)
-                                                            <span class="badge mb-3 text-bg-success p-2">Volunteer</span>
+                                                            <span
+                                                                class="badge mb-3 text-bg-success p-2">Volunteer</span>
                                                         @endif
 
                                                         @if($appointment->assignedWithPerson->details)
@@ -180,7 +182,7 @@
 
                                                         </ul>
 
-                                                        @if($appointment->assignedWithPersonAddresses)
+                                                        @if(count($appointment->assignedWithPersonAddresses) > 0)
                                                             <h3>Werkt in</h3>
                                                             <ul class="list-unstyled">
                                                                 @foreach ($appointment->assignedWithPersonAddresses as $address)
@@ -193,7 +195,7 @@
                                                             </ul>
                                                         @endif
 
-                                                        @if($appointment->assignedWithPersonSpokenLanguages)
+                                                        @if(count($appointment->assignedWithPersonSpokenLanguages) > 0)
                                                             <h3>Spreektalen</h3>
                                                             <ul>
                                                                 @foreach ($appointment->assignedWithPersonSpokenLanguages as $language)
@@ -227,7 +229,7 @@
                                         </span>
                                         <input type="text" class="form-control" aria-label="assignedWithUser"
                                                aria-describedby="assignedWithUser"
-                                               value="{{ $appointment->assignedWithUser }}"
+                                               value="{{ $appointment->assignedWithUser->name }}"
                                                disabled>
                                     </div>
                                 </div>
@@ -305,7 +307,7 @@
                                         <input type="text" class="form-control form-control-sm"
                                                aria-label="createdByUser"
                                                aria-describedby="createdByUser"
-                                               value="{{ $appointment->createdByUser }}"
+                                               value="{{ $appointment->createdByUser->name }}"
                                                disabled>
                                     </div>
                                 </div>
