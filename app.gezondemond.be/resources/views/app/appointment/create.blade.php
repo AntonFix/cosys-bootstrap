@@ -31,16 +31,15 @@
 
                     <div class="card-body">
 
-                        <hr>
-
-
-                        <hr>
-
 
                         <form action="{{ route('appointment.store') }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf
+
+                            <input type="hidden"
+                                   name="archived"
+                                   value="0">
 
                             <div class="row">
 
@@ -211,7 +210,7 @@
                                         <span class="input-group-text" id="created_by_user_id">
                                             <i class="fa-solid fa-user-pen"></i>
                                         </span>
-                                        <input type="text" class="form-control form-control-sm"
+                                        <input type="text" class="form-control form-control-sm rounded-end"
                                                name=""
                                                aria-label="created_by_user_id"
                                                aria-describedby="created_by_user_id"

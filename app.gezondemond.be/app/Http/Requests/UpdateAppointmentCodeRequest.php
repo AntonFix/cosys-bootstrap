@@ -25,6 +25,7 @@ class UpdateAppointmentCodeRequest extends FormRequest
     {
         return [
             //
+
         ];
     }
 }

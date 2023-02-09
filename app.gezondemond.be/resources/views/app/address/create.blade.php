@@ -2,8 +2,8 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
 
                 @if ($errors->any())
                     <div class="alert alert-danger">
@@ -16,48 +16,35 @@
                 @endif
 
                 @if(session('status'))
-
                     <div class="alert alert-success mb-1 mt-1">
-
                         {{ session('status') }}
-
                     </div>
-
                 @endif
 
                 <div class="card">
 
                     <div class="card-header">
-                        <h1 class="mt-2">Edit appointment item</h1>
+                        <h1>
+                            Create new appointment
+                        </h1>
                     </div>
 
                     <div class="card-body">
 
-                        <form action="{{ route('appointment.update', $appointment->id) }}" method="POST"
+                        <hr>
+
+
+                        <hr>
+
+
+                        <form action="{{ route('appointment.store') }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf
-                            @method('PUT')
 
                             <input type="hidden"
                                    name="archived"
                                    value="0">
-
-                            <input type="hidden"
-                                   name="app_code_id"
-                                   value="{{ $appointment->app_code_id }}">
-
-                            <input type="hidden"
-                                   name="app_status_id"
-                                   value="{{ $appointment->app_status_id }}">
-
-                            <input type="hidden"
-                                   name="assigned_with_person_id"
-                                   value="{{ $appointment->assigned_with_person_id }}">
-
-                            <input type="hidden"
-                                   name="assigned_with_user_id"
-                                   value="{{ $appointment->assigned_with_user_id }}">
 
                             <div class="row">
 
@@ -71,7 +58,7 @@
                                                name="title"
                                                aria-label="title"
                                                aria-describedby="title"
-                                               value="{{ $appointment->title }}">
+                                               value="{{ old('title') }}">
                                         @error('title')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
@@ -85,13 +72,7 @@
 
                                     <select class="form-control"
                                             name="app_code_id">
-                                        @if ($appointment->app_code_id)
-                                            <option selected disabled
-                                                    value="{{ $appointment->app_code_id }}">Huidige
-                                                code: {{ $appointment->appCode->title }}
-                                                ({{ $appointment->appCode->details }})
-                                            </option>
-                                        @endif
+                                        <option disabled selected value="">Kies een item...</option>
                                         @foreach ($appointmentCodes as $appointmentCode)
                                             <option value="{{ $appointmentCode->id }}">
                                                 {{ $appointmentCode->title }} ({{ $appointmentCode->details }})
@@ -112,12 +93,7 @@
 
                                     <select class="form-control"
                                             name="app_status_id">
-                                        @if ($appointment->app_status_id)
-                                            <option selected disabled
-                                                    value="{{ $appointment->app_status_id }}">Huidige
-                                                statuut: {{ $appointment->appStatus->title }}
-                                            </option>
-                                        @endif
+                                        <option disabled selected value="">Kies een item...</option>
                                         @foreach ($appointmentStatuses as $appointmentStatus)
                                             <option value="{{ $appointmentStatus->id }}">
                                                 {{ $appointmentStatus->title }}
@@ -138,12 +114,7 @@
 
                                     <select class="form-control"
                                             name="assigned_with_person_id">
-                                        @if ($appointment->assignedWithPerson)
-                                            <option selected disabled
-                                                    value="{{ $appointment->assignedWithPerson->id }}">Huidige
-                                                persoon: {{ $appointment->assignedWithPerson->forename }} {{ $appointment->assignedWithPerson->name }}
-                                            </option>
-                                        @endif
+                                        <option disabled selected value="">Kies een item...</option>
                                         @foreach ($persons as $person)
                                             <option value="{{ $person->id }}">
                                                 {{ $person->forename }} {{ $person->name }}
@@ -163,12 +134,7 @@
 
                                     <select class="form-control"
                                             name="assigned_with_user_id">
-                                        @if ($appointment->assignedWithUser)
-                                            <option selected disabled
-                                                    value="{{ $appointment->assignedWithUser->id }}">Huidige
-                                                medewerker: {{ $appointment->assignedWithUser->name }}
-                                            </option>
-                                        @endif
+                                        <option disabled selected value="">Kies een item...</option>
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">
                                                 {{ $user->name }}
@@ -184,14 +150,14 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="start_date">Datum</label>
                                     <div class="input-group">
-			<span class="input-group-text" id="start_date">
-				<i class="fa-solid fa-calendar-days"></i>
-			</span>
+                                        <span class="input-group-text" id="start_date">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                        </span>
                                         <input type="date" class="form-control"
                                                name="start_date"
                                                aria-label="start_date"
                                                aria-describedby="start_date"
-                                               value="{{ $appointment->start_date }}">
+                                               value="{{ old('start_date') }}">
                                         @error('start_date')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
@@ -201,14 +167,14 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="start_time">Tijd</label>
                                     <div class="input-group">
-			<span class="input-group-text" id="start_time">
-				<i class="fa-regular fa-clock"></i>
-			</span>
+                                        <span class="input-group-text" id="start_time">
+                                            <i class="fa-regular fa-clock"></i>
+                                        </span>
                                         <input type="time" class="form-control"
                                                name="start_time"
                                                aria-label="start_time"
                                                aria-describedby="start_time"
-                                               value="{{ $appointment->start_time }}">
+                                               value="{{ old('start_time') }}">
                                         @error('start_time')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
@@ -220,7 +186,7 @@
                                     <textarea class="form-control"
                                               id="details"
                                               name="details"
-                                              rows="10">{{ $appointment->details }}</textarea>
+                                              rows="10">{{ old('details') }}</textarea>
                                     @error('details')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
@@ -228,15 +194,15 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="input-group">
-			<span class="input-group-text" id="attachment">
-				<i class="fa-solid fa-paperclip"></i>
-			</span>
+                                        <span class="input-group-text" id="attachment">
+                                            <i class="fa-solid fa-paperclip"></i>
+                                        </span>
                                         <input type="file"
                                                class="form-control form-control-sm"
                                                name="attachment"
                                                aria-label="attachment"
                                                aria-describedby="attachment"
-                                               value="{{ $appointment->attachment }}">
+                                               value="{{ old('attachment') }}">
                                         @error('attachment')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
@@ -249,7 +215,7 @@
                                         <span class="input-group-text" id="created_by_user_id">
                                             <i class="fa-solid fa-user-pen"></i>
                                         </span>
-                                        <input type="text" class="form-control form-control-sm rounded-end"
+                                        <input type="text" class="form-control form-control-sm"
                                                name=""
                                                aria-label="created_by_user_id"
                                                aria-describedby="created_by_user_id"
@@ -275,8 +241,8 @@
 
                                 <button type="submit"
                                         class="btn btn-success">
-                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                    Update
+                                    <i class="fa-solid fa-floppy-disk mr-2"></i>
+                                    Save
                                 </button>
                             </div>
 

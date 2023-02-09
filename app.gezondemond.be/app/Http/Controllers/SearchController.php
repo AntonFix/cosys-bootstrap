@@ -10,6 +10,7 @@ use App\Models\Debug;
 use App\Models\Appointment;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 
 class SearchController extends Controller
@@ -20,6 +21,11 @@ class SearchController extends Controller
         //
         if ($request != '') {
 
+            Cache::flush();
+            cache()->flush();
+
+            $title = $request->input('title');
+
             $app_status_id = $request->input('app_status_id');
             $app_code_id = $request->input('app_code_id');
             $assigned_with_user_id = $request->input('assigned_with_user_id');
@@ -28,7 +34,7 @@ class SearchController extends Controller
             $start_time = $request->input('start_time');
 
             $serp = DB::table('appointments')
-                ->where('title', 'like', '%' . $request->input('title') . '%')
+                ->where('title', 'like', '%' . $title . '%')
                 ->when($app_status_id, function ($query, $app_status_id) {
                     $query->where('app_status_id', $app_status_id);
                 })
@@ -50,6 +56,8 @@ class SearchController extends Controller
                 ->where('archived', false)
                 ->orderBy('start_date', 'DESC')
                 ->get();
+
+            /*dd($serp);*/
 
         } else {
 

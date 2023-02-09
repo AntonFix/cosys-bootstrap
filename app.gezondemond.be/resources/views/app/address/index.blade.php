@@ -95,8 +95,7 @@
 
                             </div>
 
-                            <button class="btn btn-outline-secondary mb-3 float-end"><i
-                                    class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                            <button class="btn btn-outline-secondary mb-3 float-end"><i class="fa-solid fa-magnifying-glass-plus mr-2"></i>
                                 Search
                             </button>
 
@@ -117,13 +116,13 @@
 
                         <table class="table table-bordered table-hover">
                             <tr>
-                                <th>Titel</th>
-                                <th>Start datum</th>
-                                <th>Start tijd</th>
-                                <th>Code</th>
-                                <th>Statuut</th>
-                                <th>Contactpersoon</th>
-                                <th>Toegewezen aan</th>
+                                <th>title</th>
+                                <th>start_date</th>
+                                <th>start_time</th>
+                                <th>app_code_id</th>
+                                <th>app_status_id</th>
+                                <th>assigned_with_person_id</th>
+                                <th>assigned_with_user_id</th>
                                 <th>Action</th>
                             </tr>
 
@@ -132,16 +131,14 @@
                                 @foreach($appointments as $row)
 
                                     <tr>
-                                        <td width=300"><a href="/appointment/{{ $row->id }}">{{ $row->title }}</a></td>
+                                        <td>{{ $row->title }}</td>
                                         <td width="110"
                                             class="text-center">{{ date('d-m-Y', strtotime($row->start_date)) }}</td>
                                         <td>{{ date('H:i', strtotime($row->start_time)) }}</td>
-                                        <td>
-                                            {{ $row->appCode->title }}
-                                        </td>
-                                        <td>{{ $row->appCode->title }}</td>
-                                        <td>{{ $row->assignedWithPerson->forename }} {{ $row->assignedWithPerson->name }}</td>
-                                        <td>{{ $row->assignedWithUser->name }}</td>
+                                        <td>{{ $row->app_code_id }}</td>
+                                        <td>{{ $row->app_status_id }}</td>
+                                        <td>{{ $row->assigned_with_person_id }}</td>
+                                        <td>{{ $row->assigned_with_user_id }}</td>
 
                                         <td width="220" class="text-center">
 
@@ -195,5 +192,3 @@
         </div>
     </div>
 @endsection
-
-

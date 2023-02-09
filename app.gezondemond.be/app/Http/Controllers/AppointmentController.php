@@ -62,8 +62,6 @@ class AppointmentController extends Controller
 
         $currentUser = Auth::user();
 
-        /*return view('app.appointment.create',
-            compact('appointmentCodes2', 'appointmentCodes'));*/
         return view('app.appointment.create', compact(
                 'appointmentCodes',
                 'appointmentStatuses',
@@ -142,7 +140,33 @@ class AppointmentController extends Controller
     {
         //
         $appointment = Appointment::findOrFail($appointment->id);
-        return view('app.appointment.edit', compact('appointment'));
+
+        $appointmentCodes = DB::table('appointment_codes')
+            ->get();
+
+        $appointmentStatuses = DB::table('appointment_statuses')
+            ->get();
+
+        $persons = DB::table('persons')
+            ->orderBy('forename')
+            ->get();
+
+        $users = DB::table('users')
+            ->orderBy('name')
+            ->get();
+
+        $currentUser = Auth::user();
+
+
+
+        return view('app.appointment.edit', compact(
+                'appointment',
+                'appointmentCodes',
+                'appointmentStatuses',
+                'users',
+                'currentUser',
+                'persons')
+        );
     }
 
     /**
@@ -155,6 +179,29 @@ class AppointmentController extends Controller
     public function update(UpdateAppointmentRequest $request, Appointment $appointment)
     {
         //
+
+        $appointment = Appointment::find($appointment->id);
+
+        $appointment->title = $request->title;
+        $appointment->details = $request->details;
+        $appointment->app_code_id = $request->app_code_id;
+        $appointment->app_status_id = $request->app_status_id;
+        $appointment->created_by_user_id = $request->created_by_user_id;
+        $appointment->assigned_with_user_id = $request->assigned_with_user_id;
+        $appointment->assigned_with_person_id = $request->assigned_with_person_id;
+        $appointment->start_date = $request->start_date;
+        $appointment->start_time = $request->start_time;
+        /*$appointment->end_date = $request->end_date;
+        $appointment->end_time = $request->end_time;*/
+        $appointment->attachment = $request->attachment;
+        $appointment->archived = $request->archived;
+
+        $appointment->save();
+
+        return redirect()
+            ->route('appointment.index')
+            ->with('success', 'Appointment has been updated successfully');
+
     }
 
     /**
@@ -204,9 +251,8 @@ class AppointmentController extends Controller
                 'assignedWithUser',
                 'createdByUser',
             ])
-            ->firstOrFail();
+            ->first();
         return Response::json($appointments, 200);
-
     }
 
 
