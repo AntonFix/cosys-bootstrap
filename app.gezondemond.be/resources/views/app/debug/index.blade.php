@@ -114,14 +114,12 @@
                                                     <a href="{{ route('debug.edit', $row->id) }}"
                                                        class="btn btn-sm btn-success">
                                                         <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                                        Edit
                                                     </a>
 
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-danger btn-sm">
                                                         <i class="fa-regular fa-trash-can mr-2"></i>
-                                                        Delete
                                                     </button>
                                                 </div>
                                             </form>

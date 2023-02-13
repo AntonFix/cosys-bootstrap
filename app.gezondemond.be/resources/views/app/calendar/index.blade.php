@@ -19,16 +19,10 @@
 
                 <div class="card">
 
-
-
                     <div class="card-header">
-                        <h1 class="mt-2">Afsprakenlijst</h1>
-                    </div>
+                        <h1 class="mt-2">Zoekfilter</h1>
 
-                    <div class="card-header">
-                        <h3 class="mt-2">Zoekfilter</h3>
-
-                        <form method="get" action="{{ route('filterAppointments') }}">
+                        <form method="get" action="{{ route('filterpersons') }}">
 
                             <div class="row mb-3">
                                 <div class="col-md-12">
@@ -43,33 +37,7 @@
                             <div class="row mb-3">
 
                                 <div class="col-md-3">
-                                    <label for="app_code_id" class="form-label">Code</label>
-                                    <select class="form-control"
-                                            name="app_code_id">
-                                        <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($appointmentCodes as $appointmentCode)
-                                            <option value="{{ $appointmentCode->id }}">
-                                                {{ $appointmentCode->title }} ({{ $appointmentCode->details }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label for="app_status_id" class="form-label">Statuut</label>
-                                    <select class="form-control"
-                                            name="app_status_id">
-                                        <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($appointmentStatuses as $appointmentStatus)
-                                            <option value="{{ $appointmentStatus->id }}">
-                                                {{ $appointmentStatus->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2">
-                                    <label for="start_date" class="form-label">Start datum (vanaf)</label>
+                                    <label for="start_date" class="form-label">Start datum</label>
 
                                     <input type="date"
                                            class="form-control"
@@ -77,16 +45,7 @@
                                            id="start_date">
                                 </div>
 
-                                <div class="col-md-2">
-                                    <label for="to_date" class="form-label">tot</label>
-
-                                    <input type="date"
-                                           class="form-control"
-                                           name="to_date"
-                                           id="to_date">
-                                </div>
-
-                                <div class="col-md-2">
+                                <div class="col-md-3">
                                     <label for="start_time" class="form-label">Start tijd</label>
                                     <input type="text"
                                            class="form-control"
@@ -99,39 +58,19 @@
 
                             <div class="row mb-3">
 
-                                <div class="col-md-6 offset-md-6">
+                                <div class="col-md-4 offset-md-9">
 
-                                    <label for="assigned_with_user_id"
-                                           class="form-label">Toegewezen aan medewerker</label>
-                                    <select class="form-control"
-                                            name="assigned_with_user_id">
-                                        <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
+                                    <div class="row  row-cols-lg-auto g-3 align-items-end">
 
+                                        <div class="col-md-12">
+                                            <button class="btn btn-outline-secondary d-inline-block"><i
+                                                    class="fa-solid fa-magnifying-glass-plus mr-2"></i>
+                                                Zoek
+                                            </button>
+                                        </div>
+
+                                    </div>
                                 </div>
-
-                            </div>
-
-                            <div class="row mb-3 float-end">
-
-                                <div class="col-md-12">
-                                    <a class="btn btn-outline-secondary d-inline-block"
-                                       href="{{ Route('filterAppointments') }}"
-                                       type="reset">
-                                        <i class="fa-solid fa-eraser mr-2"></i>
-                                        Reset filter
-                                    </a>
-                                    <button class="btn btn-secondary d-inline-block"><i
-                                            class="fa-solid fa-magnifying-glass-plus mr-2"></i>
-                                        Zoek
-                                    </button>
-                                </div>
-
 
                             </div>
 
@@ -139,10 +78,14 @@
 
                     </div>
 
+                    <div class="card-header">
+                        <h2 class="mt-2">Afsprakenlijst</h2>
+                    </div>
+
                     <div class="card-body">
                         {{--debug.blade.php--}}
 
-                        <a href="{{ route('appointment.create') }}" class="btn btn-outline-primary mb-3 float-end">
+                        <a href="{{ route('person.create') }}" class="btn btn-outline-primary mb-3 float-end">
                             <i class="fa-regular fa-square-plus mr-2"></i>
                             Add
                         </a>
@@ -159,13 +102,12 @@
                                 <th>Action</th>
                             </tr>
 
-                            @if(count($appointments) > 0)
+                            @if(count($persons) > 0)
 
-                                @foreach($appointments as $row)
+                                @foreach($persons as $row)
 
                                     <tr class="align-middle">
-                                        <td class="appointment-title"><a
-                                                href="/appointment/{{ $row->id }}">{{ $row->title }}</a></td>
+                                        <td class="person-title"><a href="/person/{{ $row->id }}">{{ $row->title }}</a></td>
                                         <td width="110"
                                             class="text-center">{{ date('d-m-Y', strtotime($row->start_date)) }}</td>
                                         <td>{{ date('H:i', strtotime($row->start_time)) }}</td>
@@ -193,21 +135,21 @@
                                         <td>{{ $row->assignedWithPerson->forename }} {{ $row->assignedWithPerson->name }}</td>
                                         <td>{{ $row->assignedWithUser->name }}</td>
 
-                                        <td width="150" class="text-center">
+                                        <td width="220" class="text-center">
 
                                             <form method="POST"
-                                                  action="{{ route('appointment.destroy', $row->id) }}">
+                                                  action="{{ route('person.destroy', $row->id) }}">
 
                                                 <div class="btn-group" role="group"
                                                      aria-label="Actions">
 
-                                                    <a href="{{ route('appointment.show', $row->id) }}"
+                                                    <a href="{{ route('person.show', $row->id) }}"
                                                        class="btn btn-sm btn-primary">
                                                         <i class="fa-solid fa-list-check mr-2"></i>
                                                         Details
                                                     </a>
 
-                                                    <a href="{{ route('appointment.edit', $row->id) }}"
+                                                    <a href="{{ route('person.edit', $row->id) }}"
                                                        class="btn btn-sm btn-success">
                                                         <i class="fa-solid fa-pen-to-square mr-2"></i>
                                                     </a>
@@ -233,7 +175,7 @@
 
                         </table>
 
-                        {{--{!! $appointments->links() !!}--}}
+                        {{--{!! $persons->links() !!}--}}
 
 
                     </div>

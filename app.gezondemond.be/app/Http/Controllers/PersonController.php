@@ -18,6 +18,17 @@ class PersonController extends Controller
     public function index()
     {
         //
+        $persons = Person::orderBy('created_at', 'desc')
+            ->with([
+                'personAddresses',
+                'spokenLanguages',
+                'createdByUser',
+            ])
+            ->where('is_active', 1)
+            ->get();
+
+        return view('app.person.index',
+            compact('persons'));
     }
 
     /**
@@ -50,7 +61,15 @@ class PersonController extends Controller
     public function show(Person $person)
     {
         //
-
+        $person = Person::where('id', $person->id)
+            ->with([
+                'personAddresses',
+                'spokenLanguages',
+                'createdByUser',
+            ])
+            ->firstOrFail();
+        //dd($appointment);
+        return view('app.person.show', compact('person'));
 
     }
 
@@ -114,4 +133,5 @@ class PersonController extends Controller
             ->firstOrFail();
         return response()->json($person, 200);
     }
+
 }

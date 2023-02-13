@@ -110,17 +110,14 @@
                                                     </div>
                                                     <div class="modal-body">
                                                         <h2>
-                                                            <a href="/person/{{ $appointment->assignedWithPerson->id }}">
-                                                                {{ $appointment->assignedWithPerson->forename }} {{ $appointment->assignedWithPerson->name }}
-                                                            </a>
+                                                            {{ $appointment->assignedWithPerson->forename }} {{ $appointment->assignedWithPerson->name }}
 
+                                                            @if($appointment->assignedWithPerson->is_active == 1)
+                                                                <span class="badge bg-success small">Aktief</span>
+                                                            @elseif ($appointment->assignedWithPerson->is_active == 0)
+                                                                <span class="badge bg-danger small">Niet aktief!</span>
+                                                            @endif
                                                         </h2>
-
-                                                        @if($appointment->assignedWithPerson->is_active == 1)
-                                                            <span class="badge bg-success small mb-2">Aktief</span>
-                                                        @elseif ($appointment->assignedWithPerson->is_active == 0)
-                                                            <span class="badge bg-danger small mb-2">Niet aktief!</span>
-                                                        @endif
 
                                                         @if($appointment->assignedWithPerson->active_from)
                                                             <ul class="list-unstyled">

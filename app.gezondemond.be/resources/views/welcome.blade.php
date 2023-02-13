@@ -14,13 +14,13 @@
 
                         <h3>All services</h3>
 
-                        <a href="{{ route('debug.index') }}" class="btn btn-primary btn-lg">Debugs</a>
                         <a href="{{ route('appointment.index') }}" class="btn btn-primary btn-lg">Appointments</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Persons</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Addresses</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Calendar</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Archive</a>
-                        <a href="{{ route('register') }}" class="btn btn-primary btn-lg">Report</a>
+                        <a href="{{ route('calendar.index') }}" class="btn btn-primary btn-lg">Calendar</a>
+                        <a href="{{ route('person.index') }}" class="btn btn-primary btn-lg">Persons</a>
+                        <a href="{{ route('address.index') }}" class="btn btn-primary btn-lg">Addresses</a>
+                        <a href="{{ route('archive.index') }}" class="btn btn-primary btn-lg">Archive</a>
+                        <a href="{{ route('report.index') }}" class="btn btn-primary btn-lg">Reports</a>
+                        <a href="{{ route('debug.index') }}" class="btn btn-primary btn-lg">Debugs</a>
 
                         <hr>
 

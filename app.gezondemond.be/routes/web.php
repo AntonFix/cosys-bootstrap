@@ -24,15 +24,20 @@ Route::resource('appointment', App\Http\Controllers\AppointmentController::class
 Route::resource('appointment-code', App\Http\Controllers\AppointmentCodeController::class);
 Route::resource('appointment-status', App\Http\Controllers\AppointmentStatusController::class);
 
-Route::get('/search-appointments', [App\Http\Controllers\SearchController::class, 'filterAppointments'])->name('filterAppointments');
+Route::get('/search/appointments', [App\Http\Controllers\SearchController::class, 'filterAppointments'])->name('filterAppointments');
 
 
 Route::resource('address', App\Http\Controllers\AddressController::class);
 Route::resource('archive', App\Http\Controllers\ArchiveController::class);
+Route::resource('calendar', App\Http\Controllers\CalendarController::class);
+Route::resource('report', App\Http\Controllers\ReportController::class);
 
 Route::resource('person', App\Http\Controllers\PersonController::class);
 Route::resource('person-address', App\Http\Controllers\PersonAddressController::class);
 Route::resource('person-language', App\Http\Controllers\PersonLanguageController::class);
+Route::get('/search/persons', [App\Http\Controllers\SearchController::class, 'filterPersons'])->name('filterPersons');
+
+
 
 Route::resource('dictionary-geo', App\Http\Controllers\DictionaryGeoController::class);
 Route::resource('dictionary-language', App\Http\Controllers\DictionaryLanguageController::class);

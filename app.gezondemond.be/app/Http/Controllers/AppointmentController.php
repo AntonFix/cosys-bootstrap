@@ -6,11 +6,6 @@ use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 
-use App\Models\AppointmentCode;
-use App\Models\AppointmentStatus;
-use App\Models\Person;
-use App\Models\User;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
@@ -26,16 +21,33 @@ class AppointmentController extends Controller
     public function index()
     {
         //
-        $appointments = Appointment::latest()
-            ->orderBy('start_date', 'desc')
+        $appointments = Appointment::orderBy('start_date', 'desc')
             ->get();
+
+        $appointmentCodes = DB::table('appointment_codes')
+            ->get();
+
+        $appointmentStatuses = DB::table('appointment_statuses')
+            ->get();
+
+        $users = DB::table('users')
+            ->orderBy('name')
+            ->get();
+
+        $currentUser = Auth::user();
 
         //$newDate = $debugs->dateTime->format('d-m-Y');
 
         //dd($appointments);
         //return response()->json($debugs, 200);
 
-        return view('app.appointment.index', compact('appointments'));
+        return view('app.appointment.index',
+            compact(
+                'appointments',
+                'appointmentCodes',
+                'appointmentStatuses',
+                'users',
+                'currentUser'));
     }
 
     /**
@@ -156,7 +168,6 @@ class AppointmentController extends Controller
             ->get();
 
         $currentUser = Auth::user();
-
 
 
         return view('app.appointment.edit', compact(

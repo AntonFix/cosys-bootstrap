@@ -1,34 +1,27 @@
 @extends('layouts.app')
 
 @section('content')
+
     <div class="container">
+
         <div class="row">
+
             <div class="col-md-12">
-
-                <!--                <div id="vue-app"></div>
-
-                                <router-link/>-->
-
-                @if($message = Session::get('success'))
-
-                    <div class="alert alert-success">
-                        {{ $message }}
-                    </div>
-
-                @endif
 
                 <div class="card">
 
 
 
                     <div class="card-header">
-                        <h1 class="mt-2">Afsprakenlijst</h1>
+                        <h1 class="mt-2">Zoekresultaten voor de afspraken</h1>
                     </div>
 
                     <div class="card-header">
+
+
                         <h3 class="mt-2">Zoekfilter</h3>
 
-                        <form method="get" action="{{ route('filterAppointments') }}">
+                        <form method="get" action="{{ Route('filterAppointments') }}">
 
                             <div class="row mb-3">
                                 <div class="col-md-12">
@@ -36,37 +29,71 @@
                                     <input type="text"
                                            class="form-control"
                                            name="title"
-                                           id="title">
+                                           id="title"
+                                           value="{{ Request::get('title') }}">
                                 </div>
                             </div>
 
                             <div class="row mb-3">
 
+
                                 <div class="col-md-3">
                                     <label for="app_code_id" class="form-label">Code</label>
+
+
                                     <select class="form-control"
                                             name="app_code_id">
-                                        <option disabled selected value="">Kies een item...</option>
+
+                                        @if(Request::get('app_code_id') != '')
+                                            <option value="{{ Request::get('app_code_id') }}" selected>
+                                                @foreach($serp as $result)
+                                                    @once
+                                                        Huidige code: {{ $result->appCode->title }}
+                                                    @endonce
+                                                @endforeach
+                                            </option>
+                                        @else
+                                            <option value="" selected disabled>Kies een item...</option>
+                                        @endif
+
                                         @foreach ($appointmentCodes as $appointmentCode)
                                             <option value="{{ $appointmentCode->id }}">
-                                                {{ $appointmentCode->title }} ({{ $appointmentCode->details }})
+                                                {{ $appointmentCode->title }}
                                             </option>
                                         @endforeach
                                     </select>
+
                                 </div>
+
 
                                 <div class="col-md-3">
                                     <label for="app_status_id" class="form-label">Statuut</label>
+
                                     <select class="form-control"
                                             name="app_status_id">
-                                        <option disabled selected value="">Kies een item...</option>
+
+                                        @if(Request::get('app_status_id') != '')
+                                            <option value="{{ Request::get('app_status_id') }}" selected>
+                                                @foreach($serp as $result)
+                                                    @once
+                                                        Huidige statuut: {{ $result->appStatus->title }}
+                                                    @endonce
+                                                @endforeach
+                                            </option>
+                                        @else
+                                            <option value="" selected disabled>Kies een item...</option>
+                                        @endif
+
                                         @foreach ($appointmentStatuses as $appointmentStatus)
                                             <option value="{{ $appointmentStatus->id }}">
                                                 {{ $appointmentStatus->title }}
                                             </option>
                                         @endforeach
+
                                     </select>
+
                                 </div>
+
 
                                 <div class="col-md-2">
                                     <label for="start_date" class="form-label">Start datum (vanaf)</label>
@@ -74,8 +101,10 @@
                                     <input type="date"
                                            class="form-control"
                                            name="start_date"
-                                           id="start_date">
+                                           id="start_date"
+                                           value="{{ Request::get('start_date') }}">
                                 </div>
+
 
                                 <div class="col-md-2">
                                     <label for="to_date" class="form-label">tot</label>
@@ -83,15 +112,18 @@
                                     <input type="date"
                                            class="form-control"
                                            name="to_date"
-                                           id="to_date">
+                                           id="to_date"
+                                           value="{{ Request::get('to_date') }}">
                                 </div>
 
                                 <div class="col-md-2">
                                     <label for="start_time" class="form-label">Start tijd</label>
+
                                     <input type="text"
                                            class="form-control"
                                            name="start_time"
-                                           id="start_time">
+                                           id="start_time"
+                                           value="{{ Request::get('start_time') }}">
                                 </div>
 
                             </div>
@@ -103,18 +135,31 @@
 
                                     <label for="assigned_with_user_id"
                                            class="form-label">Toegewezen aan medewerker</label>
+
                                     <select class="form-control"
                                             name="assigned_with_user_id">
-                                        <option disabled selected value="">Kies een item...</option>
+
+                                        @if(Request::get('assigned_with_user_id') != '')
+                                            <option value="{{ Request::get('assigned_with_user_id') }}" selected>
+                                                @foreach($serp as $result)
+                                                    @once
+                                                        Huidige medewerker: {{ $result->assignedWithUser->name }}
+                                                    @endonce
+                                                @endforeach
+                                            </option>
+                                        @else
+                                            <option value="" selected disabled>Kies een item...</option>
+                                        @endif
+
                                         @foreach ($users as $user)
                                             <option value="{{ $user->id }}">
                                                 {{ $user->name }}
                                             </option>
                                         @endforeach
+
                                     </select>
 
                                 </div>
-
                             </div>
 
                             <div class="row mb-3 float-end">
@@ -140,12 +185,6 @@
                     </div>
 
                     <div class="card-body">
-                        {{--debug.blade.php--}}
-
-                        <a href="{{ route('appointment.create') }}" class="btn btn-outline-primary mb-3 float-end">
-                            <i class="fa-regular fa-square-plus mr-2"></i>
-                            Add
-                        </a>
 
                         <table class="table table-bordered table-hover">
                             <tr>
@@ -159,55 +198,56 @@
                                 <th>Action</th>
                             </tr>
 
-                            @if(count($appointments) > 0)
+                            @if(count($serp) > 0)
 
-                                @foreach($appointments as $row)
+                                @foreach($serp as $result)
 
                                     <tr class="align-middle">
-                                        <td class="appointment-title"><a
-                                                href="/appointment/{{ $row->id }}">{{ $row->title }}</a></td>
-                                        <td width="110"
-                                            class="text-center">{{ date('d-m-Y', strtotime($row->start_date)) }}</td>
-                                        <td>{{ date('H:i', strtotime($row->start_time)) }}</td>
-                                        <td>
-                                            {{ $row->appCode->title }}
+                                        <td class="appointment-title"><a href="/appointment/{{ $result->id }}">{{ $result->title }}</a>
                                         </td>
-                                        @if($row->appStatus->id == 4)
+                                        <td width="110"
+                                            class="text-center">{{ date('d-m-Y', strtotime($result->start_date)) }}</td>
+                                        <td>{{ date('H:i', strtotime($result->start_time)) }}</td>
+
+
+                                        <td>{{ $result->appCode->title }}</td>
+
+                                        @if($result->appStatus->id == 4)
                                             {{--
                                             Is uitgevoerd
                                             --}}
-                                            <td style="background-color: #e9ecef">{{ $row->appStatus->title }}</td>
-                                        @elseif($row->appStatus->id == 3)
+                                            <td style="background-color: #e9ecef">{{ $result->appStatus->title }}</td>
+                                        @elseif($result->appStatus->id == 3)
                                             {{--
                                             Dringend
                                             --}}
-                                            <td style="background-color: #fbc02d">{{ $row->appStatus->title }}</td>
-                                        @elseif($row->appStatus->id == 2)
+                                            <td style="background-color: #fbc02d">{{ $result->appStatus->title }}</td>
+                                        @elseif($result->appStatus->id == 2)
                                             {{--
                                             Dringend
                                             --}}
-                                            <td style="background-color: #94e74c">{{ $row->appStatus->title }}</td>
+                                            <td style="background-color: #94e74c">{{ $result->appStatus->title }}</td>
                                         @else
-                                            <td>{{ $row->appStatus->title }}</td>
+                                            <td>{{ $result->appStatus->title }}</td>
                                         @endif
-                                        <td>{{ $row->assignedWithPerson->forename }} {{ $row->assignedWithPerson->name }}</td>
-                                        <td>{{ $row->assignedWithUser->name }}</td>
 
+                                        <td>{{ $result->assignedWithPerson->forename }} {{ $result->assignedWithPerson->name }}</td>
+                                        <td>{{ $result->assignedWithUser->name }}</td>
                                         <td width="150" class="text-center">
 
                                             <form method="POST"
-                                                  action="{{ route('appointment.destroy', $row->id) }}">
+                                                  action="{{ route('appointment.destroy', $result->id) }}">
 
                                                 <div class="btn-group" role="group"
                                                      aria-label="Actions">
 
-                                                    <a href="{{ route('appointment.show', $row->id) }}"
+                                                    <a href="{{ route('appointment.show', $result->id) }}"
                                                        class="btn btn-sm btn-primary">
                                                         <i class="fa-solid fa-list-check mr-2"></i>
                                                         Details
                                                     </a>
 
-                                                    <a href="{{ route('appointment.edit', $row->id) }}"
+                                                    <a href="{{ route('appointment.edit', $result->id) }}"
                                                        class="btn btn-sm btn-success">
                                                         <i class="fa-solid fa-pen-to-square mr-2"></i>
                                                     </a>
@@ -233,15 +273,12 @@
 
                         </table>
 
-                        {{--{!! $appointments->links() !!}--}}
-
+                        {{ $serp->links() }}
 
                     </div>
-
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
-
-

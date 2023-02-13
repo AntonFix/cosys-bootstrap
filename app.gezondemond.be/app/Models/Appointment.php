@@ -61,18 +61,6 @@ class Appointment extends Model
         );
     }
 
-    /*public function addressRegion()
-    {
-        return $this->hasManyThrough(
-            Address::class,
-            PersonAddress::class,
-            'person_id',
-            'id',
-            'id',
-            'address_id'
-        );
-    }*/
-
     public function assignedWithPersonSpokenLanguages()
     {
         return $this->hasManyThrough(
