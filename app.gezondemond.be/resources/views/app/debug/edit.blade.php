@@ -166,7 +166,7 @@
                                 <a href="{{ route('debug.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Go back
+                                    Terug
                                 </a>
 
                                 <button type="submit"

@@ -33,7 +33,7 @@
                                     <label for="app_code_id" class="form-label">Code</label>
 
 
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="app_code_id">
 
                                         @if(Request::get('app_code_id'))
@@ -63,7 +63,7 @@
 
                                 <div class="col-md-3">
                                     <label for="app_status_id" class="form-label">Statuut</label>
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="app_status_id">
 
 
@@ -113,7 +113,7 @@
 
                                             <label for="assigned_with_user_id"
                                                    class="form-label">Toegewezen aan medewerker</label>
-                                            <select class="form-control"
+                                            <select class="form-control form-select"
                                                     name="assigned_with_user_id">
                                                 <option disabled selected value="">Kies een item...</option>
                                                 @foreach ($users as $user)

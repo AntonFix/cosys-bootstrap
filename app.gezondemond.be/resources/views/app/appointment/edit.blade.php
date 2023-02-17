@@ -83,7 +83,7 @@
                                     <i class="fa-solid fa-list mr-2"></i>
                                     <label for="app_code_id">Code</label>
 
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="app_code_id">
                                         @if ($appointment->app_code_id)
                                             <option selected disabled
@@ -110,7 +110,7 @@
                                     <i class="fa-solid fa-list mr-2"></i>
                                     <label for="app_status_id">Statuut</label>
 
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="app_status_id">
                                         @if ($appointment->app_status_id)
                                             <option selected disabled
@@ -136,7 +136,7 @@
                                     <i class="fa-solid fa-id-card mr-2"></i>
                                     <label for="assigned_with_person_id">Contactpersoon</label>
 
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="assigned_with_person_id">
                                         @if ($appointment->assignedWithPerson)
                                             <option selected disabled
@@ -161,7 +161,7 @@
                                     <i class="fa-solid fa-user-plus"></i>
                                     <label for="assigned_with_user_id">Toegewezen aan medewerker</label>
 
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="assigned_with_user_id">
                                         @if ($appointment->assignedWithUser)
                                             <option selected disabled
@@ -270,7 +270,7 @@
                                 <a href="{{ route('appointment.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Go back
+                                    Terug
                                 </a>
 
                                 <button type="submit"

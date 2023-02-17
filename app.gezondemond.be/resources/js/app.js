@@ -2,6 +2,8 @@ import './bootstrap';
 
 import '@fortawesome/fontawesome-free/js/all.min'
 
+
+
 /*
 import {createApp} from 'vue'
 
@@ -63,3 +65,4 @@ app.use(ToastService);
 app.component('DataTable', DataTable);
 
 app.mount('#vue-app');
+

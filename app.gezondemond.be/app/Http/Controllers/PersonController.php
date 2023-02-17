@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\Person;
 use App\Http\Requests\StorePersonRequest;
 use App\Http\Requests\UpdatePersonRequest;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
 
@@ -39,6 +41,22 @@ class PersonController extends Controller
     public function create()
     {
         //
+
+        $addresses = DB::table('addresses')
+            ->get();
+
+        $languages = DB::table('dictionary_languages')
+            ->get();
+
+        $currentUser = Auth::user();
+
+        return view('app.person.create',
+            compact(
+                'currentUser',
+                'addresses',
+                'languages')
+        );
+
     }
 
     /**
@@ -50,6 +68,32 @@ class PersonController extends Controller
     public function store(StorePersonRequest $request)
     {
         //
+
+        $person = new Person;
+
+        $person->forename = $request->forename;
+        $person->name = $request->name;
+        $person->birthday = $request->birthday;
+        $person->sex = $request->sex;
+        $person->function = $request->function;
+        $person->volunteer = $request->volunteer;
+        $person->oral_coach = $request->oral_coach;
+        $person->coordinator = $request->coordinator;
+        $person->details = $request->details;
+        $person->phone = $request->phone;
+        $person->email = $request->email;
+        $person->presence = $request->presence;
+        $person->active_from = $request->active_from;
+        $person->inactive_from = $request->inactive_from;
+        $person->is_active = $request->is_active;
+        $person->created_by_user_id = $request->created_by_user_id;
+
+        $person->save();
+
+        return redirect()
+            ->route('person.index')
+            ->with('success', 'Person has been created successfully.');
+
     }
 
     /**
@@ -82,6 +126,14 @@ class PersonController extends Controller
     public function edit(Person $person)
     {
         //
+
+        $person = Person::findOrFail($person->id);
+
+        return view('app.person.edit', compact(
+                'person')
+        );
+
+
     }
 
     /**
@@ -105,6 +157,13 @@ class PersonController extends Controller
     public function destroy(Person $person)
     {
         //
+
+        $person->delete();
+
+        return redirect()
+            ->route('person.index')
+            ->with('success', 'Person has been deleted successfully');
+
     }
 
     public function returnPersonsJson()

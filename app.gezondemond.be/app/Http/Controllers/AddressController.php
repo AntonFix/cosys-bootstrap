@@ -18,6 +18,14 @@ class AddressController extends Controller
     public function index()
     {
         //
+
+        $addresses = Address::orderBy('created_at', 'desc')
+            ->with([
+                'region',
+            ])
+            ->get();
+
+        return view('app.address.index', compact('addresses'));
     }
 
     /**
@@ -50,6 +58,14 @@ class AddressController extends Controller
     public function show(Address $address)
     {
         //
+
+        $address = Address::where('id', $address->id)
+            ->with([
+                'region',
+            ])
+            ->firstOrFail();
+        //dd($appointment);
+        return view('app.address.show', compact('address'));
     }
 
     /**

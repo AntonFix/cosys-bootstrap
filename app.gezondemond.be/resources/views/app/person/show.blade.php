@@ -20,10 +20,10 @@
                             <div class="row">
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="birthday">birthday</label>
+                                    <label for="birthday">Geboortedatum</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="birthday">
-                                            <i class="fa-solid fa-list"></i>
+                                            <i class="fa-solid fa-calendar-day"></i>
                                         </span>
                                         <input type="text" class="form-control" aria-label="birthday"
                                                aria-describedby="birthday"
@@ -33,10 +33,10 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="sex">sex</label>
+                                    <label for="sex">Geslacht</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="sex">
-                                            <i class="fa-solid fa-list"></i>
+                                            <i class="fa-regular fa-user"></i>
                                         </span>
                                         <input type="text" class="form-control" aria-label="sex"
                                                aria-describedby="sex"
@@ -46,10 +46,10 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="sex">function</label>
+                                    <label for="function">Functie</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="function">
-                                            <i class="fa-solid fa-list"></i>
+                                            <i class="fa-regular fa-id-badge"></i>
                                         </span>
                                         <input type="text" class="form-control" aria-label="function"
                                                aria-describedby="function"
@@ -59,10 +59,10 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="sex">details</label>
+                                    <label for="details">Details</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="details">
-                                            <i class="fa-solid fa-list"></i>
+                                            <i class="fa-regular fa-file-lines"></i>
                                         </span>
                                         <input type="text" class="form-control" aria-label="details"
                                                aria-describedby="details"
@@ -72,36 +72,10 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="sex">phone</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="phone">
-                                            <i class="fa-solid fa-list"></i>
-                                        </span>
-                                        <input type="text" class="form-control" aria-label="phone"
-                                               aria-describedby="phone"
-                                               value="{{ $person->phone }}"
-                                               disabled>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="sex">email</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="email">
-                                            <i class="fa-solid fa-list"></i>
-                                        </span>
-                                        <input type="email" class="form-control" aria-label="email"
-                                               aria-describedby="email"
-                                               value="{{ $person->email }}"
-                                               disabled>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="presence">presence</label>
+                                    <label for="presence">Aanwezigheid</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="presence">
-                                            <i class="fa-solid fa-list"></i>
+                                            <i class="fa-solid fa-user-check"></i>
                                         </span>
                                         <input type="text" class="form-control" aria-label="presence"
                                                aria-describedby="presence"
@@ -110,47 +84,48 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-2">
+                                    <div>Telefoon/GSM</div>
+                                    <i class="fa-solid fa-phone mr-3 mt-2"></i>
+                                    <a href="tel:{{ str_replace(' ', '', $person->phone) }}">{{ $person->phone }}</a>
+                                </div>
+
+
+
+                                <div class="col-md-4">
+                                    <div>E-mailadres</div>
+                                    <i class="fa-solid fa-at mr-3 mt-2"></i>
+                                    <a href="mailto:{{ $person->email }}">{{ $person->email }}</a>
+                                </div>
+
                                 <div class="col-md-6 mb-3">
-                                    <label for="app_code">Statuut</label>
+
+                                    <div>Extra</div>
 
                                     @if($person->volunteer)
-                                        <div class="input-group color-finished">
-                                            <span class="input-group-text" id="volunteer">
-                                                <i class="fa-solid fa-list"></i>
-                                            </span>
-                                            <input type="text" class="form-control" aria-label="volunteer"
-                                                   aria-describedby="volunteer"
-                                                   value="volunteer"
-                                                   disabled>
+                                        <div class="d-inline">
+                                            <span class="badge p-2 mt-1"
+                                                  style="font-size:0.85rem;background-color:#8bc34a;color:#fff;">Vrijwilliger</span>
                                         </div>
                                     @elseif($person->oral_coach)
-                                        <div class="input-group color-urgent">
-                                            <span class="input-group-text" id="oral_coach">
-                                                <i class="fa-solid fa-list"></i>
-                                            </span>
-                                            <input type="text" class="form-control" aria-label="oral_coach"
-                                                   aria-describedby="oral_coach"
-                                                   value="oral_coach"
-                                                   disabled>
+                                        <div class="d-inline">
+                                            <span class="badge p-2 mt-1"
+                                                  style="font-size:0.85rem;background-color:#3f51b5;color:#fff;">Oral coach</span>
                                         </div>
                                     @elseif($person->coordinator)
-                                        <div class="input-group color-planned">
-                                            <span class="input-group-text" id="coordinator">
-                                                <i class="fa-solid fa-list"></i>
-                                            </span>
-                                            <input type="text" class="form-control" aria-label="coordinator"
-                                                   aria-describedby="coordinator"
-                                                   value="coordinator"
-                                                   disabled>
+                                        <div class="d-inline">
+                                            <span class="badge p-2 mt-1"
+                                                  style="font-size:0.85rem;background-color:#ff9800;color:#fff;">Coordinator</span>
                                         </div>
                                     @endif
 
                                 </div>
 
+
                                 <hr>
 
-                                <div class="col-md-6 mb-3">
-                                    @if(count($person->personAddresses) > 0)
+                                @if(count($person->personAddresses) > 0)
+                                    <div class="col-md-6 mb-3">
                                         <h3>Werkt in</h3>
                                         <ul class="list-unstyled">
                                             @foreach ($person->personAddresses as $address)
@@ -161,28 +136,29 @@
                                                 </li>
                                             @endforeach
                                         </ul>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
 
-                                <div class="col-md-6 mb-3">
-                                    @if(count($person->spokenLanguages) > 0)
+                                @if(count($person->spokenLanguages) > 0)
+                                    <div class="col-md-6 mb-3">
                                         <h3>Spreektalen</h3>
                                         <ul class="list-unstyled">
                                             @foreach ($person->spokenLanguages as $language)
-                                                <li><i class="fa-regular fa-building mr-2"></i>
-                                                        {{ $language->name }} ({{ $language->local_name }})
+                                                <li><i class="fa-solid fa-language mr-2"></i></i>
+                                                    {{ $language->name }} ({{ $language->local_name }})
                                                 </li>
                                             @endforeach
                                         </ul>
-                                    @endif
-                                </div>
+                                    </div>
+                                @endif
 
+                                <hr>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="active_from">active_from</label>
+                                    <label for="active_from">Actief sinds</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="active_from">
-                                            <i class="fa-regular fa-calendar-plus"></i>
+                                            <i class="fa-regular fa-calendar-check"></i>
                                         </span>
                                         <input type="text" class="form-control form-control-sm" aria-label="active_from"
                                                aria-describedby="active_from"
@@ -206,20 +182,6 @@
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="updated_at">Gewijzigd</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="updated_at">
-                                            <i class="fa-solid fa-pen"></i>
-                                        </span>
-                                        <input type="text" class="form-control form-control-sm" aria-label="updated_at"
-                                               aria-describedby="updated_at"
-                                               value="{{ Carbon\Carbon::parse($person->created_at)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }} om {{ Carbon\Carbon::parse($person->updated_at)->locale('nl')->timezone('Europe/Brussels')->format('H:i') }}"
-                                               disabled>
-                                    </div>
-                                </div>
-
-
-                                <div class="col-md-6 mb-3">
                                     <label for="assignedWithUser">Aangemaaakt door</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="createdByUser">
@@ -233,13 +195,27 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6 mb-3">
+                                    <label for="updated_at">Gewijzigd</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="updated_at">
+                                            <i class="fa-solid fa-pen"></i>
+                                        </span>
+                                        <input type="text" class="form-control form-control-sm" aria-label="updated_at"
+                                               aria-describedby="updated_at"
+                                               value="{{ Carbon\Carbon::parse($person->created_at)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }} om {{ Carbon\Carbon::parse($person->updated_at)->locale('nl')->timezone('Europe/Brussels')->format('H:i') }}"
+                                               disabled>
+                                    </div>
+                                </div>
+
+
                             </div>
 
                             <div class="text-center">
                                 <a href="{{ Route('person.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Go back
+                                    Terug
                                 </a>
 
                                 <a href="{{ Route('person.edit', $person->id) }}"

@@ -195,7 +195,7 @@ class SearchController extends Controller
 
         }
 
-        return view('app.appointment.resultsAppointments',
+        return view('app.person.resultsPersons',
             compact(
                 'appointments',
                 'serp',

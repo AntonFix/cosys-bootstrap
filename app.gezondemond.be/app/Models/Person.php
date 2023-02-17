@@ -11,6 +11,25 @@ class Person extends Model
 
     protected $table = 'persons'; //select exact table "persons"
 
+    protected $fillable = [
+        'forename',
+        'name',
+        'birthday',
+        'sex',
+        'function',
+        'volunteer',
+        'oral_coach',
+        'coordinator',
+        'details',
+        'phone',
+        'email',
+        'presence',
+        'active_from',
+        'inactive_from',
+        'is_active',
+        'created_by_user_id',
+    ];
+
     public function personAddresses()
     {
         return $this->hasManyThrough(

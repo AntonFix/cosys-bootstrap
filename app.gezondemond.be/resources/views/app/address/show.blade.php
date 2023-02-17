@@ -7,269 +7,139 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h1 class="mt-2">Details appointment item</h1>
+                        <h1 class="mt-2">Details van adres</h1>
                     </div>
 
                     <div class="card-body">
 
-                        <h2>{{ $appointment->title }}</h2>
+                        <h2>{{ $address->forename }} {{ $address->name }}</h2>
 
                         <form method="POST"
-                              action="{{ route('appointment.destroy', $appointment->id) }}">
+                              action="{{ Route('address.destroy', $address->id) }}">
 
                             <div class="row">
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="app_code">Code</label>
+                                    <label for="birthday">Geboortedatum</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="appCode">
-                                            <i class="fa-solid fa-list"></i>
+                                        <span class="input-group-text" id="birthday">
+                                            <i class="fa-solid fa-calendar-day"></i>
                                         </span>
-                                        <input type="text" class="form-control" aria-label="appCode"
-                                               aria-describedby="appCode"
-                                               value="{{ $appointment->appCode->title }} ({{ $appointment->appCode->details }})"
+                                        <input type="text" class="form-control" aria-label="birthday"
+                                               aria-describedby="birthday"
+                                               value="{{ $address->birthday }}"
                                                disabled>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="app_code">Statuut</label>
+                                    <label for="sex">Geslacht</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="sex">
+                                            <i class="fa-regular fa-user"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="sex"
+                                               aria-describedby="sex"
+                                               value="{{ $address->sex }}"
+                                               disabled>
+                                    </div>
+                                </div>
 
-                                @if($appointment->appStatus->id == 4)
-                                    <!--Is uitgevoerd-->
-                                        <div class="input-group color-finished">
-                                            <span class="input-group-text" id="appStatus">
-                                                <i class="fa-solid fa-list"></i>
-                                            </span>
-                                            <input type="text" class="form-control" aria-label="appStatus"
-                                                   aria-describedby="appStatus"
-                                                   value="{{ $appointment->appStatus->title }}"
-                                                   disabled>
+                                <div class="col-md-6 mb-3">
+                                    <label for="function">Functie</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="function">
+                                            <i class="fa-regular fa-id-badge"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="function"
+                                               aria-describedby="function"
+                                               value="{{ $address->function }}"
+                                               disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="details">Details</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="details">
+                                            <i class="fa-regular fa-file-lines"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="details"
+                                               aria-describedby="details"
+                                               value="{{ $address->details }}"
+                                               disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="presence">Aanwezigheid</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="presence">
+                                            <i class="fa-solid fa-user-check"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="presence"
+                                               aria-describedby="presence"
+                                               value="{{ $address->presence }}"
+                                               disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-2">
+                                    <div>Telefoon/GSM</div>
+                                    <i class="fa-solid fa-phone mr-3 mt-2"></i>
+                                    <a href="tel:{{ str_replace(' ', '', $address->phone) }}">{{ $address->phone }}</a>
+                                </div>
+
+
+                                <div class="col-md-4">
+                                    <div>E-mailadres</div>
+                                    <i class="fa-solid fa-at mr-3 mt-2"></i>
+                                    <a href="mailto:{{ $address->email }}">{{ $address->email }}</a>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <div>Extra</div>
+
+                                    @if($address->volunteer)
+                                        <div class="d-inline">
+                                            <span class="badge p-2 mt-1"
+                                                  style="font-size:0.85rem;background-color:#8bc34a;color:#fff;">Vrijwilliger</span>
                                         </div>
-                                @elseif($appointment->appStatus->id == 3)
-                                    <!--Dringend-->
-                                        <div class="input-group color-urgent">
-                                            <span class="input-group-text" id="appStatus">
-                                                <i class="fa-solid fa-list"></i>
-                                            </span>
-                                            <input type="text" class="form-control" aria-label="appStatus"
-                                                   aria-describedby="appStatus"
-                                                   value="{{ $appointment->appStatus->title }}"
-                                                   disabled>
+                                    @elseif($address->oral_coach)
+                                        <div class="d-inline">
+                                            <span class="badge p-2 mt-1"
+                                                  style="font-size:0.85rem;background-color:#3f51b5;color:#fff;">Oral coach</span>
                                         </div>
-                                @elseif($appointment->appStatus->id == 1)
-                                    <!--Gepland-->
-                                        <div class="input-group color-planned">
-                                            <span class="input-group-text" id="appStatus">
-                                                <i class="fa-solid fa-list"></i>
-                                            </span>
-                                            <input type="text" class="form-control" aria-label="appStatus"
-                                                   aria-describedby="appStatus"
-                                                   value="{{ $appointment->appStatus->title }}"
-                                                   disabled>
-                                        </div>
-                                    @else
-                                        <div class="input-group">
-                                            <span class="input-group-text" id="appStatus">
-                                                <i class="fa-solid fa-list"></i>
-                                            </span>
-                                            <input type="text" class="form-control" aria-label="appStatus"
-                                                   aria-describedby="appStatus"
-                                                   value="{{ $appointment->appStatus->title }}"
-                                                   disabled>
+                                    @elseif($address->coordinator)
+                                        <div class="d-inline">
+                                            <span class="badge p-2 mt-1"
+                                                  style="font-size:0.85rem;background-color:#ff9800;color:#fff;">Coordinator</span>
                                         </div>
                                     @endif
 
                                 </div>
 
-                                <hr>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="person">Contactpersoon</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="person">
-                                            <i class="fa-solid fa-id-card"></i>
-                                        </span>
-                                        <input type="text" class="form-control" aria-label="person"
-                                               aria-describedby="person"
-                                               value="{{ $appointment->assignedWithPerson->forename }} {{ $appointment->assignedWithPerson->name }}"
-                                               disabled>
-                                        <button class="btn btn-secondary rounded-end" type="button" id="person"
-                                                data-bs-toggle="modal" data-bs-target="#showPerson"><i
-                                                class="fa-regular fa-eye"></i></button>
-
-                                        <div class="modal fade" id="showPerson" tabindex="-1"
-                                             aria-labelledby="showPersonLabel" aria-hidden="true">
-                                            <div class="modal-dialog">
-                                                <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="showPersonLabel">Details
-                                                            van contactpersoon</h1>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                                aria-label="Sluiten"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <h2>
-                                                            {{ $appointment->assignedWithPerson->forename }} {{ $appointment->assignedWithPerson->name }}
-
-                                                            @if($appointment->assignedWithPerson->is_active == 1)
-                                                                <span class="badge bg-success small">Aktief</span>
-                                                            @elseif ($appointment->assignedWithPerson->is_active == 0)
-                                                                <span class="badge bg-danger small">Niet aktief!</span>
-                                                            @endif
-                                                        </h2>
-
-                                                        @if($appointment->assignedWithPerson->active_from)
-                                                            <ul class="list-unstyled">
-                                                                <li>
-                                                                    <i class="fa-regular fa-calendar-check pr-2"></i>
-                                                                    Actief vanaf
-                                                                    {{ Carbon\Carbon::parse($appointment->assignedWithPerson->active_from)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }}
-                                                                </li>
-                                                            </ul>
-                                                        @endif
-                                                        @if($appointment->assignedWithPerson->inactive_from)
-                                                            <ul class="list-unstyled">
-                                                                <li>
-                                                                    <i class="fa-regular fa-calendar-xmark pr-2"></i>
-                                                                    Inactief vanaf
-                                                                    {{ Carbon\Carbon::parse($appointment->assignedWithPerson->inactive_from)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }}
-                                                                </li>
-                                                            </ul>
-                                                        @endif
-
-                                                        @if($appointment->assignedWithPerson->coordinator)
-                                                            <span
-                                                                class="badge mb-3 text-bg-primary p-2">Coordinator</span>
-                                                        @endif
-                                                        @if($appointment->assignedWithPerson->oral_coach)
-                                                            <span class="badge mb-3 text-bg-info p-2">Oral coach</span>
-                                                        @endif
-                                                        @if($appointment->assignedWithPerson->volunteer)
-                                                            <span
-                                                                class="badge mb-3 text-bg-success p-2">Volunteer</span>
-                                                        @endif
-
-                                                        @if($appointment->assignedWithPerson->details)
-                                                            <hr>
-                                                            <p>{{ $appointment->assignedWithPerson->details }}</p>
-                                                            <hr>
-                                                        @endif
-
-                                                        @if($appointment->assignedWithPerson->function)
-                                                            <p>{{ $appointment->assignedWithPerson->function }}</p>
-                                                            <hr>
-                                                        @endif
-
-                                                        <h3>Сontacten</h3>
-                                                        <ul class="list-unstyled">
-                                                            @if($appointment->assignedWithPerson->phone)
-                                                                <li>
-                                                                    <i class="fa-solid fa-phone-volume pr-2"></i>
-                                                                    <a href="tel:{{ $appointment->assignedWithPerson->phone }}">
-                                                                        {{ $appointment->assignedWithPerson->phone }}
-                                                                    </a>
-                                                                </li>
-                                                            @endif
-                                                            @if($appointment->assignedWithPerson->email)
-                                                                <li>
-                                                                    <i class="fa-solid fa-at pr-2"></i>
-                                                                    <a href="mailto:{{ $appointment->assignedWithPerson->email }}?subject={{ $appointment->title }}">
-                                                                        {{ $appointment->assignedWithPerson->email }}
-                                                                    </a>
-                                                                </li>
-                                                            @endif
-
-                                                        </ul>
-
-                                                        @if(count($appointment->assignedWithPersonAddresses) > 0)
-                                                            <h3>Werkt in</h3>
-                                                            <ul class="list-unstyled">
-                                                                @foreach ($appointment->assignedWithPersonAddresses as $address)
-                                                                    <li><i class="fa-regular fa-building mr-2"></i>
-                                                                        <a href="/address/{{ $address->id }}">
-                                                                            {{ $address->name }}
-                                                                        </a>
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        @endif
-
-                                                        @if(count($appointment->assignedWithPersonSpokenLanguages) > 0)
-                                                            <h3>Spreektalen</h3>
-                                                            <ul>
-                                                                @foreach ($appointment->assignedWithPersonSpokenLanguages as $language)
-                                                                    <li>
-                                                                        {{ $language->name }}
-                                                                        ({{ $language->local_name }})
-                                                                    </li>
-                                                                @endforeach
-                                                            </ul>
-                                                        @endif
-
-
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary"
-                                                                data-bs-dismiss="modal">Sluiten
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="assignedWithUser">Toegewezen aan medewerker</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="assignedWithUser">
-                                            <i class="fa-solid fa-user-plus"></i>
-                                        </span>
-                                        <input type="text" class="form-control" aria-label="assignedWithUser"
-                                               aria-describedby="assignedWithUser"
-                                               value="{{ $appointment->assignedWithUser->name }}"
-                                               disabled>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="dateTime">Datum en tijd</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="dateTime">
-                                            <i class="fa-regular fa-calendar-days"></i>
-                                        </span>
-                                        <input type="text" class="form-control" aria-label="dateTime"
-                                               aria-describedby="dateTime"
-                                               value="{{ Carbon\Carbon::parse($appointment->start_date)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }} om {{ $appointment->start_time }}"
-                                               disabled>
-                                    </div>
-                                </div>
 
                                 <hr>
 
-                                <div class="col-md-12 mb-3">
-                                    <label for="details">Details</label>
-                                    <textarea class="form-control" id="details"
-                                              rows="10"
-                                              disabled>{{ $appointment->details }}</textarea>
-                                </div>
 
 
-                                <div class="col-md-12 mb-3">
+                                <hr>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="active_from">Actief sinds</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="attachment">
-                                            <i class="fa-solid fa-paperclip"></i>
+                                        <span class="input-group-text" id="active_from">
+                                            <i class="fa-regular fa-calendar-check"></i>
                                         </span>
-                                        <input type="text" class="form-control form-control-sm" aria-label="attachment"
-                                               aria-describedby="attachment"
-                                               value="{{ $appointment->attachment }}"
+                                        <input type="text" class="form-control form-control-sm" aria-label="active_from"
+                                               aria-describedby="active_from"
+                                               value="{{ Carbon\Carbon::parse($address->active_from)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }}"
                                                disabled>
                                     </div>
                                 </div>
 
-                                <hr>
 
                                 <div class="col-md-6 mb-3">
                                     <label for="created_at">Datum en tijd aanmaken</label>
@@ -279,7 +149,21 @@
                                         </span>
                                         <input type="text" class="form-control form-control-sm" aria-label="created_at"
                                                aria-describedby="created_at"
-                                               value="{{ Carbon\Carbon::parse($appointment->created_at)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }} om {{ Carbon\Carbon::parse($appointment->created_at)->locale('nl')->timezone('Europe/Brussels')->format('H:i') }}"
+                                               value="{{ Carbon\Carbon::parse($address->created_at)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }} om {{ Carbon\Carbon::parse($address->created_at)->locale('nl')->timezone('Europe/Brussels')->format('H:i') }}"
+                                               disabled>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="assignedWithUser">Aangemaaakt door</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="createdByUser">
+                                            <i class="fa-solid fa-user-pen"></i>
+                                        </span>
+                                        <input type="text" class="form-control form-control-sm"
+                                               aria-label="createdByUser"
+                                               aria-describedby="createdByUser"
+                                               value="{{ $address->createdByUser->name }}"
                                                disabled>
                                     </div>
                                 </div>
@@ -292,36 +176,22 @@
                                         </span>
                                         <input type="text" class="form-control form-control-sm" aria-label="updated_at"
                                                aria-describedby="updated_at"
-                                               value="{{ Carbon\Carbon::parse($appointment->created_at)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }} om {{ Carbon\Carbon::parse($appointment->updated_at)->locale('nl')->timezone('Europe/Brussels')->format('H:i') }}"
+                                               value="{{ Carbon\Carbon::parse($address->created_at)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }} om {{ Carbon\Carbon::parse($address->updated_at)->locale('nl')->timezone('Europe/Brussels')->format('H:i') }}"
                                                disabled>
                                     </div>
                                 </div>
 
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="assignedWithUser">Aangemaaakt door</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="createdByUser">
-                                            <i class="fa-solid fa-user-pen"></i>
-                                        </span>
-                                        <input type="text" class="form-control form-control-sm"
-                                               aria-label="createdByUser"
-                                               aria-describedby="createdByUser"
-                                               value="{{ $appointment->createdByUser->name }}"
-                                               disabled>
-                                    </div>
-                                </div>
 
                             </div>
 
                             <div class="text-center">
-                                <a href="{{ route('appointment.index') }}"
+                                <a href="{{ Route('address.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Go back
+                                    Terug
                                 </a>
 
-                                <a href="{{ route('appointment.edit', $appointment->id) }}"
+                                <a href="{{ Route('address.edit', $address->id) }}"
                                    class="btn btn-outline-success">
                                     <i class="fa-solid fa-pen-to-square mr-2"></i>
                                     Edit

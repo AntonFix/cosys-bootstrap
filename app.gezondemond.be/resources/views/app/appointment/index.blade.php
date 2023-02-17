@@ -20,7 +20,6 @@
                 <div class="card">
 
 
-
                     <div class="card-header">
                         <h1 class="mt-2">Afsprakenlijst</h1>
                     </div>
@@ -41,11 +40,26 @@
                             </div>
 
                             <div class="row mb-3">
+                                <div class="col-md-12">
+                                    <label for="title" class="form-label">Zoekterm in de titel</label>
+                                </div>
+                            </div>
+
+                            <div class="row mb-3">
 
                                 <div class="col-md-3">
+<!--                                    <select class="form-control form-select" id="test-select">
+                                        <option value="AL">Alabama</option>
+                                        <option value="WY">Wyoming</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                    </select>-->
+
                                     <label for="app_code_id" class="form-label">Code</label>
-                                    <select class="form-control"
-                                            name="app_code_id">
+                                    <select class="form-control form-select"
+                                            name="app_code_id"
+                                            aria-label="app_code_id">
                                         <option disabled selected value="">Kies een item...</option>
                                         @foreach ($appointmentCodes as $appointmentCode)
                                             <option value="{{ $appointmentCode->id }}">
@@ -53,11 +67,13 @@
                                             </option>
                                         @endforeach
                                     </select>
+
                                 </div>
 
                                 <div class="col-md-3">
+
                                     <label for="app_status_id" class="form-label">Statuut</label>
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="app_status_id">
                                         <option disabled selected value="">Kies een item...</option>
                                         @foreach ($appointmentStatuses as $appointmentStatus)
@@ -103,7 +119,7 @@
 
                                     <label for="assigned_with_user_id"
                                            class="form-label">Toegewezen aan medewerker</label>
-                                    <select class="form-control"
+                                    <select class="form-control form-select"
                                             name="assigned_with_user_id">
                                         <option disabled selected value="">Kies een item...</option>
                                         @foreach ($users as $user)
@@ -242,6 +258,13 @@
             </div>
         </div>
     </div>
+
+    <script>
+        $("#test-select").select2({
+            theme: "bootstrap-5",
+        });
+    </script>
+
 @endsection
 
 

@@ -24,37 +24,65 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h1>
-                            Create new appointment
-                        </h1>
+                        <h1 class="mt-2">Een nieuwe persoon toevegen</h1>
                     </div>
 
                     <div class="card-body">
 
 
-                        <form action="{{ route('appointment.store') }}" method="POST"
+                        <form action="{{ route('person.store') }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf
 
                             <input type="hidden"
-                                   name="archived"
-                                   value="0">
+                                   name="is_active"
+                                   value="1">
+
+                            <input type="hidden"
+                                   name="created_by_user_id"
+                                   value="{{ $currentUser->id }}">
 
                             <div class="row">
 
-                                <div class="col-md-12 mb-3">
-                                    <label for="title">Titel</label>
+                                <div class="col-md-3 mb-3">
+                                    <label for="forename">Voornaam</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="title">
-                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        <span class="input-group-text" id="forename">
+                                            <i class="fa-regular fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control"
-                                               name="title"
-                                               aria-label="title"
-                                               aria-describedby="title"
-                                               value="{{ old('title') }}">
-                                        @error('title')
+                                        <input type="text" class="form-control" aria-label="forename"
+                                               aria-describedby="forename"
+                                               name="forename"
+                                               value="{{ old('forename') }}">
+                                        @error('forename')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="name">Naam</label>
+                                    <input type="text" class="form-control" aria-label="name"
+                                           aria-describedby="name"
+                                           name="name"
+                                           value="{{ old('name') }}">
+                                    @error('name')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="birthday">Geboortedatum</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="birthday">
+                                            <i class="fa-solid fa-calendar-day"></i>
+                                        </span>
+                                        <input type="date" class="form-control" aria-label="birthday"
+                                               aria-describedby="birthday"
+                                               name="birthday"
+                                               value="{{ old('birthday') }}">
+                                        @error('birthday')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -62,165 +90,213 @@
 
                                 <div class="col-md-6 mb-3">
 
-                                    <i class="fa-solid fa-list mr-2"></i>
-                                    <label for="app_code_id">Code</label>
+                                    <i class="fa-regular fa-user mr-2"></i>
+                                    <label for="sex">Geslacht</label>
 
-                                    <select class="form-control"
-                                            name="app_code_id">
+                                    <select class="form-control form-select"
+                                            name="sex">
                                         <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($appointmentCodes as $appointmentCode)
-                                            <option value="{{ $appointmentCode->id }}">
-                                                {{ $appointmentCode->title }} ({{ $appointmentCode->details }})
-                                            </option>
-                                        @endforeach
+                                        <option value="M">M</option>
+                                        <option value="V">V</option>
+                                        <option value="X">X</option>
                                     </select>
 
-                                    @error('app_code_id')
+                                    @error('sex')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
 
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-
-                                    <i class="fa-solid fa-list mr-2"></i>
-                                    <label for="app_status_id">Statuut</label>
-
-                                    <select class="form-control"
-                                            name="app_status_id">
-                                        <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($appointmentStatuses as $appointmentStatus)
-                                            <option value="{{ $appointmentStatus->id }}">
-                                                {{ $appointmentStatus->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('app_status_id')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-
-                                    <i class="fa-solid fa-id-card mr-2"></i>
-                                    <label for="assigned_with_person_id">Contactpersoon</label>
-
-                                    <select class="form-control"
-                                            name="assigned_with_person_id">
-                                        <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($persons as $person)
-                                            <option value="{{ $person->id }}">
-                                                {{ $person->forename }} {{ $person->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('assigned_with_person_id')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <label for="assigned_with_user_id">Toegewezen aan medewerker</label>
-
-                                    <select class="form-control"
-                                            name="assigned_with_user_id">
-                                        <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('assigned_with_user_id')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <label for="start_date">Datum</label>
+                                    <label for="function">Functie</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="start_date">
-                                            <i class="fa-solid fa-calendar-days"></i>
+                                        <span class="input-group-text" id="function">
+                                            <i class="fa-regular fa-id-badge"></i>
                                         </span>
-                                        <input type="date" class="form-control"
-                                               name="start_date"
-                                               aria-label="start_date"
-                                               aria-describedby="start_date"
-                                               value="{{ old('start_date') }}">
-                                        @error('start_date')
+                                        <input type="text" class="form-control" aria-label="function"
+                                               aria-describedby="function"
+                                               name="function"
+                                               value="{{ old('function') }}">
+                                        @error('function')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="start_time">Tijd</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="start_time">
-                                            <i class="fa-regular fa-clock"></i>
-                                        </span>
-                                        <input type="time" class="form-control"
-                                               name="start_time"
-                                               aria-label="start_time"
-                                               aria-describedby="start_time"
-                                               value="{{ old('start_time') }}">
-                                        @error('start_time')
-                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
-
-                                <div class="col-md-12 mb-3">
                                     <label for="details">Details</label>
-                                    <textarea class="form-control"
-                                              id="details"
-                                              name="details"
-                                              rows="10">{{ old('details') }}</textarea>
-                                    @error('details')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-12 mb-3">
                                     <div class="input-group">
-                                        <span class="input-group-text" id="attachment">
-                                            <i class="fa-solid fa-paperclip"></i>
+                                        <span class="input-group-text" id="details">
+                                            <i class="fa-regular fa-file-lines"></i>
                                         </span>
-                                        <input type="file"
-                                               class="form-control form-control-sm"
-                                               name="attachment"
-                                               aria-label="attachment"
-                                               aria-describedby="attachment"
-                                               value="{{ old('attachment') }}">
-                                        @error('attachment')
+                                        <input type="text" class="form-control" aria-label="details"
+                                               aria-describedby="details"
+                                               name="details"
+                                               value="{{ old('details') }}">
+                                        @error('details')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="created_by_user_id">Aangemaaakt door</label>
+                                    <label for="presence">Aanwezigheid</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="created_by_user_id">
-                                            <i class="fa-solid fa-user-pen"></i>
+                                        <span class="input-group-text" id="presence">
+                                            <i class="fa-solid fa-user-check"></i>
                                         </span>
-                                        <input type="text" class="form-control form-control-sm rounded-end"
-                                               name=""
-                                               aria-label="created_by_user_id"
-                                               aria-describedby="created_by_user_id"
-                                               value="{{ $currentUser->name }}"
-                                               disabled>
+                                        <input type="text" class="form-control" aria-label="presence"
+                                               aria-describedby="presence"
+                                               name="presence"
+                                               value="{{ old('presence') }}">
+                                        @error('presence')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                                        <input type="hidden"
-                                               name="created_by_user_id"
-                                               value="{{ $currentUser->id }}">
+                                <div class="col-md-6 mb-3">
 
+                                    <label for="phone">Telefoon/GSM</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="phone">
+                                            <i class="fa-solid fa-phone"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="phone"
+                                               aria-describedby="phone"
+                                               name="phone"
+                                               value="{{ old('phone') }}">
+                                        @error('phone')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label for="phone">E-mailadres</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="email">
+                                            <i class="fa-solid fa-at"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="email"
+                                               aria-describedby="email"
+                                               name="email"
+                                               value="{{ old('email') }}">
+                                        @error('email')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <div>Extra</div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="volunteer"
+                                               value="{{ old('volunteer') }}"
+                                               id="volunteer">
+                                        <label class="form-check-label" for="volunteer">
+                                            Vrijwilliger
+                                        </label>
+                                        @error('volunteer')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="oral_coach"
+                                               value="{{ old('oral_coach') }}"
+                                               id="oral_coach">
+                                        <label class="form-check-label" for="oral_coach">
+                                            Oral coach
+                                        </label>
+                                        @error('oral_coach')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="coordinator"
+                                               value="{{ old('coordinator') }}"
+                                               id="coordinator">
+                                        <label class="form-check-label" for="coordinator">
+                                            Coordinator
+                                        </label>
+                                        @error('coordinator')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+
+                                <hr>
+
+                                @if(count($addresses) > 0)
+                                    <div class="col-md-6 mb-3">
+                                        <h3>Werkt in</h3>
+
+                                        <select class="form-control form-select"
+                                                name="address">
+                                            <option disabled selected value="">Kies een item...</option>
+                                            @foreach ($addresses as $address)
+                                                <option value="">
+                                                    {{ $address->name }}
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('address')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+
+                                    </div>
+                                @endif
+
+                                @if(count($languages) > 0)
+                                    <div class="col-md-6 mb-3">
+                                        <h3>Spreektalen</h3>
+                                        <select class="form-control form-select"
+                                                name="language">
+                                            <option disabled selected value="">Kies een item...</option>
+                                            @foreach ($languages as $language)
+                                                <option value="">
+                                                    {{ $language->name }} ({{ $language->local_name }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+
+                                        @error('language')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+
+                                    </div>
+                                @endif
+
+                                <hr>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="active_from">Actief sinds</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="active_from">
+                                            <i class="fa-regular fa-calendar-check"></i>
+                                        </span>
+                                        <input type="date" class="form-control form-control-sm"
+                                               aria-label="active_from"
+                                               aria-describedby="active_from"
+                                               name="active_from"
+                                               value="{{ old('active_from') }}">
+                                        @error('active_from')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -228,17 +304,18 @@
 
                             <div class="text-center">
 
-                                <a href="{{ route('appointment.index') }}"
+                                <a href="{{ Route('person.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Go back
+                                    Aanmaken
                                 </a>
 
                                 <button type="submit"
                                         class="btn btn-success">
                                     <i class="fa-solid fa-floppy-disk mr-2"></i>
-                                    Save
+                                    Opslaan
                                 </button>
+
                             </div>
 
                         </form>

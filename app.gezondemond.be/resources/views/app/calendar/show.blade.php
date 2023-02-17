@@ -318,7 +318,7 @@
                                 <a href="{{ route('appointment.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Go back
+                                    Terug
                                 </a>
 
                                 <a href="{{ route('appointment.edit', $appointment->id) }}"
