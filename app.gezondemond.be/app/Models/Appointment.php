@@ -5,6 +5,56 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Appointment
+ *
+ * @property int $id
+ * @property string $title
+ * @property string|null $details
+ * @property int|null $app_code_id
+ * @property int|null $app_status_id
+ * @property int|null $created_by_user_id
+ * @property int|null $assigned_with_user_id
+ * @property int|null $assigned_with_person_id
+ * @property string|null $start_date
+ * @property string|null $start_time
+ * @property string|null $end_date
+ * @property string|null $end_time
+ * @property string|null $attachment
+ * @property int|null $archived
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\AppointmentCode|null $appCode
+ * @property-read \App\Models\AppointmentStatus|null $appStatus
+ * @property-read \App\Models\Person|null $assignedWithPerson
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Address> $assignedWithPersonAddresses
+ * @property-read int|null $assigned_with_person_addresses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DictionaryLanguage> $assignedWithPersonSpokenLanguages
+ * @property-read int|null $assigned_with_person_spoken_languages_count
+ * @property-read \App\Models\User|null $assignedWithUser
+ * @property-read \App\Models\User|null $createdByUser
+ * @method static \Database\Factories\AppointmentFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereAppCodeId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereAppStatusId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereArchived($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereAssignedWithPersonId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereAssignedWithUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereAttachment($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereCreatedByUserId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereDetails($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereEndDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereEndTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereStartDate($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereStartTime($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Appointment whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Appointment extends Model
 {
     use HasFactory;
@@ -24,6 +74,18 @@ class Appointment extends Model
         'attachment',
         'archived',
     ];
+
+    public function assignedWithPersonAddresses()
+    {
+        return $this->hasManyThrough(
+            Address::class,
+            PersonAddress::class,
+            'person_id',
+            'id',
+            'assigned_with_person_id',
+            'address_id'
+        );
+    }
 
     public function appCode()
     {
@@ -49,18 +111,6 @@ class Appointment extends Model
             'assigned_with_person_id');
     }
 
-    public function assignedWithPersonAddresses()
-    {
-        return $this->hasManyThrough(
-            Address::class, // we need info from the table 'addresses'
-            PersonAddress::class, // here are relation with the table 'persons_addresses' (id, person_id, address_id)
-            'person_id', // we search field 'person_id' in the table 'persons_addresses'
-            'id',
-            'id',
-            'address_id' // match by field 'address_id' in the table 'addresses'
-        );
-    }
-
     public function assignedWithPersonSpokenLanguages()
     {
         return $this->hasManyThrough(
@@ -68,7 +118,7 @@ class Appointment extends Model
             PersonLanguage::class,
             'person_id',
             'id',
-            'id',
+            'assigned_with_person_id',
             'language_id'
         );
     }

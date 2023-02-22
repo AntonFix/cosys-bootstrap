@@ -116,6 +116,15 @@
       <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/fruitcake/php-cors" />
       <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/inflector" />
       <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/instantiator" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/barryvdh/laravel-ide-helper" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/barryvdh/reflection-docblock" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/phpdocumentor/type-resolver" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/phpdocumentor/reflection-common" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/event-manager" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/deprecations" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/dbal" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/psr/cache" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

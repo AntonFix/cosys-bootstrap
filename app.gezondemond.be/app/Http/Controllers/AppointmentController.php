@@ -169,7 +169,6 @@ class AppointmentController extends Controller
 
         $currentUser = Auth::user();
 
-
         return view('app.appointment.edit', compact(
                 'appointment',
                 'appointmentCodes',
@@ -263,6 +262,8 @@ class AppointmentController extends Controller
                 'createdByUser',
             ])
             ->first();
+
+        //dd($appointments);
         return Response::json($appointments, 200);
     }
 

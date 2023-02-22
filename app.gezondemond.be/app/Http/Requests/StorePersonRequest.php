@@ -40,7 +40,7 @@ class StorePersonRequest extends FormRequest
             'active_from' => 'date|nullable',
             'inactive_from' => 'date|nullable',
             'is_active' => 'boolean|nullable',
-            'created_by_user_id' => 'integer|nullable',
+            'created_by_user_id' => 'integer|nullable'
         ];
     }
 }

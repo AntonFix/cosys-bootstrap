@@ -2,11 +2,11 @@
 
 @section('content')
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
+        <div class="row">
+            <div class="col-md-10 offset-md-1">
 
                 @if ($errors->any())
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger pt-4">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -16,250 +16,340 @@
                 @endif
 
                 @if(session('status'))
-
                     <div class="alert alert-success mb-1 mt-1">
-
                         {{ session('status') }}
-
                     </div>
-
                 @endif
 
                 <div class="card">
 
                     <div class="card-header">
-                        <h1 class="mt-2">Edit appointment item</h1>
+                        <h1 class="mt-2">Huidige persoon aanpassen</h1>
                     </div>
 
                     <div class="card-body">
 
-                        <form action="{{ route('appointment.update', $appointment->id) }}" method="POST"
+
+                        <form action="{{ Route('person.update', $person->id) }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf
                             @method('PUT')
 
                             <input type="hidden"
-                                   name="archived"
-                                   value="0">
+                                   name="is_active"
+                                   value="{{ $person->is_active }}">
 
                             <input type="hidden"
-                                   name="app_code_id"
-                                   value="{{ $appointment->app_code_id }}">
-
-                            <input type="hidden"
-                                   name="app_status_id"
-                                   value="{{ $appointment->app_status_id }}">
-
-                            <input type="hidden"
-                                   name="assigned_with_person_id"
-                                   value="{{ $appointment->assigned_with_person_id }}">
-
-                            <input type="hidden"
-                                   name="assigned_with_user_id"
-                                   value="{{ $appointment->assigned_with_user_id }}">
+                                   name="created_by_user_id"
+                                   value="{{ $currentUser->id }}">
 
                             <div class="row">
 
-                                <div class="col-md-12 mb-3">
-                                    <label for="title">Titel</label>
+                                <div class="col-md-3 mb-3">
+                                    <label for="forename">Voornaam</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="title">
-                                            <i class="fa-regular fa-pen-to-square"></i>
+                                        <span class="input-group-text" id="forename">
+                                            <i class="fa-regular fa-user"></i>
                                         </span>
-                                        <input type="text" class="form-control"
-                                               name="title"
-                                               aria-label="title"
-                                               aria-describedby="title"
-                                               value="{{ $appointment->title }}">
-                                        @error('title')
+                                        <input type="text" class="form-control" aria-label="forename"
+                                               aria-describedby="forename"
+                                               name="forename"
+                                               value="{{ $person->forename }}">
+                                        @error('forename')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-
-                                    <i class="fa-solid fa-list mr-2"></i>
-                                    <label for="app_code_id">Code</label>
-
-                                    <select class="form-control form-select"
-                                            name="app_code_id">
-                                        @if ($appointment->app_code_id)
-                                            <option selected disabled
-                                                    value="{{ $appointment->app_code_id }}">Huidige
-                                                code: {{ $appointment->appCode->title }}
-                                                ({{ $appointment->appCode->details }})
-                                            </option>
-                                        @endif
-                                        @foreach ($appointmentCodes as $appointmentCode)
-                                            <option value="{{ $appointmentCode->id }}">
-                                                {{ $appointmentCode->title }} ({{ $appointmentCode->details }})
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('app_code_id')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-
-                                    <i class="fa-solid fa-list mr-2"></i>
-                                    <label for="app_status_id">Statuut</label>
-
-                                    <select class="form-control form-select"
-                                            name="app_status_id">
-                                        @if ($appointment->app_status_id)
-                                            <option selected disabled
-                                                    value="{{ $appointment->app_status_id }}">Huidige
-                                                statuut: {{ $appointment->appStatus->title }}
-                                            </option>
-                                        @endif
-                                        @foreach ($appointmentStatuses as $appointmentStatus)
-                                            <option value="{{ $appointmentStatus->id }}">
-                                                {{ $appointmentStatus->title }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('app_status_id')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-
-                                    <i class="fa-solid fa-id-card mr-2"></i>
-                                    <label for="assigned_with_person_id">Contactpersoon</label>
-
-                                    <select class="form-control form-select"
-                                            name="assigned_with_person_id">
-                                        @if ($appointment->assignedWithPerson)
-                                            <option selected disabled
-                                                    value="{{ $appointment->assignedWithPerson->id }}">Huidige
-                                                persoon: {{ $appointment->assignedWithPerson->forename }} {{ $appointment->assignedWithPerson->name }}
-                                            </option>
-                                        @endif
-                                        @foreach ($persons as $person)
-                                            <option value="{{ $person->id }}">
-                                                {{ $person->forename }} {{ $person->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('assigned_with_person_id')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-
-                                </div>
-
-                                <div class="col-md-6 mb-3">
-                                    <i class="fa-solid fa-user-plus"></i>
-                                    <label for="assigned_with_user_id">Toegewezen aan medewerker</label>
-
-                                    <select class="form-control form-select"
-                                            name="assigned_with_user_id">
-                                        @if ($appointment->assignedWithUser)
-                                            <option selected disabled
-                                                    value="{{ $appointment->assignedWithUser->id }}">Huidige
-                                                medewerker: {{ $appointment->assignedWithUser->name }}
-                                            </option>
-                                        @endif
-                                        @foreach ($users as $user)
-                                            <option value="{{ $user->id }}">
-                                                {{ $user->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-
-                                    @error('assigned_with_user_id')
+                                <div class="col-md-3 mb-3">
+                                    <label for="name">Naam</label>
+                                    <input type="text" class="form-control" aria-label="name"
+                                           aria-describedby="name"
+                                           name="name"
+                                           value="{{ $person->name }}">
+                                    @error('name')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="start_date">Datum</label>
+                                    <label for="birthday">Geboortedatum</label>
                                     <div class="input-group">
-			<span class="input-group-text" id="start_date">
-				<i class="fa-solid fa-calendar-days"></i>
-			</span>
-                                        <input type="date" class="form-control"
-                                               name="start_date"
-                                               aria-label="start_date"
-                                               aria-describedby="start_date"
-                                               value="{{ $appointment->start_date }}">
-                                        @error('start_date')
+                                        <span class="input-group-text" id="birthday">
+                                            <i class="fa-solid fa-calendar-day"></i>
+                                        </span>
+                                        <input type="date" class="form-control" aria-label="birthday"
+                                               aria-describedby="birthday"
+                                               name="birthday"
+                                               value="{{ $person->birthday }}">
+                                        @error('birthday')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="start_time">Tijd</label>
+
+                                    <i class="fa-regular fa-user mr-2"></i>
+                                    <label for="sex">Geslacht</label>
+                                    <select class="form-control form-select"
+                                            name="sex">
+
+                                        <option disabled value="">Kies een item...</option>
+
+                                        <option value="M" @if(old('type', $person->sex) === 'M')
+                                        selected @endif>M
+                                        </option>
+
+                                        <option value="V" @if(old('type', $person->sex) === 'V')
+                                        selected @endif>V
+                                        </option>
+
+                                        <option value="X" @if(old('type', $person->sex) === 'X')
+                                        selected @endif>X
+                                        </option>
+
+                                    </select>
+
+                                    @error('sex')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="function">Functie</label>
                                     <div class="input-group">
-			<span class="input-group-text" id="start_time">
-				<i class="fa-regular fa-clock"></i>
-			</span>
-                                        <input type="time" class="form-control"
-                                               name="start_time"
-                                               aria-label="start_time"
-                                               aria-describedby="start_time"
-                                               value="{{ $appointment->start_time }}">
-                                        @error('start_time')
+                                        <span class="input-group-text" id="function">
+                                            <i class="fa-regular fa-id-badge"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="function"
+                                               aria-describedby="function"
+                                               name="function"
+                                               value="{{ $person->function }}">
+                                        @error('function')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
-                                <div class="col-md-12 mb-3">
+                                <div class="col-md-6 mb-3">
                                     <label for="details">Details</label>
-                                    <textarea class="form-control"
-                                              id="details"
-                                              name="details"
-                                              rows="10">{{ $appointment->details }}</textarea>
-                                    @error('details')
-                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                    @enderror
-                                </div>
-
-                                <div class="col-md-12 mb-3">
                                     <div class="input-group">
-			<span class="input-group-text" id="attachment">
-				<i class="fa-solid fa-paperclip"></i>
-			</span>
-                                        <input type="file"
-                                               class="form-control form-control-sm"
-                                               name="attachment"
-                                               aria-label="attachment"
-                                               aria-describedby="attachment"
-                                               value="{{ $appointment->attachment }}">
-                                        @error('attachment')
+                                        <span class="input-group-text" id="details">
+                                            <i class="fa-regular fa-file-lines"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="details"
+                                               aria-describedby="details"
+                                               name="details"
+                                               value="{{ $person->details }}">
+                                        @error('details')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
                                 <div class="col-md-6 mb-3">
-                                    <label for="created_by_user_id">Aangemaaakt door</label>
+                                    <label for="presence">Aanwezigheid</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="created_by_user_id">
-                                            <i class="fa-solid fa-user-pen"></i>
+                                        <span class="input-group-text" id="presence">
+                                            <i class="fa-solid fa-user-check"></i>
                                         </span>
-                                        <input type="text" class="form-control form-control-sm rounded-end"
-                                               name=""
-                                               aria-label="created_by_user_id"
-                                               aria-describedby="created_by_user_id"
-                                               value="{{ $currentUser->name }}"
-                                               disabled>
+                                        <input type="text" class="form-control" aria-label="presence"
+                                               aria-describedby="presence"
+                                               name="presence"
+                                               value="{{ $person->presence }}">
+                                        @error('presence')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-                                        <input type="hidden"
-                                               name="created_by_user_id"
-                                               value="{{ $currentUser->id }}">
+                                <div class="col-md-6 mb-3">
 
+                                    <label for="phone">Telefoon/GSM</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="phone">
+                                            <i class="fa-solid fa-phone"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="phone"
+                                               aria-describedby="phone"
+                                               name="phone"
+                                               value="{{ $person->phone }}">
+                                        @error('phone')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-md-6 mb-3">
+
+                                    <label for="phone">E-mailadres</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="email">
+                                            <i class="fa-solid fa-at"></i>
+                                        </span>
+                                        <input type="text" class="form-control" aria-label="email"
+                                               aria-describedby="email"
+                                               name="email"
+                                               value="{{ $person->email }}">
+                                        @error('email')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    <div>Extra</div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="volunteer"
+                                               value="1"
+                                               id="volunteer"
+                                               @if(old('volunteer', $person->volunteer) === 1) checked @endif>
+                                        <label class="form-check-label" for="volunteer">
+                                            Vrijwilliger
+                                        </label>
+                                        @error('volunteer')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="oral_coach"
+                                               value="1"
+                                               id="oral_coach"
+                                               @if(old('oral_coach', $person->oral_coach) === 1) checked @endif>
+                                        <label class="form-check-label" for="oral_coach">
+                                            Oral coach
+                                        </label>
+                                        @error('oral_coach')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="checkbox"
+                                               name="coordinator"
+                                               value="1"
+                                               id="coordinator"
+                                               @if(old('coordinator', $person->coordinator) === 1) checked @endif>
+                                        <label class="form-check-label" for="coordinator">
+                                            Coordinator
+                                        </label>
+                                        @error('coordinator')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+
+                                </div>
+
+
+                                <hr>
+
+                                @if(count($addresses) > 0)
+                                    <div class="col-md-6 mb-3">
+                                        <h3>Werkt in</h3>
+
+                                        <select class="form-control form-select"
+                                                multiple
+                                                size="6"
+                                                name="person_address[]">
+
+                                            @if(count($currentAddresses)>0)
+
+                                                <option disabled value="">De huidige organisaties:</option>
+
+                                                @foreach ($currentAddresses as $currentAddress)
+                                                    <option
+                                                        value="{{ $currentAddress->id }}"
+                                                        @if(old('currentAddress', $currentAddress->id) === $currentAddress->id)
+                                                        selected @endif>{{ $currentAddress->name }}</option>
+                                                @endforeach
+
+                                            @endif
+
+                                            <option disabled value="">Kies een nieuwe item...</option>
+                                            <option value="0"> - Geen organisatie -</option>
+
+                                            @foreach ($addresses as $address)
+                                                <option value="{{ $address->id }}">
+                                                    {{ $address->name }}
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+
+                                        @error('address')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+
+                                    </div>
+                                @endif
+
+                                @if(count($languages) > 0)
+                                    <div class="col-md-6 mb-3">
+                                        <h3>Spreektalen</h3>
+
+                                        <select class="form-control form-select"
+                                                multiple
+                                                size="5"
+                                                name="person_language[]">
+
+                                            @if(count($currentLanguages)>0)
+
+                                                <option disabled value="">De huidige spreektalen:</option>
+
+                                                @foreach ($currentLanguages as $currentLanguage)
+                                                    <option
+                                                        value="{{ $currentLanguage->id }}"
+                                                        @if(old('currentLanguage', $currentLanguage->id) === $currentLanguage->id)
+                                                        selected @endif>{{ $currentLanguage->name }}</option>
+                                                @endforeach
+
+                                            @endif
+
+                                            <option disabled value="">Kies een item...</option>
+                                            <option value="0"> - Geen organisatie -</option>
+
+                                            @foreach ($languages as $language)
+                                                <option value="{{ $language->id }}">
+                                                    {{ $language->name }} ({{ $language->local_name }})
+                                                </option>
+                                            @endforeach
+
+                                        </select>
+
+                                        @error('language')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+
+                                    </div>
+                                @endif
+
+                                <hr>
+
+                                <div class="col-md-6 mb-3">
+                                    <label for="active_from">Actief sinds</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="active_from">
+                                            <i class="fa-regular fa-calendar-check"></i>
+                                        </span>
+                                        <input type="date" class="form-control form-control-sm"
+                                               aria-label="active_from"
+                                               aria-describedby="active_from"
+                                               name="active_from"
+                                               value="{{ $person->active_from }}">
+                                        @error('active_from')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 
@@ -267,7 +357,7 @@
 
                             <div class="text-center">
 
-                                <a href="{{ route('appointment.index') }}"
+                                <a href="{{ Route('person.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
                                     Terug
@@ -275,9 +365,10 @@
 
                                 <button type="submit"
                                         class="btn btn-success">
-                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                    Update
+                                    <i class="fa-solid fa-floppy-disk mr-2"></i>
+                                    Opslaan
                                 </button>
+
                             </div>
 
                         </form>
@@ -289,4 +380,3 @@
         </div>
     </div>
 @endsection
-

@@ -13,7 +13,7 @@ class StorePersonLanguageRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,8 @@ class StorePersonLanguageRequest extends FormRequest
     {
         return [
             //
+            'person_id' => 'integer|nullable',
+            'language_id' => 'integer|nullable',
         ];
     }
 }

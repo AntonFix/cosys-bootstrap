@@ -82,7 +82,7 @@
                     <div class="card-body">
                         {{--debug.blade.php--}}
 
-                        <a href="{{ route('address.create') }}" class="btn btn-outline-primary mb-3 float-end">
+                        <a href="{{ Route('address.create') }}" class="btn btn-outline-primary mb-3 float-end">
                             <i class="fa-regular fa-square-plus mr-2"></i>
                             Add
                         </a>
@@ -117,7 +117,6 @@
                                             {{ $row->region->gemeente }}
                                         </td>
                                         <td>
-
                                             {{ $row->region->deelgemeente }}
                                         </td>
 

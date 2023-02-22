@@ -13,7 +13,7 @@ class UpdatePersonAddressRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -25,6 +25,8 @@ class UpdatePersonAddressRequest extends FormRequest
     {
         return [
             //
+            'person_id' => 'integer|nullable',
+            'address_id' => 'integer|nullable',
         ];
     }
 }

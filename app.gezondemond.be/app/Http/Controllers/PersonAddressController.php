@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Models\PersonAddress;
 use App\Http\Requests\StorePersonAddressRequest;
 use App\Http\Requests\UpdatePersonAddressRequest;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
 
 class PersonAddressController extends Controller
 {
@@ -16,6 +18,8 @@ class PersonAddressController extends Controller
     public function index()
     {
         //
+        $personAddresses = PersonAddress::get();
+        return Response::json($personAddresses, 200);
     }
 
     /**
@@ -48,6 +52,9 @@ class PersonAddressController extends Controller
     public function show(PersonAddress $personAddress)
     {
         //
+        $personAddress = PersonAddress::where('id', $personAddress->id)
+            ->firstOrFail();
+        return Response::json($personAddress, 200);
     }
 
     /**

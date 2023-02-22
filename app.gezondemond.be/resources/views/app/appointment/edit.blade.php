@@ -33,7 +33,7 @@
 
                     <div class="card-body">
 
-                        <form action="{{ route('appointment.update', $appointment->id) }}" method="POST"
+                        <form action="{{ Route('appointment.update', $appointment->id) }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf

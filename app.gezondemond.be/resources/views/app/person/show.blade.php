@@ -91,7 +91,6 @@
                                 </div>
 
 
-
                                 <div class="col-md-4">
                                     <div>E-mailadres</div>
                                     <i class="fa-solid fa-at mr-3 mt-2"></i>
@@ -107,12 +106,14 @@
                                             <span class="badge p-2 mt-1"
                                                   style="font-size:0.85rem;background-color:#8bc34a;color:#fff;">Vrijwilliger</span>
                                         </div>
-                                    @elseif($person->oral_coach)
+                                    @endif
+                                    @if($person->oral_coach)
                                         <div class="d-inline">
                                             <span class="badge p-2 mt-1"
                                                   style="font-size:0.85rem;background-color:#3f51b5;color:#fff;">Oral coach</span>
                                         </div>
-                                    @elseif($person->coordinator)
+                                    @endif
+                                    @if($person->coordinator)
                                         <div class="d-inline">
                                             <span class="badge p-2 mt-1"
                                                   style="font-size:0.85rem;background-color:#ff9800;color:#fff;">Coordinator</span>

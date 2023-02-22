@@ -5,6 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * App\Models\Search
+ *
+ * @property int $id
+ * @property \Illuminate\Support\Carbon|null $created_at
+ * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Models\AppointmentCode|null $appCode
+ * @property-read \App\Models\AppointmentStatus|null $appStatus
+ * @property-read \App\Models\Person|null $assignedWithPerson
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\Address> $assignedWithPersonAddresses
+ * @property-read int|null $assigned_with_person_addresses_count
+ * @property-read \Illuminate\Database\Eloquent\Collection<int, \App\Models\DictionaryLanguage> $assignedWithPersonSpokenLanguages
+ * @property-read int|null $assigned_with_person_spoken_languages_count
+ * @property-read \App\Models\User|null $assignedWithUser
+ * @property-read \App\Models\User|null $createdByUser
+ * @method static \Database\Factories\SearchFactory factory($count = null, $state = [])
+ * @method static \Illuminate\Database\Eloquent\Builder|Search newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Search newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|Search query()
+ * @method static \Illuminate\Database\Eloquent\Builder|Search whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Search whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|Search whereUpdatedAt($value)
+ * @mixin \Eloquent
+ */
 class Search extends Model
 {
     use HasFactory;

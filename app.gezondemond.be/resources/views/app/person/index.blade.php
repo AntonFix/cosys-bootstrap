@@ -97,7 +97,7 @@
                                 <th>Geslacht</th>
                                 <th>Organisatienaam</th>
                                 <th>Telefoon</th>
-                                <th>Volunteer</th>
+                                <th>Vrijwilliger</th>
                                 <th>Oral coach</th>
                                 <th>Coördinator</th>
                                 <th>Actief sinds</th>
@@ -132,7 +132,7 @@
                                             @endif
                                         </td>
                                         @if($row->volunteer == 1)
-                                            <td style="background-color:#8bc34a;color:#fff;">Volunteer</td>
+                                            <td style="background-color:#8bc34a;color:#fff;">Vrijwilliger</td>
                                         @else
                                             <td>Neen</td>
                                         @endif

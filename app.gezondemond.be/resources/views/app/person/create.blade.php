@@ -6,7 +6,7 @@
             <div class="col-md-10 offset-md-1">
 
                 @if ($errors->any())
-                    <div class="alert alert-danger">
+                    <div class="alert alert-danger pt-4">
                         <ul>
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -30,7 +30,7 @@
                     <div class="card-body">
 
 
-                        <form action="{{ route('person.store') }}" method="POST"
+                        <form action="{{ Route('person.store') }}" method="POST"
                               enctype="multipart/form-data">
 
                             @csrf
@@ -199,7 +199,7 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox"
                                                name="volunteer"
-                                               value="{{ old('volunteer') }}"
+                                               value="1"
                                                id="volunteer">
                                         <label class="form-check-label" for="volunteer">
                                             Vrijwilliger
@@ -212,7 +212,7 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox"
                                                name="oral_coach"
-                                               value="{{ old('oral_coach') }}"
+                                               value="1"
                                                id="oral_coach">
                                         <label class="form-check-label" for="oral_coach">
                                             Oral coach
@@ -225,7 +225,7 @@
                                     <div class="form-check form-check-inline">
                                         <input class="form-check-input" type="checkbox"
                                                name="coordinator"
-                                               value="{{ old('coordinator') }}"
+                                               value="1"
                                                id="coordinator">
                                         <label class="form-check-label" for="coordinator">
                                             Coordinator
@@ -245,10 +245,12 @@
                                         <h3>Werkt in</h3>
 
                                         <select class="form-control form-select"
-                                                name="address">
+                                                multiple
+                                                size="6"
+                                                name="person_address[]">
                                             <option disabled selected value="">Kies een item...</option>
                                             @foreach ($addresses as $address)
-                                                <option value="">
+                                                <option value="{{ $address->id }}">
                                                     {{ $address->name }}
                                                 </option>
                                             @endforeach
@@ -265,10 +267,12 @@
                                     <div class="col-md-6 mb-3">
                                         <h3>Spreektalen</h3>
                                         <select class="form-control form-select"
-                                                name="language">
+                                                multiple
+                                                size="5"
+                                                name="person_language[]">
                                             <option disabled selected value="">Kies een item...</option>
                                             @foreach ($languages as $language)
-                                                <option value="">
+                                                <option value="{{ $language->id }}">
                                                     {{ $language->name }} ({{ $language->local_name }})
                                                 </option>
                                             @endforeach
@@ -307,13 +311,13 @@
                                 <a href="{{ Route('person.index') }}"
                                    class="btn btn-outline-primary">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Aanmaken
+                                    Annuleren
                                 </a>
 
                                 <button type="submit"
                                         class="btn btn-success">
                                     <i class="fa-solid fa-floppy-disk mr-2"></i>
-                                    Opslaan
+                                    Aanmaken
                                 </button>
 
                             </div>

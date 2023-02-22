@@ -6,6 +6,14 @@ $body-bg: #f8fafc;
 $font-size-base: 1.05rem;
 $line-height-base: 1.6;
 
+$input-btn-padding-y: .375rem;
+$input-btn-padding-x: .75rem;
+$input-btn-font-size: $font-size-base;
+$input-btn-line-height: $line-height-base;
+
+$blue: #007bff;
+$yellow: #ffdb00;
+
 /*FontAwesome*/
 $fa-font-path: "@fortawesome/fontawesome-free/webfonts";
 @import "@fortawesome/fontawesome-free/scss/fontawesome.scss";

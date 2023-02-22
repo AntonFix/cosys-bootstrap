@@ -150,7 +150,7 @@
                                                         @endif
                                                         @if($appointment->assignedWithPerson->volunteer)
                                                             <span
-                                                                class="badge mb-3 text-bg-success p-2">Volunteer</span>
+                                                                class="badge mb-3 text-bg-success p-2">Vrijwilliger</span>
                                                         @endif
 
                                                         @if($appointment->assignedWithPerson->details)
