@@ -91,4 +91,12 @@ class Address extends Model
             'dictionary_geos_id'
         );
     }
+
+    public function createdByUser()
+    {
+        return $this->hasOne(
+            User::class,
+            'id',
+            'created_by_user_id');
+    }
 }

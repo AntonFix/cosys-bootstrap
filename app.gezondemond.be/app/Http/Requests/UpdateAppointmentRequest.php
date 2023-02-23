@@ -36,7 +36,7 @@ class UpdateAppointmentRequest extends FormRequest
             'start_time' => 'string|nullable',
             'end_date' => 'date|nullable',
             'end_time' => 'string|nullable',
-            'attachment' => 'string|nullable',
+            'attachment' => 'file|nullable',
             'archived' => 'boolean',
         ];
     }

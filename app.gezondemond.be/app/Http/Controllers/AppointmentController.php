@@ -110,6 +110,13 @@ class AppointmentController extends Controller
         $appointment->attachment = $request->attachment;
         $appointment->archived = $request->archived;
 
+        if ($attachment = $request->file('attachment')) {
+            $destinationPath = 'uploads/';
+            $attachmentName = date('YmdHis') . "-" . $attachment->getClientOriginalName() . "." . $attachment->getClientOriginalExtension();
+            $attachment->move($destinationPath, $attachmentName);
+            $input['attachment'] = "$attachmentName";
+        }
+
         $appointment->save();
 
         return redirect()
@@ -205,6 +212,13 @@ class AppointmentController extends Controller
         $appointment->end_time = $request->end_time;*/
         $appointment->attachment = $request->attachment;
         $appointment->archived = $request->archived;
+
+        if ($attachment = $request->file('attachment')) {
+            $destinationPath = 'uploads/';
+            $attachmentName = date('YmdHis') . "-" . $attachment->getClientOriginalName() . "." . $attachment->getClientOriginalExtension();
+            $attachment->move($destinationPath, $attachmentName);
+            $input['attachment'] = "$attachmentName";
+        }
 
         $appointment->save();
 

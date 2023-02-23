@@ -27,7 +27,7 @@
                                         </span>
                                         <input type="text" class="form-control" aria-label="birthday"
                                                aria-describedby="birthday"
-                                               value="{{ $person->birthday }}"
+                                               value="{{ Carbon\Carbon::parse($person->birthday)->locale('nl')->timezone('Europe/Brussels')->format('D' . ', ' .'m/d/Y') }}"
                                                disabled>
                                     </div>
                                 </div>

@@ -311,7 +311,7 @@
                                                     <option
                                                         value="{{ $currentLanguage->id }}"
                                                         @if(old('currentLanguage', $currentLanguage->id) === $currentLanguage->id)
-                                                        selected @endif>{{ $currentLanguage->name }}</option>
+                                                        selected @endif>{{ $currentLanguage->name }} ({{ $currentLanguage->local_name }})</option>
                                                 @endforeach
 
                                             @endif

@@ -200,7 +200,7 @@
                                             <td style="background-color: #fbc02d">{{ $row->appStatus->title }}</td>
                                         @elseif($row->appStatus->id == 2)
                                             {{--
-                                            Dringend
+                                            In behandeling
                                             --}}
                                             <td style="background-color: #94e74c">{{ $row->appStatus->title }}</td>
                                         @else

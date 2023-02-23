@@ -184,9 +184,9 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="start_date">Datum</label>
                                     <div class="input-group">
-			<span class="input-group-text" id="start_date">
-				<i class="fa-solid fa-calendar-days"></i>
-			</span>
+                                        <span class="input-group-text" id="start_date">
+                                            <i class="fa-solid fa-calendar-days"></i>
+                                        </span>
                                         <input type="date" class="form-control"
                                                name="start_date"
                                                aria-label="start_date"
@@ -201,9 +201,9 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="start_time">Tijd</label>
                                     <div class="input-group">
-			<span class="input-group-text" id="start_time">
-				<i class="fa-regular fa-clock"></i>
-			</span>
+                                        <span class="input-group-text" id="start_time">
+                                            <i class="fa-regular fa-clock"></i>
+                                        </span>
                                         <input type="time" class="form-control"
                                                name="start_time"
                                                aria-label="start_time"
@@ -228,19 +228,19 @@
 
                                 <div class="col-md-12 mb-3">
                                     <div class="input-group">
-			<span class="input-group-text" id="attachment">
-				<i class="fa-solid fa-paperclip"></i>
-			</span>
+                                        <span class="input-group-text" id="attachment">
+                                            <i class="fa-solid fa-paperclip"></i>
+                                        </span>
                                         <input type="file"
                                                class="form-control form-control-sm"
                                                name="attachment"
                                                aria-label="attachment"
                                                aria-describedby="attachment"
                                                value="{{ $appointment->attachment }}">
-                                        @error('attachment')
-                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                        @enderror
                                     </div>
+                                    @error('attachment')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-6 mb-3">

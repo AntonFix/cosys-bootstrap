@@ -57,7 +57,7 @@
                                                    value="{{ $appointment->appStatus->title }}"
                                                    disabled>
                                         </div>
-                                @elseif($appointment->appStatus->id == 1)
+                                @elseif($appointment->appStatus->id == 2)
                                     <!--Gepland-->
                                         <div class="input-group color-planned">
                                             <span class="input-group-text" id="appStatus">
