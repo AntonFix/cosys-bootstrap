@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Storage;
 
 class AppointmentController extends Controller
 {
@@ -105,8 +106,8 @@ class AppointmentController extends Controller
         $appointment->assigned_with_person_id = $request->assigned_with_person_id;
         $appointment->start_date = $request->start_date;
         $appointment->start_time = $request->start_time;
-        /*$appointment->end_date = $request->end_date;
-        $appointment->end_time = $request->end_time;*/
+        $appointment->end_date = $request->end_date;
+        $appointment->end_time = $request->end_time;
         $appointment->attachment = $request->attachment;
         $appointment->archived = $request->archived;
 
@@ -208,17 +209,37 @@ class AppointmentController extends Controller
         $appointment->assigned_with_person_id = $request->assigned_with_person_id;
         $appointment->start_date = $request->start_date;
         $appointment->start_time = $request->start_time;
-        /*$appointment->end_date = $request->end_date;
-        $appointment->end_time = $request->end_time;*/
-        $appointment->attachment = $request->attachment;
+        $appointment->end_date = $request->end_date;
+        $appointment->end_time = $request->end_time;
+
         $appointment->archived = $request->archived;
 
-        if ($attachment = $request->file('attachment')) {
-            $destinationPath = 'uploads/';
-            $attachmentName = date('YmdHis') . "-" . $attachment->getClientOriginalName() . "." . $attachment->getClientOriginalExtension();
-            $attachment->move($destinationPath, $attachmentName);
-            $input['attachment'] = "$attachmentName";
+        if ($request->attachment) {
+
+            $extension = $request->file('attachment')->extension();
+
+            $mimeType = $request->file('attachment')->getMimeType();
+
+            $name = $request->file('attachment')->getClientOriginalName();
+
+            //$fileName = time() . '-' . $name . '.' . $extension;
+            $fileName = time() . '-' . $name;
+
+            Storage::disk('local')
+                ->putFileAs('public/uploads', $request->file('attachment'), $fileName);
+
+            //$appointment->attachment = $fileName;
+
+            //$appointment->attachment = 'attachment';
+
+            //$request->attachment->move(public_path('uploads'), $fileName);
+
+            $appointment->attachment = $fileName;
+
         }
+
+
+        //dd($request->attachment);
 
         $appointment->save();
 

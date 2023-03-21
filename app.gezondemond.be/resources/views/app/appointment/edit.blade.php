@@ -198,8 +198,8 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
-                                    <label for="start_time">Tijd</label>
+                                <div class="col-md-3 mb-3">
+                                    <label for="start_time">Starttijd</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="start_time">
                                             <i class="fa-regular fa-clock"></i>
@@ -210,6 +210,23 @@
                                                aria-describedby="start_time"
                                                value="{{ $appointment->start_time }}">
                                         @error('start_time')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="dateTime">Eindtijd</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="dateTime">
+                                            <i class="fa-solid fa-circle-stop"></i>
+                                        </span>
+                                        <input type="time" class="form-control"
+                                               name="end_time"
+                                               aria-label="dateTime"
+                                               aria-describedby="dateTime"
+                                               value="{{ $appointment->end_time }}">
+                                        @error('end_time')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
                                         @enderror
                                     </div>
@@ -227,12 +244,20 @@
                                 </div>
 
                                 <div class="col-md-12 mb-3">
+                                    @if($appointment->attachment)
+                                        <a href="{{ URL::asset('storage/uploads/'.$appointment->attachment) }}"
+                                           class="btn btn-info mb-3"
+                                           title=""><i class="fa fa-download"></i> {{ $appointment->attachment }}
+                                        </a>
+                                    @endif
+
                                     <div class="input-group">
                                         <span class="input-group-text" id="attachment">
                                             <i class="fa-solid fa-paperclip"></i>
                                         </span>
                                         <input type="file"
                                                class="form-control form-control-sm"
+                                               placeholder="{{ $appointment->attachment }}"
                                                name="attachment"
                                                aria-label="attachment"
                                                aria-describedby="attachment"

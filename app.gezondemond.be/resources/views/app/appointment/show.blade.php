@@ -237,8 +237,9 @@
                                     </div>
                                 </div>
 
+
                                 <div class="col-md-6 mb-3">
-                                    <label for="dateTime">Datum en tijd</label>
+                                    <label for="dateTime">Startdatum en tijd</label>
                                     <div class="input-group">
                                         <span class="input-group-text" id="dateTime">
                                             <i class="fa-regular fa-calendar-days"></i>
@@ -250,6 +251,21 @@
                                     </div>
                                 </div>
 
+                                @if($appointment->end_time)
+                                    <div class="col-md-6 mb-3">
+                                        <label for="dateTime">Eindtijd</label>
+                                        <div class="input-group">
+                                        <span class="input-group-text" id="dateTime">
+                                            <i class="fa-solid fa-circle-stop"></i>
+                                        </span>
+                                            <input type="text" class="form-control" aria-label="dateTime"
+                                                   aria-describedby="dateTime"
+                                                   value="{{ $appointment->end_time }}"
+                                                   disabled>
+                                        </div>
+                                    </div>
+                                @endif
+
                                 <hr>
 
                                 <div class="col-md-12 mb-3">
@@ -260,17 +276,14 @@
                                 </div>
 
 
-                                <div class="col-md-12 mb-3">
-                                    <div class="input-group">
-                                        <span class="input-group-text" id="attachment">
-                                            <i class="fa-solid fa-paperclip"></i>
-                                        </span>
-                                        <input type="text" class="form-control form-control-sm" aria-label="attachment"
-                                               aria-describedby="attachment"
-                                               value="{{ $appointment->attachment }}"
-                                               disabled>
+                                @if($appointment->attachment)
+                                    <div class="col-md-12 mb-3">
+                                        <a href="{{ URL::asset('storage/uploads/'.$appointment->attachment) }}"
+                                           class="btn btn-info"
+                                           title=""><i class="fa fa-download"></i> {{ $appointment->attachment }}
+                                        </a>
                                     </div>
-                                </div>
+                                @endif
 
                                 <hr>
 

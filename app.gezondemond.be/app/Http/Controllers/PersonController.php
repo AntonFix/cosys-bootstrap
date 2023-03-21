@@ -32,8 +32,12 @@ class PersonController extends Controller
             ->where('is_active', 1)
             ->get();
 
+        $languages = DB::table('dictionary_languages')
+            ->orderBy('order', 'DESC')
+            ->get();
+
         return view('app.person.index',
-            compact('persons'));
+            compact('persons', 'languages'));
     }
 
     /**
@@ -165,7 +169,7 @@ class PersonController extends Controller
         $currentLanguages = DB::table('person_languages')
             ->where('person_id', '=', $person->id)
             ->join('dictionary_languages', 'person_languages.language_id', '=', 'dictionary_languages.id')
-            ->select('dictionary_languages.id', 'dictionary_languages.name','dictionary_languages.local_name',)
+            ->select('dictionary_languages.id', 'dictionary_languages.name', 'dictionary_languages.local_name',)
             ->get();
 
         $addresses = DB::table('addresses')

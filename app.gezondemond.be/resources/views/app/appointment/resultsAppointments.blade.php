@@ -37,7 +37,7 @@
                             <div class="row mb-3">
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label for="app_code_id" class="form-label">Code</label>
 
 
@@ -66,7 +66,7 @@
                                 </div>
 
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
                                     <label for="app_status_id" class="form-label">Statuut</label>
 
                                     <select class="form-control form-select"
@@ -96,7 +96,7 @@
 
 
                                 <div class="col-md-2">
-                                    <label for="start_date" class="form-label">Start datum (vanaf)</label>
+                                    <label for="start_date" class="form-label">Startdatum (vanaf)</label>
 
                                     <input type="date"
                                            class="form-control"
@@ -117,13 +117,23 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <label for="start_time" class="form-label">Start tijd</label>
+                                    <label for="start_time" class="form-label">Starttijd</label>
 
                                     <input type="text"
                                            class="form-control"
                                            name="start_time"
                                            id="start_time"
                                            value="{{ Request::get('start_time') }}">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label for="start_time" class="form-label">Eindtijd</label>
+
+                                    <input type="text"
+                                           class="form-control"
+                                           name="end_time"
+                                           id="end_time"
+                                           value="{{ Request::get('end_time') }}">
                                 </div>
 
                             </div>
@@ -189,8 +199,9 @@
                         <table class="table table-bordered table-hover">
                             <tr>
                                 <th>Titel</th>
-                                <th>Start datum</th>
-                                <th>Start tijd</th>
+                                <th>Startdatum</th>
+                                <th>Starttijd</th>
+                                <th>Eindtijd</th>
                                 <th>Code</th>
                                 <th>Statuut</th>
                                 <th>Contactpersoon</th>
@@ -208,6 +219,12 @@
                                         <td width="110"
                                             class="text-center">{{ date('d-m-Y', strtotime($result->start_date)) }}</td>
                                         <td>{{ date('H:i', strtotime($result->start_time)) }}</td>
+                                        <td>
+                                            @if($result->end_time)
+                                                {{ date('H:i', strtotime($result->end_time)) }}
+                                            @else
+                                            @endif
+                                        </td>
 
 
                                         <td>{{ $result->appCode->title }}</td>
@@ -233,7 +250,7 @@
 
                                         <td>{{ $result->assignedWithPerson->forename }} {{ $result->assignedWithPerson->name }}</td>
                                         <td>{{ $result->assignedWithUser->name }}</td>
-                                        <td width="150" class="text-center">
+                                        <td width="120" class="text-center">
 
                                             <form method="POST"
                                                   action="{{ route('appointment.destroy', $result->id) }}">
@@ -252,11 +269,6 @@
                                                         <i class="fa-solid fa-pen-to-square mr-2"></i>
                                                     </a>
 
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="fa-regular fa-trash-can mr-2"></i>
-                                                    </button>
                                                 </div>
                                             </form>
 

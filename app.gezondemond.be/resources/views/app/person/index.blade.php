@@ -30,32 +30,88 @@
                         <form method="get" action="{{ route('filterPersons') }}">
 
                             <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="title" class="form-label">Zoekterm in de titel</label>
+
+
+
+                                <div class="col-md-3">
+                                    <label for="forename" class="form-label">Naam</label>
                                     <input type="text"
                                            class="form-control"
-                                           name="title"
-                                           id="title">
+                                           name="forename"
+                                           id="forename">
                                 </div>
+                                <div class="col-md-3">
+                                    <label for="name" class="form-label">Voornaam</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="name"
+                                           id="name">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <label for="personAddresses" class="form-label">Organisatienaam</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="personAddresses"
+                                           id="personAddresses">
+                                </div>
+
+                                <div class="col-md-3">
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox" value="1"
+                                               id="volunteer"
+                                               name="volunteer">
+                                        <label class="form-check-label" for="volunteer">
+                                            Vrijwilliger
+                                        </label>
+                                    </div>
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox" value="1"
+                                               id="oral_coach"
+                                               name="oral_coach">
+                                        <label class="form-check-label" for="oral_coach">
+                                            Oral coach
+                                        </label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input"
+                                               type="checkbox" value="1"
+                                               id="coordinator"
+                                               name="coordinator">
+                                        <label class="form-check-label" for="coordinator">
+                                            Coördinator
+                                        </label>
+                                    </div>
+
+                                </div>
+
                             </div>
 
                             <div class="row mb-3">
 
                                 <div class="col-md-3">
-                                    <label for="start_date" class="form-label">Start datum</label>
+                                    <label for="start_date" class="form-label">Actief sinds</label>
 
                                     <input type="date"
                                            class="form-control"
-                                           name="start_date"
-                                           id="start_date">
+                                           name="active_from"
+                                           id="active_from">
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label for="start_time" class="form-label">Start tijd</label>
-                                    <input type="text"
-                                           class="form-control"
-                                           name="start_time"
-                                           id="start_time">
+                                    <label for="app_status_id" class="form-label">Spreektalen</label>
+                                    <select class="form-control form-select"
+                                            name="languages">
+                                        <option disabled selected value="">Kies een item...</option>
+                                        @foreach ($languages as $language)
+                                            <option value="{{ $language->id }}">
+                                                {{ $language->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                 </div>
 
                             </div>
@@ -65,7 +121,7 @@
 
                                 <div class="col-md-12">
                                     <a class="btn btn-outline-secondary d-inline-block"
-                                       href="{{ Route('filterAppointments') }}"
+                                       href="{{ Route('filterPersons') }}"
                                        type="reset">
                                         <i class="fa-solid fa-eraser mr-2"></i>
                                         Reset filter
@@ -75,7 +131,6 @@
                                         Zoek
                                     </button>
                                 </div>
-
 
                             </div>
 
@@ -153,7 +208,7 @@
                                             class="text-center">{{ date('d-m-Y', strtotime($row->active_from)) }}
                                         </td>
 
-                                        <td width="150" class="text-center">
+                                        <td width="120" class="text-center">
 
                                             <form method="POST"
                                                   action="{{ route('person.destroy', $row->id) }}">
@@ -172,11 +227,6 @@
                                                         <i class="fa-solid fa-pen-to-square mr-2"></i>
                                                     </a>
 
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="fa-regular fa-trash-can mr-2"></i>
-                                                    </button>
                                                 </div>
                                             </form>
 

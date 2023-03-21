@@ -40,21 +40,8 @@
                             </div>
 
                             <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="title" class="form-label">Zoekterm in de titel</label>
-                                </div>
-                            </div>
 
-                            <div class="row mb-3">
-
-                                <div class="col-md-3">
-<!--                                    <select class="form-control form-select" id="test-select">
-                                        <option value="AL">Alabama</option>
-                                        <option value="WY">Wyoming</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                    </select>-->
+                                <div class="col-md-2">
 
                                     <label for="app_code_id" class="form-label">Code</label>
                                     <select class="form-control form-select"
@@ -70,7 +57,7 @@
 
                                 </div>
 
-                                <div class="col-md-3">
+                                <div class="col-md-2">
 
                                     <label for="app_status_id" class="form-label">Statuut</label>
                                     <select class="form-control form-select"
@@ -103,11 +90,19 @@
                                 </div>
 
                                 <div class="col-md-2">
-                                    <label for="start_time" class="form-label">Start tijd</label>
+                                    <label for="start_time" class="form-label">Starttijd</label>
                                     <input type="text"
                                            class="form-control"
                                            name="start_time"
                                            id="start_time">
+                                </div>
+
+                                <div class="col-md-2">
+                                    <label for="start_time" class="form-label">Eindtijd</label>
+                                    <input type="text"
+                                           class="form-control"
+                                           name="end_time"
+                                           id="end_time">
                                 </div>
 
                             </div>
@@ -166,8 +161,9 @@
                         <table class="table table-bordered table-hover">
                             <tr>
                                 <th>Titel</th>
-                                <th>Start datum</th>
-                                <th>Start tijd</th>
+                                <th>Startdatum</th>
+                                <th>Starttijd</th>
+                                <th>Eindtijd</th>
                                 <th>Code</th>
                                 <th>Statuut</th>
                                 <th>Contactpersoon</th>
@@ -185,6 +181,12 @@
                                         <td width="110"
                                             class="text-center">{{ date('d-m-Y', strtotime($row->start_date)) }}</td>
                                         <td>{{ date('H:i', strtotime($row->start_time)) }}</td>
+                                        <td>
+                                            @if($row->end_time)
+                                                {{ date('H:i', strtotime($row->end_time)) }}
+                                            @else
+                                            @endif
+                                        </td>
                                         <td>
                                             {{ $row->appCode->title }}
                                         </td>
@@ -206,10 +208,14 @@
                                         @else
                                             <td>{{ $row->appStatus->title }}</td>
                                         @endif
-                                        <td>{{ $row->assignedWithPerson->forename }} {{ $row->assignedWithPerson->name }}</td>
+                                        <td>
+                                            <a href="{{ route('person.show', $row->assignedWithPerson->id) }}">
+                                                {{ $row->assignedWithPerson->forename }} {{ $row->assignedWithPerson->name }}
+                                            </a>
+                                        </td>
                                         <td>{{ $row->assignedWithUser->name }}</td>
 
-                                        <td width="150" class="text-center">
+                                        <td width="120" class="text-center">
 
                                             <form method="POST"
                                                   action="{{ route('appointment.destroy', $row->id) }}">
@@ -228,11 +234,6 @@
                                                         <i class="fa-solid fa-pen-to-square mr-2"></i>
                                                     </a>
 
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-danger btn-sm">
-                                                        <i class="fa-regular fa-trash-can mr-2"></i>
-                                                    </button>
                                                 </div>
                                             </form>
 
