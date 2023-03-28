@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Person;
 use App\Models\Search;
+
+use App\Models\Person;
+use App\Models\Appointment;
+use App\Models\Address;
+
 use App\Http\Requests\StoreSearchRequest;
 use App\Http\Requests\UpdateSearchRequest;
-
-use App\Models\Appointment;
 
 //use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
@@ -173,6 +175,56 @@ class SearchController extends Controller
         } else {
 
             $serp = Person::all();;
+
+        }
+
+
+    }
+
+    public function filterAddresses(Request $request, Address $address)
+    {
+        //
+
+        if ($request != '') {
+
+            $addresses = Address::latest();
+
+            /*$regions = DB::table('dictionary_languages')
+                ->orderBy('order', 'DESC')
+                ->get();*/
+
+            $currentUser = Auth::user();
+
+            $addressName = $request->input('address_name');
+            $postcode = $request->input('postcode');
+
+            $dictionaryGeosID = $request->input('dictionaryGeosID');
+
+            $serp = Address::orderBy('created_at', 'DESC')
+                ->with([
+                    'region',
+                ])
+                ->where('is_active', 1)
+                /*->when($addressName, function ($query, $addressName) {
+                    $query->where('name', $addressName);
+                })*/
+                ->where('name', 'like', '%' . $addressName . '%')
+                /*->whereHas('spoken_languages', function (Builder $query) {
+                    $query->where('id', 'like', 168);
+                })*/
+                ->when($postcode, function ($query, $postcode) {
+                    $query->where('dictionary_geos.postcode', 'LIKE', $postcode);
+                })
+                ->get();
+
+            /*dd($serp);*/
+
+            return view('app.address.resultsAddresses',
+                compact('serp',));
+
+        } else {
+
+            $serp = Address::all();;
 
         }
 

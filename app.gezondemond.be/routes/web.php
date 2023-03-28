@@ -28,6 +28,8 @@ Route::get('/search/appointments', [App\Http\Controllers\SearchController::class
 
 
 Route::resource('address', App\Http\Controllers\AddressController::class);
+Route::get('/search/addresses', [App\Http\Controllers\SearchController::class, 'filterAddresses'])->name('filterAddresses');
+
 Route::resource('archive', App\Http\Controllers\ArchiveController::class);
 Route::resource('calendar', App\Http\Controllers\CalendarController::class);
 Route::resource('report', App\Http\Controllers\ReportController::class);
@@ -36,8 +38,6 @@ Route::resource('person', App\Http\Controllers\PersonController::class);
 Route::resource('person-address', App\Http\Controllers\PersonAddressController::class);
 Route::resource('person-language', App\Http\Controllers\PersonLanguageController::class);
 Route::get('/search/persons', [App\Http\Controllers\SearchController::class, 'filterPersons'])->name('filterPersons');
-
-
 
 Route::resource('dictionary-geo', App\Http\Controllers\DictionaryGeoController::class);
 Route::resource('dictionary-language', App\Http\Controllers\DictionaryLanguageController::class);
