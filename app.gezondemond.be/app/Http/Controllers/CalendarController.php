@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Appointment;
 use App\Models\Calendar;
 use App\Http\Requests\StoreCalendarRequest;
 use App\Http\Requests\UpdateCalendarRequest;
+use Illuminate\Support\Facades\Response;
 
 class CalendarController extends Controller
 {
@@ -16,6 +18,14 @@ class CalendarController extends Controller
     public function index()
     {
         //
+
+        $appointments = Appointment::orderBy('start_date', 'desc')
+            ->get();
+
+        return view('app.calendar.index',
+            compact(
+                'appointments'));
+
     }
 
     /**
@@ -26,12 +36,14 @@ class CalendarController extends Controller
     public function create()
     {
         //
+
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreCalendarRequest  $request
+     * @param \App\Http\Requests\StoreCalendarRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreCalendarRequest $request)
@@ -42,7 +54,7 @@ class CalendarController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Calendar  $calendar
+     * @param \App\Models\Calendar $calendar
      * @return \Illuminate\Http\Response
      */
     public function show(Calendar $calendar)
@@ -53,7 +65,7 @@ class CalendarController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Calendar  $calendar
+     * @param \App\Models\Calendar $calendar
      * @return \Illuminate\Http\Response
      */
     public function edit(Calendar $calendar)
@@ -64,8 +76,8 @@ class CalendarController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateCalendarRequest  $request
-     * @param  \App\Models\Calendar  $calendar
+     * @param \App\Http\Requests\UpdateCalendarRequest $request
+     * @param \App\Models\Calendar $calendar
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateCalendarRequest $request, Calendar $calendar)
@@ -76,11 +88,28 @@ class CalendarController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Calendar  $calendar
+     * @param \App\Models\Calendar $calendar
      * @return \Illuminate\Http\Response
      */
     public function destroy(Calendar $calendar)
     {
         //
+    }
+
+    /*JSON*/
+    public function returnCalendarAppointmentsJson()
+    {
+        $appointments = Appointment::query()
+            ->with([
+                'appCode',
+                'appStatus',
+                'assignedWithPerson',
+                'assignedWithPersonAddresses',
+                'assignedWithPersonSpokenLanguages',
+                'assignedWithUser',
+                'createdByUser',
+            ])
+            ->get();
+        return Response::json($appointments, 200);
     }
 }

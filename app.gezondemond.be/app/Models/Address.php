@@ -99,4 +99,18 @@ class Address extends Model
             'id',
             'created_by_user_id');
     }
+
+
+    public function coupledPersons()
+    {
+        return $this->belongsToMany(
+            Person::class,
+            'person_addresses',
+            'address_id',
+            'person_id',
+            'id',
+            'id',
+        );
+    }
+
 }

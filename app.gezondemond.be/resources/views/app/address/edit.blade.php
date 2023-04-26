@@ -227,6 +227,40 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-3 mb-3">
+                                    <label for="active_from">Actief sinds</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="active_from">
+                                            <i class="fa-regular fa-calendar-check"></i>
+                                        </span>
+                                        <input type="date" class="form-control"
+                                               aria-label="active_from"
+                                               aria-describedby="active_from"
+                                               name="active_from"
+                                               value="{{ $address->active_from }}">
+                                        @error('active_from')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="not_active_from">Inactief sinds</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="not_active_from">
+                                            <i class="fa-regular fa-calendar-check"></i>
+                                        </span>
+                                        <input type="date" class="form-control"
+                                               aria-label="not_active_from"
+                                               aria-describedby="not_active_from"
+                                               name="not_active_from"
+                                               value="{{ $address->not_active_from }}">
+                                        @error('not_active_from')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 <hr>
 
                                 <h2>Extra gegevens</h2>

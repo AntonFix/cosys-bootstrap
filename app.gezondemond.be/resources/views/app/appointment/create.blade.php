@@ -25,7 +25,7 @@
 
                     <div class="card-header">
                         <h1>
-                            Create new appointment
+                            Voeg een nieuwe afspraak toe
                         </h1>
                     </div>
 

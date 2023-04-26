@@ -21,6 +21,11 @@ Route::resource('debug', App\Http\Controllers\DebugController::class);
 Route::get('/search-debugs', [App\Http\Controllers\SearchController::class, 'filterDebugs'])->name('filterDebugs');
 
 Route::resource('appointment', App\Http\Controllers\AppointmentController::class);
+Route::get('appointment/{id}/copy', [App\Http\Controllers\AppointmentController::class, 'appointmentCopy'])->name('appointment.copy');
+Route::get('appointment/{id}/in-progress', [App\Http\Controllers\AppointmentController::class, 'appInProgress'])->name('appointment.inProgress');
+Route::get('appointment/{id}/is-carried-out', [App\Http\Controllers\AppointmentController::class, 'appIsCarriedOut'])->name('appointment.isCarriedOut');
+
+
 Route::resource('appointment-code', App\Http\Controllers\AppointmentCodeController::class);
 Route::resource('appointment-status', App\Http\Controllers\AppointmentStatusController::class);
 
@@ -50,6 +55,11 @@ Route::get('/json/persons.json', [App\Http\Controllers\PersonController::class, 
 Route::get('/json/person-{id}.json', [App\Http\Controllers\PersonController::class, 'returnPersonByIdJson']);
 Route::get('/json/addresses.json', [App\Http\Controllers\AddressController::class, 'returnAddressesJson']);
 Route::get('/json/address-{id}.json', [App\Http\Controllers\AddressController::class, 'returnAddressByIdJson']);
+
+Route::get('/json/languages.json', [App\Http\Controllers\DictionaryLanguageController::class, 'returnLanguagesJson']);
+Route::get('/json/languages-person-{id}.json', [App\Http\Controllers\DictionaryLanguageController::class, 'returnLanguagesByIdJson']);
+
+Route::get('/json/calendar-appointments.json', [App\Http\Controllers\CalendarController::class, 'returnCalendarAppointmentsJson']);
 
 Route::get('/generate-passsword', function () {
     $password = Hash::make('anton@ictoplossing.be');

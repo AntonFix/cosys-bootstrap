@@ -24,7 +24,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <h1 class="mt-2">Een nieuwe persoon toevegen</h1>
+                        <h1 class="mt-2">Voeg een nieuwe persoon toe</h1>
                     </div>
 
                     <div class="card-body">
@@ -266,17 +266,11 @@
                                 @if(count($languages) > 0)
                                     <div class="col-md-6 mb-3">
                                         <h3>Spreektalen</h3>
-                                        <select class="form-control form-select"
-                                                multiple
-                                                size="5"
-                                                name="person_language[]">
-                                            <option disabled selected value="">Kies een item...</option>
-                                            @foreach ($languages as $language)
-                                                <option value="{{ $language->id }}">
-                                                    {{ $language->name }} ({{ $language->local_name }})
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                        <!--             <select name="person_language[]" data-choice multiple class="spreektalen"></select>-->
+
+                                        <spoken-languages-create>
+                                        </spoken-languages-create>
+
 
                                         @error('language')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
@@ -290,9 +284,9 @@
                                 <div class="col-md-6 mb-3">
                                     <label for="active_from">Actief sinds</label>
                                     <div class="input-group">
-                                        <span class="input-group-text" id="active_from">
-                                            <i class="fa-regular fa-calendar-check"></i>
-                                        </span>
+                                                <span class="input-group-text" id="active_from">
+                                                    <i class="fa-regular fa-calendar-check"></i>
+                                                </span>
                                         <input type="date" class="form-control form-control-sm"
                                                aria-label="active_from"
                                                aria-describedby="active_from"
@@ -304,19 +298,79 @@
                                     </div>
                                 </div>
 
+                                <div class="col-md-6 mb-3">
+
+                                    <div class="row">
+                                        <div class="col-md-6 mb-3">
+                                            <label for="active_from">Bijlage 1</label>
+                                            <div class="input-group">
+                                            <span class="input-group-text" id="attachment">
+                                                <i class="fa-solid fa-paperclip"></i>
+                                            </span>
+                                                <input type="file"
+                                                       class="form-control form-control-sm"
+                                                       name="attachment"
+                                                       aria-label="attachment"
+                                                       aria-describedby="attachment"
+                                                       value="{{ old('attachment') }}">
+                                                @error('attachment')
+                                                <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6 mb-3">
+                                            <label for="active_from">Bijlage 2</label>
+                                            <div class="input-group">
+                                    <span class="input-group-text" id="attachment">
+                                        <i class="fa-solid fa-paperclip"></i>
+                                    </span>
+                                                <input type="file"
+                                                       class="form-control form-control-sm"
+                                                       name="attachment"
+                                                       aria-label="attachment"
+                                                       aria-describedby="attachment"
+                                                       value="{{ old('attachment') }}">
+                                                @error('attachment')
+                                                <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 mb-3">
+                                            <label for="active_from">Bijlage 3</label>
+                                            <div class="input-group">
+                                    <span class="input-group-text" id="attachment">
+                                        <i class="fa-solid fa-paperclip"></i>
+                                    </span>
+                                                <input type="file"
+                                                       class="form-control form-control-sm"
+                                                       name="attachment"
+                                                       aria-label="attachment"
+                                                       aria-describedby="attachment"
+                                                       value="{{ old('attachment') }}">
+                                                @error('attachment')
+                                                <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                                @enderror
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
                             </div>
 
                             <div class="text-center">
 
                                 <a href="{{ Route('person.index') }}"
-                                   class="btn btn-outline-primary">
+                                   class="btn btn-outline-primary mr-2">
                                     <i class="fa-solid fa-arrow-left-long mr-2"></i>
                                     Annuleren
                                 </a>
 
                                 <button type="submit"
-                                        class="btn btn-success">
-                                    <i class="fa-solid fa-floppy-disk mr-2"></i>
+                                        class="btn btn-success ml-2">
+                                    <i class="fa-solid fa-floppy-disk mrl-2"></i>
                                     Aanmaken
                                 </button>
 
@@ -330,5 +384,6 @@
             </div>
         </div>
     </div>
+
 @endsection
 

@@ -26,32 +26,21 @@
                         <form method="get" action="{{ route('filterAddresses') }}">
 
                             <div class="row mb-3">
-                                <div class="col-md-12">
-                                    <label for="address_name" class="form-label">Zoekterm in de titel</label>
+                                <div class="col-md-6">
+                                    <label for="address_name" class="form-label">Zoekterm in de organisatienaam</label>
                                     <input type="text"
                                            class="form-control"
                                            name="address_name"
                                            id="address_name">
                                 </div>
-                            </div>
-
-                            <div class="row mb-3">
 
                                 <div class="col-md-3">
-                                    <label for="start_date" class="form-label">Start datum</label>
-
-                                    <input type="date"
-                                           class="form-control"
-                                           name="start_date"
-                                           id="start_date">
-                                </div>
-
-                                <div class="col-md-3">
-                                    <label for="start_time" class="form-label">Start tijd</label>
+                                    <label for="postcode" class="form-label">Postcode</label>
                                     <input type="text"
                                            class="form-control"
-                                           name="start_time"
-                                           id="start_time">
+                                           name="postcode"
+                                           id="postcode"
+                                           value="{{ Request::get('postcode') }}">
                                 </div>
 
                             </div>

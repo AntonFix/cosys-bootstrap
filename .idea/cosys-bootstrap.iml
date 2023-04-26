@@ -125,6 +125,9 @@
       <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/cache" />
       <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/doctrine/dbal" />
       <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/psr/cache" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/guzzlehttp/uri-template" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/app.gezondemond.be/vendor/phpstan/phpdoc-parser" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

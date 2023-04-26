@@ -1,12 +1,11 @@
 import {createRouter, createWebHistory} from 'vue-router'
 
-import AppointmentsIndex from '../components/appointments/Index.vue'
-
 const routes = [
     {
-        path: '/appointments-index',
-        name: 'appointments.index',
-        component: AppointmentsIndex
+        name: 'SpokenLanguagesEdit',
+        path: '/person/:id/edit',
+        component: () => import('../components/persons/SpokenLanguagesEdit.vue'),
+        props: true
     }
 ]
 

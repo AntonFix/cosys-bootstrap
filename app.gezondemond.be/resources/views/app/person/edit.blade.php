@@ -298,34 +298,34 @@
                                     <div class="col-md-6 mb-3">
                                         <h3>Spreektalen</h3>
 
-                                        <select class="form-control form-select"
+                                    <!--                                        <select class="form-control form-select"
                                                 multiple
                                                 size="5"
                                                 name="person_language[]">
 
                                             @if(count($currentLanguages)>0)
 
-                                                <option disabled value="">De huidige spreektalen:</option>
+                                        <option disabled value="">De huidige spreektalen:</option>
 
-                                                @foreach ($currentLanguages as $currentLanguage)
-                                                    <option
-                                                        value="{{ $currentLanguage->id }}"
+@foreach ($currentLanguages as $currentLanguage)
+                                            <option
+                                                value="{{ $currentLanguage->id }}"
                                                         @if(old('currentLanguage', $currentLanguage->id) === $currentLanguage->id)
-                                                        selected @endif>{{ $currentLanguage->name }} ({{ $currentLanguage->local_name }})</option>
+                                                selected @endif>{{ $currentLanguage->name }}
+                                                ({{ $currentLanguage->local_name }})
+                                                    </option>
                                                 @endforeach
 
-                                            @endif
+                                    @endif
 
-                                            <option disabled value="">Kies een item...</option>
-                                            <option value="0"> - Geen organisatie -</option>
+                                        <option disabled value="">Kies een item...</option>
+                                        <option value="0"> - Geen taal -</option>
 
-                                            @foreach ($languages as $language)
-                                                <option value="{{ $language->id }}">
-                                                    {{ $language->name }} ({{ $language->local_name }})
-                                                </option>
-                                            @endforeach
 
-                                        </select>
+                                    </select>-->
+
+                                        <spoken-languages-edit>
+                                        </spoken-languages-edit>
 
                                         @error('language')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>

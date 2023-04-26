@@ -6,6 +6,8 @@ use App\Models\Appointment;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 
+
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Request;
@@ -111,11 +113,14 @@ class AppointmentController extends Controller
         $appointment->attachment = $request->attachment;
         $appointment->archived = $request->archived;
 
-        if ($attachment = $request->file('attachment')) {
-            $destinationPath = 'uploads/';
-            $attachmentName = date('YmdHis') . "-" . $attachment->getClientOriginalName() . "." . $attachment->getClientOriginalExtension();
-            $attachment->move($destinationPath, $attachmentName);
-            $input['attachment'] = "$attachmentName";
+        if ($request->attachment) {
+            $extension = $request->file('attachment')->extension();
+            $mimeType = $request->file('attachment')->getMimeType();
+            $name = $request->file('attachment')->getClientOriginalName();
+            $fileName = time() . '-' . $name;
+            Storage::disk('local')
+                ->putFileAs('public/uploads', $request->file('attachment'), $fileName);
+            $appointment->attachment = $fileName;
         }
 
         $appointment->save();
@@ -135,6 +140,7 @@ class AppointmentController extends Controller
     public function show(Appointment $appointment)
     {
         //
+
         $appointment = Appointment::where('id', $appointment->id)
             ->with([
                 'appCode',
@@ -215,29 +221,14 @@ class AppointmentController extends Controller
         $appointment->archived = $request->archived;
 
         if ($request->attachment) {
-
             $extension = $request->file('attachment')->extension();
-
             $mimeType = $request->file('attachment')->getMimeType();
-
             $name = $request->file('attachment')->getClientOriginalName();
-
-            //$fileName = time() . '-' . $name . '.' . $extension;
             $fileName = time() . '-' . $name;
-
             Storage::disk('local')
                 ->putFileAs('public/uploads', $request->file('attachment'), $fileName);
-
-            //$appointment->attachment = $fileName;
-
-            //$appointment->attachment = 'attachment';
-
-            //$request->attachment->move(public_path('uploads'), $fileName);
-
             $appointment->attachment = $fileName;
-
         }
-
 
         //dd($request->attachment);
 
@@ -263,6 +254,63 @@ class AppointmentController extends Controller
         return redirect()
             ->route('appointment.index')
             ->with('success', 'Appointment has been deleted successfully');
+    }
+
+
+    public function appointmentCopy(StoreAppointmentRequest $request, Appointment $appointment)
+    {
+        //
+
+        $appointment = Appointment::findOrFail($request->id);
+
+        $newAppointment = $appointment->replicate();
+
+        $newAppointment->app_status_id = 1; //Statuut: Gepland
+        $newAppointment->created_by_user_id = $request->user()->id;
+        $newAppointment->created_at = Carbon::now();
+
+        $newAppointment->save();
+
+        return redirect()
+            ->route('appointment.index')
+            ->with('success', 'Appointment has been copied successfully');
+
+    }
+
+
+    public function appInProgress(UpdateAppointmentRequest $request, Appointment $appointment)
+    {
+        //
+
+        $appointment = Appointment::find($request->id);
+
+        //dd($appointment);
+
+        $appointment->app_status_id = 2;
+
+        $appointment->save();
+
+        return redirect()
+            ->route('appointment.index')
+            ->with('success', 'Appointment has been updated successfully');
+
+    }
+
+
+    public function appIsCarriedOut(UpdateAppointmentRequest $request, Appointment $appointment)
+    {
+        //
+
+        $appointment = Appointment::findOrFail($request->id);
+
+        $appointment->app_status_id = 4;
+
+        $appointment->save();
+
+        return redirect()
+            ->route('appointment.index')
+            ->with('success', 'Appointment has been updated successfully');
+
     }
 
     /*Extra functions*/

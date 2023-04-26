@@ -94,6 +94,7 @@
                                                aria-describedby="person"
                                                value="{{ $appointment->assignedWithPerson->forename }} {{ $appointment->assignedWithPerson->name }}"
                                                disabled>
+
                                         <button class="btn btn-secondary rounded-end" type="button" id="person"
                                                 data-bs-toggle="modal" data-bs-target="#showPerson"><i
                                                 class="fa-regular fa-eye"></i></button>
@@ -330,28 +331,51 @@
 
                             </div>
 
-                            <div class="text-center">
-                                <a href="{{ route('appointment.index') }}"
-                                   class="btn btn-outline-primary">
-                                    <i class="fa-solid fa-arrow-left-long mr-2"></i>
-                                    Terug
-                                </a>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <a href="{{ route('appointment.index') }}"
+                                       class="btn btn-outline-primary">
+                                        <i class="fa-solid fa-arrow-left-long mr-2"></i>
+                                        Terug
+                                    </a>
 
-                                <a href="{{ route('appointment.edit', $appointment->id) }}"
-                                   class="btn btn-outline-success">
-                                    <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                    Edit
-                                </a>
+                                    <a href="{{ route('appointment.copy', $appointment->id) }}"
+                                       class="btn btn-light border">
+                                        <i class="fa-regular fa-copy mr-2"></i>
+                                        Een kopie maken
+                                    </a>
 
-                                @csrf
-                                @method('DELETE')
-                                <button
-                                    type="submit"
-                                    class="btn btn-outline-danger">
-                                    <i class="fa-regular fa-trash-can mr-2"></i>
-                                    Delete
-                                </button>
+                                    <a href="{{ route('appointment.edit', $appointment->id) }}"
+                                       class="btn btn-outline-success">
+                                        <i class="fa-solid fa-pen-to-square mr-2"></i>
+                                        Bewerken
+                                    </a>
 
+                                </div>
+
+                                <div class="col-md-6">
+                                    <a href="{{ route('appointment.inProgress', $appointment->id) }}"
+                                       class="btn btn-primary">
+                                        <i class="fa-solid fa-gears mr-2"></i>
+                                        In behandeling
+                                    </a>
+
+                                    <a href="{{ route('appointment.isCarriedOut', $appointment->id) }}"
+                                       class="btn btn-success">
+                                        <i class="fa-regular fa-circle-check mr-2"></i>
+                                        Is uitgevoerd
+                                    </a>
+
+                                    @csrf
+                                    @method('DELETE')
+                                    <button
+                                        type="submit"
+                                        class="btn btn-outline-danger float-end">
+                                        <i class="fa-regular fa-trash-can mr-2"></i>
+                                        <!--Delete-->
+                                    </button>
+
+                                </div>
                             </div>
 
                         </form>

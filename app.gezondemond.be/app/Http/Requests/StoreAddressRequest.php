@@ -54,6 +54,8 @@ class StoreAddressRequest extends FormRequest
             'fin_opmerkingen' => 'string|max:255|nullable',
             'is_active' => 'boolean',
             'created_by_user_id' => 'integer|nullable',
+            'active_from' => 'date|nullable',
+            'not_active_from' => 'date|nullable',
 
         ];
     }

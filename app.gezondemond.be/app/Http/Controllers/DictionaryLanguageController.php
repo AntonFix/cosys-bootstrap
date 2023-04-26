@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\DictionaryLanguage;
 use App\Http\Requests\StoreDictionaryLanguageRequest;
 use App\Http\Requests\UpdateDictionaryLanguageRequest;
+use App\Models\Person;
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\Response;
 
 class DictionaryLanguageController extends Controller
 {
@@ -31,7 +34,7 @@ class DictionaryLanguageController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreDictionaryLanguageRequest  $request
+     * @param \App\Http\Requests\StoreDictionaryLanguageRequest $request
      * @return \Illuminate\Http\Response
      */
     public function store(StoreDictionaryLanguageRequest $request)
@@ -42,7 +45,7 @@ class DictionaryLanguageController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\DictionaryLanguage  $dictionaryLanguage
+     * @param \App\Models\DictionaryLanguage $dictionaryLanguage
      * @return \Illuminate\Http\Response
      */
     public function show(DictionaryLanguage $dictionaryLanguage)
@@ -53,7 +56,7 @@ class DictionaryLanguageController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\DictionaryLanguage  $dictionaryLanguage
+     * @param \App\Models\DictionaryLanguage $dictionaryLanguage
      * @return \Illuminate\Http\Response
      */
     public function edit(DictionaryLanguage $dictionaryLanguage)
@@ -64,8 +67,8 @@ class DictionaryLanguageController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\UpdateDictionaryLanguageRequest  $request
-     * @param  \App\Models\DictionaryLanguage  $dictionaryLanguage
+     * @param \App\Http\Requests\UpdateDictionaryLanguageRequest $request
+     * @param \App\Models\DictionaryLanguage $dictionaryLanguage
      * @return \Illuminate\Http\Response
      */
     public function update(UpdateDictionaryLanguageRequest $request, DictionaryLanguage $dictionaryLanguage)
@@ -76,11 +79,32 @@ class DictionaryLanguageController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\DictionaryLanguage  $dictionaryLanguage
+     * @param \App\Models\DictionaryLanguage $dictionaryLanguage
      * @return \Illuminate\Http\Response
      */
     public function destroy(DictionaryLanguage $dictionaryLanguage)
     {
         //
+    }
+
+    /*JSON*/
+    public function returnLanguagesJson()
+    {
+        $languages = DictionaryLanguage::get()
+            ->map(function ($key) {
+                return [
+                    'value' => $key->id,
+                    'label' => $key->name . ' (' . $key->local_name . ')',
+                ];
+            })
+            ->toArray();
+        return Response::json($languages, 200);
+    }
+
+    public function returnLanguagesByIdJson(Request $request, $id)
+    {
+        $person = Person::where('id', $id)->first();
+
+        return response()->json($person, 200);
     }
 }

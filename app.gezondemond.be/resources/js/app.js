@@ -1,68 +1,28 @@
 import './bootstrap';
 
+//import './vendor';
+
 import '@fortawesome/fontawesome-free/js/all.min'
-
-
-
-/*
-import {createApp} from 'vue'
-
-import App from './components/App.vue'
-
-createApp(App).mount("#vue-app")
-*/
-
-
-import {createApp, h} from 'vue';
-
-import App from './components/App.vue';
-
-const app = createApp({
-    render: () => h(App)
-});
 
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import router from './router'
 
-import 'primevue/resources/primevue.min.css'  //core css
-import 'primevue/resources/themes/saga-blue/theme.css' //import theme
-import 'primeicons/primeicons.css'  //icons
+import {createApp} from 'vue/dist/vue.esm-bundler.js'
 
-import PrimeVue from 'primevue/config'
+const app = createApp({});
 
-import Column from 'primevue/column';
-import ColumnGroup from 'primevue/columngroup';
-import Row from 'primevue/row';
-
-import Button from 'primevue/button';
-import Toast from 'primevue/toast';
-import ToastService from 'primevue/toastservice';
-
-import DataTable from 'primevue/datatable';
-import InputText from 'primevue/inputtext';
-
-import Calendar from 'primevue/calendar';
+import CalendarAppointments from './components/calendar/Calendar.vue'
+import SpokenLanguagesCreate from './components/persons/SpokenLanguagesCreate.vue'
+import SpokenLanguagesEdit from './components/persons/SpokenLanguagesEdit.vue'
 
 app.use(router);
-app.use(PrimeVue);
-
 app.use(VueAxios, axios)
 
-app.component('Column', Column);
-app.component('ColumnGroup', ColumnGroup);
-app.component('Row', Row);
+app
+    .component('spoken-languages-create', SpokenLanguagesCreate)
+    .component('spoken-languages-edit', SpokenLanguagesEdit)
+    .component('calendar-appointments', CalendarAppointments)
 
-app.component('InputText', InputText);
-app.component('Calendar', Calendar);
-
-app.component('Button', Button);
-
-app.component('Toast', Toast);
-app.use(ToastService);
-
-app.component('DataTable', DataTable);
-
-app.mount('#vue-app');
-
+app.mount('#main-content');

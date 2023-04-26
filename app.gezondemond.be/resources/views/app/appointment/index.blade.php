@@ -155,7 +155,7 @@
 
                         <a href="{{ route('appointment.create') }}" class="btn btn-outline-primary mb-3 float-end">
                             <i class="fa-regular fa-square-plus mr-2"></i>
-                            Add
+                            Voeg een nieuwe afspraak toe
                         </a>
 
                         <table class="table table-bordered table-hover">
@@ -259,12 +259,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        $("#test-select").select2({
-            theme: "bootstrap-5",
-        });
-    </script>
 
 @endsection
 

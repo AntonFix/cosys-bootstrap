@@ -93,6 +93,8 @@ class AddressController extends Controller
         $address->fin_opmerkingen = $request->fin_opmerkingen;
         $address->is_active = $request->is_active;
         $address->created_by_user_id = $request->created_by_user_id;
+        $address->active_from = $request->active_from;
+        $address->not_active_from = $request->not_active_from;
 
         $address->save();
 
@@ -115,6 +117,9 @@ class AddressController extends Controller
         $address = Address::where('id', $address->id)
             ->with([
                 'region',
+                'coupledPersons' => function ($q) {
+                    $q->orderBy('forename', 'ASC');
+                },
             ])
             ->firstOrFail();
 
@@ -188,6 +193,8 @@ class AddressController extends Controller
         $address->fin_ondernemingsnummer = $request->fin_ondernemingsnummer;
         $address->fin_opmerkingen = $request->fin_opmerkingen;
         $address->is_active = $request->is_active;
+        $address->active_from = $request->active_from;
+        $address->not_active_from = $request->not_active_from;
 
         $address->save();
 
@@ -231,6 +238,7 @@ class AddressController extends Controller
         $address = Address::where('id', $id)
             ->with([
                 'region',
+                'coupledPersons',
             ])
             ->firstOrFail();
         return response()->json($address, 200);

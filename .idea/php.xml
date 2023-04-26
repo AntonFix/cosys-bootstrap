@@ -119,6 +119,9 @@
       <path value="$PROJECT_DIR$/app.gezondemond.be/vendor/doctrine/cache" />
       <path value="$PROJECT_DIR$/app.gezondemond.be/vendor/doctrine/dbal" />
       <path value="$PROJECT_DIR$/app.gezondemond.be/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/app.gezondemond.be/vendor/guzzlehttp/uri-template" />
+      <path value="$PROJECT_DIR$/app.gezondemond.be/vendor/symfony/yaml" />
+      <path value="$PROJECT_DIR$/app.gezondemond.be/vendor/phpstan/phpdoc-parser" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.0" />

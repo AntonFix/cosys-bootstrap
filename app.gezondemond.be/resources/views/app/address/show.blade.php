@@ -56,7 +56,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-md-6 mb-3">
+                                <div class="col-md-4 mb-3">
 
                                     <i class="fa-solid fa-list mr-2"></i>
                                     <label for="dictionaryGeos">Regio</label>
@@ -67,6 +67,16 @@
                                            aria-describedby="name"
                                            value="{{ $address->region->postcode }} {{ $address->region->gemeente }}@if($address->region->deelgemeente), {{ $address->region->deelgemeente }} @endif @if($address->region->provincie)({{ $address->region->provincie }})@endif"
                                            disabled>
+                                </div>
+
+                                <div class="col-md-2 mb-3">
+                                    <i class="fa-solid fa-location-dot mr-2"></i>
+                                    <label for="dictionaryGeos" class="mb-1">Google Maps</label>
+
+                                    <a target="_blank"
+                                       href="https://www.google.be/maps/place/{{ $address->street }} {{ $address->number }}, {{ $address->region->postcode }}">Bekijk
+                                        map en route</a>
+
                                 </div>
 
                                 <div class="col-md-4 mb-3">
@@ -119,12 +129,10 @@
                                         <span class="input-group-text" id="phone_1">
                                             <i class="fa-solid fa-phone"></i>
                                         </span>
-                                        <input type="text" class="form-control"
-                                               name="phone_1"
-                                               aria-label="phone_1"
-                                               aria-describedby="phone_1"
-                                               value="{{ $address->phone_1 }}"
-                                               disabled>
+                                        <a href="tel:{{ $address->phone_1 }}" class="form-control"
+                                           aria-label="phone_1"
+                                           aria-describedby="phone_1"
+                                           disabled>{{ $address->phone_1 }}</a>
                                     </div>
                                 </div>
 
@@ -149,12 +157,11 @@
                                         <span class="input-group-text" id="email_1">
                                             <i class="fa-solid fa-at"></i>
                                         </span>
-                                        <input type="email" class="form-control"
-                                               name="email_1"
-                                               aria-label="email_1"
-                                               aria-describedby="email_1"
-                                               value="{{ $address->email_1 }}"
-                                               disabled>
+                                        <a href="mailto:{{ $address->email_1 }}" class="form-control"
+                                           aria-label="email_1"
+                                           aria-describedby="email_1"
+                                           disabled>{{ $address->email_1 }}</a>
+
                                     </div>
                                 </div>
 
@@ -179,12 +186,96 @@
                                         <span class="input-group-text" id="website">
                                             <i class="fa-solid fa-globe"></i>
                                         </span>
-                                        <input type="text" class="form-control"
-                                               name="website"
-                                               aria-label="website"
-                                               aria-describedby="website"
-                                               value="{{ $address->website }}"
+                                        <a href="{{ $address->website }}" type="text" class="form-control"
+                                           aria-label="website"
+                                           aria-describedby="website">
+                                            {{ $address->website }}
+                                        </a>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6 mb-3">
+
+                                    @if(count($address->coupledPersons) > 0)
+                                        <button type="button" class="btn btn-outline-secondary mt-4"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#personsListModal">
+                                            Wie werkt hier
+                                        </button>
+                                    @endif
+
+                                    <div class="modal fade" id="personsListModal" tabindex="-1"
+                                         aria-labelledby="personsListModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h1 class="modal-title fs-5" id="personsListModalLabel">Hier
+                                                        werken</h1>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    @if(count($address->coupledPersons) > 0)
+                                                        <ul class="list-unstyled">
+                                                            @foreach ($address->coupledPersons as $person)
+                                                                <li>
+                                                                    <i class="fa-regular fa-id-badge mr-2"></i> <a
+                                                                        href="/person/{{ $person->id }}">{{ $person->forename }} {{ $person->name }}</a>
+                                                                    /
+                                                                    <i class="fa-solid fa-at mr-2"></i> <a
+                                                                        href="mailto:{{ $person->email }}">{{ $person->email }}</a>
+                                                                    /
+                                                                    <i class="fa-solid fa-phone"></i> <a
+                                                                        href="tel:{{ $person->phone }}">{{ $person->phone }}</a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    @endif
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Sluiten
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="active_from">Actief sinds</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="active_from">
+                                            <i class="fa-regular fa-calendar-check"></i>
+                                        </span>
+                                        <input type="date" class="form-control"
+                                               aria-label="active_from"
+                                               aria-describedby="active_from"
+                                               name="active_from"
+                                               value="{{ $address->active_from }}"
                                                disabled>
+                                        @error('active_from')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 mb-3">
+                                    <label for="not_active_from">Inactief sinds</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="not_active_from">
+                                            <i class="fa-regular fa-calendar-check"></i>
+                                        </span>
+                                        <input type="date" class="form-control"
+                                               aria-label="not_active_from"
+                                               aria-describedby="not_active_from"
+                                               name="not_active_from"
+                                               value="{{ $address->not_active_from }}"
+                                               disabled>
+                                        @error('not_active_from')
+                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 

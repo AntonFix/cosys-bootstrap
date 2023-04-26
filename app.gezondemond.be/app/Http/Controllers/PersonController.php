@@ -121,6 +121,8 @@ class PersonController extends Controller
             }
         }
 
+        //dd($request->person_language);
+
         return redirect()
             ->route('person.index')
             ->with('success', 'Person has been created successfully.');
@@ -184,13 +186,16 @@ class PersonController extends Controller
 
         $currentUser = Auth::user();
 
+        $personID = $person->id;
+
         return view('app.person.edit', compact(
                 'person',
                 'currentUser',
                 'currentAddresses',
                 'currentLanguages',
                 'addresses',
-                'languages')
+                'languages',
+                'personID')
         );
 
     }

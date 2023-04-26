@@ -2,14 +2,6 @@ import _ from 'lodash';
 
 window._ = _;
 
-import $ from 'jquery';
-
-window.$ = $;
-
-import * as Popper from '@popperjs/core';
-
-window.Popper = Popper.defaults;
-
 import 'bootstrap';
 
 /**
