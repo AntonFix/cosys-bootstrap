@@ -33,4 +33,9 @@ use Illuminate\Database\Eloquent\Model;
 class DictionaryGeo extends Model
 {
     use HasFactory;
+
+    protected $table = 'dictionary_geos';
+
+
+
 }

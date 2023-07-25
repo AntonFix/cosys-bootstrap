@@ -25,7 +25,7 @@ class StoreAppointmentRequest extends FormRequest
     {
         return [
             //
-            'title' => 'string|max:255',
+            'title' => 'max:255|required',
             'details' => 'string|nullable',
             'app_code_id' => 'integer|nullable',
             'app_status_id' => 'integer|nullable',
@@ -38,6 +38,13 @@ class StoreAppointmentRequest extends FormRequest
             'end_time' => 'string|nullable',
             'attachment' => 'nullable',
             'archived' => 'boolean',
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'title.required' => 'Het veld Titel is verplicht',
         ];
     }
 }

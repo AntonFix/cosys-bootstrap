@@ -224,11 +224,20 @@ class AddressController extends Controller
 
     public function returnAddressesJson()
     {
-        $address = Address::latest()
-            ->with([
-                'region',
-            ])
-            ->get();
+        $isInputSelect = request()->get('inputSelect');
+
+        $address = Address::latest();
+
+        if ($isInputSelect) {
+            $address = $address->get(['id', 'name']);
+            foreach($address as $k => $v) {
+                $v['label'] = $v['name'];
+                $v['value']= $v['id'];
+            }
+        } else {
+            $address = $address->with(['region'])->get();
+        }
+
         return Response::json($address, 200);
     }
 
@@ -243,6 +252,7 @@ class AddressController extends Controller
             ->firstOrFail();
         return response()->json($address, 200);
     }
+
 
 
 }

@@ -579,7 +579,7 @@
                                 <a href="{{ route('address.edit', $address->id) }}"
                                    class="btn btn-outline-success">
                                     <i class="fa-solid fa-pen-to-square mr-2"></i>
-                                    Edit
+                                    Bewerken
                                 </a>
 
                                 @csrf
@@ -588,7 +588,7 @@
                                     type="submit"
                                     class="btn btn-outline-danger">
                                     <i class="fa-regular fa-trash-can mr-2"></i>
-                                    Delete
+                                    Verwijderen
                                 </button>
 
                             </div>

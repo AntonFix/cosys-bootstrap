@@ -53,11 +53,11 @@
                                                name="title"
                                                aria-label="title"
                                                aria-describedby="title"
-                                               value="{{ old('title') }}">
-                                        @error('title')
-                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                        @enderror
+                                        value="{{ old('title') }}">
                                     </div>
+                                    @error('title')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -107,7 +107,7 @@
                                     <i class="fa-solid fa-id-card mr-2"></i>
                                     <label for="assigned_with_person_id">Contactpersoon</label>
 
-                                    <select class="form-control form-select"
+<!--                                    <select class="form-control form-select"
                                             name="assigned_with_person_id">
                                         <option disabled selected value="">Kies een item...</option>
                                         @foreach ($persons as $person)
@@ -115,7 +115,11 @@
                                                 {{ $person->forename }} {{ $person->name }}
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </select>-->
+
+                                    <appointment-person-create>
+
+                                    </appointment-person-create>
 
                                     @error('assigned_with_person_id')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>

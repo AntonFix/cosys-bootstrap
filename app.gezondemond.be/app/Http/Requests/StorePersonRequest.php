@@ -25,8 +25,8 @@ class StorePersonRequest extends FormRequest
     {
         return [
             //
-            'forename' => 'string|max:255',
-            'name' => 'string|max:255',
+            'forename' => 'max:255|required',
+            'name' => 'max:255|required',
             'birthday' => 'date|nullable',
             'sex' => 'string|max:255|nullable',
             'function' => 'string|max:255|nullable',
@@ -41,6 +41,14 @@ class StorePersonRequest extends FormRequest
             'inactive_from' => 'date|nullable',
             'is_active' => 'boolean|nullable',
             'created_by_user_id' => 'integer|nullable'
+        ];
+    }
+
+    public function messages()
+    {
+        return [
+            'forename.required' => 'Het veld Voornaam is verplicht',
+            'name.required' => 'Het veld Naam is verplicht',
         ];
     }
 }

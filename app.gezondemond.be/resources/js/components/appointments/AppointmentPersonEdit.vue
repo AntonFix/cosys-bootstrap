@@ -3,9 +3,9 @@
     <div>
 
         <Multiselect
-            v-model="tempLang"
+            v-model="persons"
             :allow-absent="true"
-            mode="tags"
+            mode="single"
             locale="nl"
             :close-on-select="false"
             :searchable="true"
@@ -15,9 +15,9 @@
         />
 
         <input type="hidden"
-               v-for="language in tempLang"
-               name="person_language[]"
-               :value="language">
+               v-for="person in persons"
+               name="appointment_person[]"
+               :value="person">
 
     </div>
 
@@ -29,7 +29,7 @@ import Multiselect from '@vueform/multiselect'
 
 export default {
 
-    props: ['langs'],
+    props: ['persons'],
 
     components: {
         Multiselect
@@ -37,10 +37,10 @@ export default {
 
     data() {
         return {
-            tempLang: null,
+            tempPersons: null,
 
             options: async (query) => {
-                return await fetchLanguages(query)
+                return await fetchPersons(query)
             },
 
         }
@@ -49,17 +49,16 @@ export default {
     methods: {},
 
     mounted() {
-        this.tempLang = JSON.parse(this.langs).map(l => {
+        this.tempPersons = JSON.parse(this.persons).map(l => {
             return l.id
         })
     }
 }
 
-const fetchLanguages = async (query) => {
+const fetchPersons = async (query) => {
 
     try {
-        const items = await fetch('/json/languages.json');
-
+        const items = await fetch('/json/appointments.json?inputSelect=1');
         return items.json();
     } catch (err) {
         console.error(err);

@@ -59,6 +59,8 @@ Route::get('/json/address-{id}.json', [App\Http\Controllers\AddressController::c
 Route::get('/json/languages.json', [App\Http\Controllers\DictionaryLanguageController::class, 'returnLanguagesJson']);
 Route::get('/json/languages-person-{id}.json', [App\Http\Controllers\DictionaryLanguageController::class, 'returnLanguagesByIdJson']);
 
+Route::get('/json/regions.json', [App\Http\Controllers\DictionaryGeoController::class, 'returnAllRegionsJson']);
+
 Route::get('/json/calendar-appointments.json', [App\Http\Controllers\CalendarController::class, 'returnCalendarAppointmentsJson']);
 
 Route::get('/generate-passsword', function () {

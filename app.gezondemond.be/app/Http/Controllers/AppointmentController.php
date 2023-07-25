@@ -23,8 +23,10 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-        //
-        $appointments = Appointment::orderBy('start_date', 'desc')
+        $sortBy = request()->get('sort', 'desc');
+        //http://127.0.0.1:8000/appointment?sort=asc
+
+        $appointments = Appointment::orderBy('start_date', $sortBy)
             ->get();
 
         $appointmentCodes = DB::table('appointment_codes')
@@ -177,6 +179,11 @@ class AppointmentController extends Controller
             ->orderBy('forename')
             ->get();
 
+        $currentPerson = DB::table('persons')
+            ->where('id', '=', $appointment->assigned_with_person_id)
+            ->select('forename', 'name')
+            ->get();
+
         $users = DB::table('users')
             ->orderBy('name')
             ->get();
@@ -189,7 +196,8 @@ class AppointmentController extends Controller
                 'appointmentStatuses',
                 'users',
                 'currentUser',
-                'persons')
+                'persons',
+                'currentPerson')
         );
     }
 

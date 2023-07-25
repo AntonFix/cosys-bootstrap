@@ -73,7 +73,7 @@
 
                         <a href="{{ Route('address.create') }}" class="btn btn-outline-primary mb-3 float-end">
                             <i class="fa-regular fa-square-plus mr-2"></i>
-                            Add
+                            Voeg een nieuwe adres toe
                         </a>
 
                         <table class="table table-bordered table-hover">

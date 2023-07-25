@@ -11,6 +11,15 @@ $input-btn-padding-x: .75rem;
 $input-btn-font-size: $font-size-base;
 $input-btn-line-height: $line-height-base;
 
+.btn {
+    margin: 0.25rem 0.125rem;
+}
+
+.input-group .btn, .btn-group > .btn,
+.btn-group-vertical > .btn {
+    margin: 0;
+}
+
 $blue: #007bff;
 $yellow: #ffdb00;
 

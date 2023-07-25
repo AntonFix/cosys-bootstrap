@@ -109,7 +109,7 @@ class Address extends Model
             'address_id',
             'person_id',
             'id',
-            'id',
+            'id'
         );
     }
 

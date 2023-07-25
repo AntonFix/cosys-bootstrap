@@ -3,21 +3,24 @@
     <div>
 
         <Multiselect
-            v-model="tempLang"
-            :allow-absent="true"
-            mode="tags"
+            v-model="regions"
+            mode="single"
             locale="nl"
-            :close-on-select="false"
+            :close-on-select="true"
             :searchable="true"
             :create-option="false"
+            :resolve-on-load="false"
+            :filter-results="true"
+            :delay="0"
+            :min-chars="1"
             :options="options"
             class="multiselect-gm"
         />
 
         <input type="hidden"
-               v-for="language in tempLang"
-               name="person_language[]"
-               :value="language">
+               v-for="region in regions"
+               name="dictionary_geos_id"
+               :value="region">
 
     </div>
 
@@ -29,7 +32,9 @@ import Multiselect from '@vueform/multiselect'
 
 export default {
 
-    props: ['langs'],
+    props: {
+        max: [String, Number]
+    },
 
     components: {
         Multiselect
@@ -37,36 +42,25 @@ export default {
 
     data() {
         return {
-            tempLang: null,
-
+            regions: [],
             options: async (query) => {
-                return await fetchLanguages(query)
+                return await fetchRegions(query)
             },
-
         }
-    },
-
-    methods: {},
-
-    mounted() {
-        this.tempLang = JSON.parse(this.langs).map(l => {
-            return l.id
-        })
     }
+
+
 }
 
-const fetchLanguages = async (query) => {
+const fetchRegions = async (query) => {
 
     try {
-        const items = await fetch('/json/languages.json');
-
+        const items = await fetch('/json/regions.json?inputSelect=1');
         return items.json();
     } catch (err) {
         console.error(err);
     }
-
 }
-
 
 </script>
 

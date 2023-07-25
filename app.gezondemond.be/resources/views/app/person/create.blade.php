@@ -55,10 +55,11 @@
                                                aria-describedby="forename"
                                                name="forename"
                                                value="{{ old('forename') }}">
-                                        @error('forename')
-                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                        @enderror
+
                                     </div>
+                                    @error('forename')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-3 mb-3">
@@ -244,17 +245,20 @@
                                     <div class="col-md-6 mb-3">
                                         <h3>Werkt in</h3>
 
-                                        <select class="form-control form-select"
+                                        <addresses-create>
+                                        </addresses-create>
+
+                                    <!--                                        <select class="form-control form-select"
                                                 multiple
                                                 size="6"
                                                 name="person_address[]">
                                             <option disabled selected value="">Kies een item...</option>
                                             @foreach ($addresses as $address)
-                                                <option value="{{ $address->id }}">
+                                        <option value="{{ $address->id }}">
                                                     {{ $address->name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
+                                            </option>
+@endforeach
+                                        </select>-->
 
                                         @error('address')
                                         <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>

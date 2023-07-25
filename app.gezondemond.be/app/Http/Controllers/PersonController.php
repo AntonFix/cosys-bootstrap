@@ -165,13 +165,13 @@ class PersonController extends Controller
         $currentAddresses = DB::table('person_addresses')
             ->where('person_id', '=', $person->id)
             ->join('addresses', 'person_addresses.address_id', '=', 'addresses.id')
-            ->select('addresses.id', 'addresses.name',)
+            ->select('addresses.id', 'addresses.name')
             ->get();
 
         $currentLanguages = DB::table('person_languages')
             ->where('person_id', '=', $person->id)
             ->join('dictionary_languages', 'person_languages.language_id', '=', 'dictionary_languages.id')
-            ->select('dictionary_languages.id', 'dictionary_languages.name', 'dictionary_languages.local_name',)
+            ->select('dictionary_languages.id', 'dictionary_languages.name', 'dictionary_languages.local_name')
             ->get();
 
         $addresses = DB::table('addresses')
@@ -268,13 +268,33 @@ class PersonController extends Controller
 
     public function returnPersonsJson()
     {
-        $persons = Person::latest()
-            ->with([
-                'personAddresses',
-                'spokenLanguages',
-                'createdByUser',
-            ])
-            ->get();
+        $isInputSelect = request()->get('inputSelect');
+
+        $persons = Person::latest();
+
+        if ($isInputSelect) {
+            $persons = $persons
+                ->with([
+                    'personAddresses',
+                    'spokenLanguages',
+                    'createdByUser',
+                ])
+                ->get(['id', 'forename', 'name']);
+            foreach ($persons as $k => $v) {
+                $test = 'person_addresses + spoken_languages';
+                $v['label'] = $v['forename'] . ' ' . $v['name'] . ' / ' . $test;
+                $v['value'] = $v['id'];
+            }
+        } else {
+            $persons = $persons
+                ->with([
+                    'personAddresses',
+                    'spokenLanguages',
+                    'createdByUser',
+                ])
+                ->get();
+        }
+
         return Response::json($persons, 200);
     }
 
@@ -292,5 +312,7 @@ class PersonController extends Controller
             ->firstOrFail();
         return response()->json($person, 200);
     }
+
+
 
 }

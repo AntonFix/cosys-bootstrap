@@ -54,10 +54,10 @@
                                                aria-label="name"
                                                aria-describedby="name"
                                                value="{{ old('name') }}">
-                                        @error('name')
-                                        <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
-                                        @enderror
                                     </div>
+                                    @error('name')
+                                    <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
+                                    @enderror
                                 </div>
 
                                 <div class="col-md-6 mb-3">
@@ -65,7 +65,7 @@
                                     <i class="fa-solid fa-list mr-2"></i>
                                     <label for="dictionaryGeos">Regio</label>
 
-                                    <select class="form-control form-select"
+<!--                                    <select class="form-control form-select"
                                             name="dictionary_geos_id">
                                         <option disabled selected value="">Kies een item...</option>
                                         @foreach ($dictionaryGeos as $dictionaryGeo)
@@ -78,7 +78,11 @@
                                                 @endif
                                             </option>
                                         @endforeach
-                                    </select>
+                                    </select>-->
+
+                                    <address-region-create>
+
+                                    </address-region-create>
 
                                     @error('dictionaryGeos')
                                     <div class="alert alert-danger mt-2 mb-0">{{ $message }}</div>
