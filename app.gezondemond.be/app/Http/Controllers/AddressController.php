@@ -239,6 +239,7 @@ class AddressController extends Controller
         }
 
         return Response::json($address, 200);
+
     }
 
     public function returnAddressByIdJson(Request $request, $id)
