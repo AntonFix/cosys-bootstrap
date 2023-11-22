@@ -8,5 +8,12 @@
       <jdbc-url>jdbc:mysql://localhost:3306/cosys_bootstrap</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="appgezondemond.be SQL" uuid="81841b30-0e73-4444-b20c-0e96450289d2">
+      <driver-ref>mysql.8</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>com.mysql.cj.jdbc.Driver</jdbc-driver>
+      <jdbc-url>jdbc:mysql://localhost:3306/u166733p187215_cosys</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

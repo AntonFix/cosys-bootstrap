@@ -4,6 +4,8 @@ import './bootstrap';
 
 import '@fortawesome/fontawesome-free/js/all.min'
 
+import 'bootstrap/dist/js/bootstrap.bundle.min'
+
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 

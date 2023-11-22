@@ -261,27 +261,33 @@ class AppointmentController extends Controller
 
         return redirect()
             ->route('appointment.index')
-            ->with('success', 'Appointment has been deleted successfully');
+            ->with('success', 'Appointment has been deleted successfully')
+            ->with('alert-class', 'text-bg-danger');
     }
 
 
-    public function appointmentCopy(StoreAppointmentRequest $request, Appointment $appointment)
+    public function appointmentCopy(UpdateAppointmentRequest $request, Appointment $appointment)
     {
         //
 
-        $appointment = Appointment::findOrFail($request->id);
+        $appointment = Appointment::find($request->id);
+
+        //dd($appointment);
 
         $newAppointment = $appointment->replicate();
+
 
         $newAppointment->app_status_id = 1; //Statuut: Gepland
         $newAppointment->created_by_user_id = $request->user()->id;
         $newAppointment->created_at = Carbon::now();
 
+
         $newAppointment->save();
 
         return redirect()
             ->route('appointment.index')
-            ->with('success', 'Appointment has been copied successfully');
+            ->with('success', 'Appointment has been copied successfully')
+            ->with('alert-class', 'alert-success');
 
     }
 
@@ -300,7 +306,8 @@ class AppointmentController extends Controller
 
         return redirect()
             ->route('appointment.index')
-            ->with('success', 'Appointment has been updated successfully');
+            ->with('success', 'Appointment has been updated successfully')
+            ->with('alert-class', 'alert-success');
 
     }
 
@@ -317,7 +324,8 @@ class AppointmentController extends Controller
 
         return redirect()
             ->route('appointment.index')
-            ->with('success', 'Appointment has been updated successfully');
+            ->with('success', 'Appointment has been updated successfully')
+            ->with('alert-class', 'alert-success');
 
     }
 

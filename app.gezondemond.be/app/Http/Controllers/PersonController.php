@@ -273,18 +273,41 @@ class PersonController extends Controller
         $persons = Person::latest();
 
         if ($isInputSelect) {
+
             $persons = $persons
                 ->with([
                     'personAddresses',
                     'spokenLanguages',
                     'createdByUser',
+                    //'personAddressesRegio',
                 ])
                 ->get(['id', 'forename', 'name']);
+
             foreach ($persons as $k => $v) {
-                $test = 'person_addresses + spoken_languages';
-                $v['label'] = $v['forename'] . ' ' . $v['name'] . ' / ' . $test;
+
+                if ($v->spokenLanguages) {
+                    $lngArray = $v->spokenLanguages->pluck('name')->join(', ');
+                    //$lng = str_replace('[', '', $lngArray);
+                    $lngPerson = $lngArray;
+                }
+
+                if ($v->personAddresses) {
+                    $addrArray = $v->personAddresses->pluck('name')->join(', ');
+                    //$lng = str_replace('[', '', $lngArray);
+                    $lngPerson = $lngArray;
+                }
+
+
+                $v['label'] = $v['forename'] . ' ' . $v['name'] . ' / ' . $lngPerson;
+
                 $v['value'] = $v['id'];
+
             }
+
+            /*foreach ($persons as $person) {
+                $person->label = $person->spokenLanguages->pluck('name');
+            }*/
+
         } else {
             $persons = $persons
                 ->with([
@@ -312,7 +335,6 @@ class PersonController extends Controller
             ->firstOrFail();
         return response()->json($person, 200);
     }
-
 
 
 }

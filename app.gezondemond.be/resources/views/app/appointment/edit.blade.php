@@ -136,7 +136,6 @@
                                     <i class="fa-solid fa-id-card mr-2"></i>
                                     <label for="assigned_with_person_id">Contactpersoon</label>
 
-                                    {{ $currentPerson }}
 
 <!--                                    <appointment-person-edit>
                                     </appointment-person-edit>-->

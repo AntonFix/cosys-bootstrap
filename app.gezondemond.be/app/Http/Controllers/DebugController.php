@@ -6,6 +6,7 @@ use App\Models\Debug;
 use App\Http\Requests\StoreDebugRequest;
 use App\Http\Requests\UpdateDebugRequest;
 
+use App\Models\Person;
 use Illuminate\Support\Facades\Response;
 
 class DebugController extends Controller
@@ -24,16 +25,30 @@ class DebugController extends Controller
                 ->get()
         ]);*/
 
-        $debugs = Debug::latest()
-            ->take(50)
-            ->get();
+        $persons = Person::latest();
 
-        //$newDate = $debugs->dateTime->format('d-m-Y');
+        $persons = $persons
+            ->with([
+                'personAddresses',
+                'spokenLanguages',
+                'createdByUser',
+            ])
+            ->get(['id', 'forename', 'name']);
 
-        //dd($newDate);
-        //return response()->json($debugs, 200);
+        foreach ($persons as $person) {
 
-        return view('app.debug.index', compact('debugs'));
+
+            $person['forename'] . ' ' . $person['name'] . ' /// ' . $person['spokenLanguages'];
+
+            /*foreach ($v['person_addresses'] as $car ) {
+                echo($car['id']. ", ");
+            }*/
+
+            //dd($v['label']);
+
+        }
+
+        return view('app.debug.index', compact('persons'));
 
     }
 
@@ -42,7 +57,8 @@ class DebugController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public
+    function create()
     {
         //
         return view('app.debug.create');
@@ -55,7 +71,8 @@ class DebugController extends Controller
      * @param \App\Models\Debug $debug
      * @return \Illuminate\Http\Response
      */
-    public function show(Debug $debug)
+    public
+    function show(Debug $debug)
     {
         //
         return view('app.debug.show', compact('debug'));
@@ -67,7 +84,8 @@ class DebugController extends Controller
      * @param \App\Models\Debug $debug
      * @return \Illuminate\Http\Response
      */
-    public function edit(Debug $debug)
+    public
+    function edit(Debug $debug)
     {
         //
         //dd($debug);
@@ -82,7 +100,8 @@ class DebugController extends Controller
      * @param \App\Http\Requests\StoreDebugRequest $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreDebugRequest $request)
+    public
+    function store(StoreDebugRequest $request)
     {
         //All validation rules are in StoreDebugRequest
 
@@ -111,7 +130,8 @@ class DebugController extends Controller
      * @param \App\Models\Debug $debug
      * @return \Illuminate\Http\Response
      */
-    public function update(UpdateDebugRequest $request, Debug $debug)
+    public
+    function update(UpdateDebugRequest $request, Debug $debug)
     {
         //
         //All validate rules are in UpdateDebugRequest
@@ -151,7 +171,8 @@ class DebugController extends Controller
      * @param \App\Models\Debug $debug
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Debug $debug)
+    public
+    function destroy(Debug $debug)
     {
         //
         $debug->delete();
@@ -161,7 +182,8 @@ class DebugController extends Controller
             ->with('success', 'Debug item has been deleted successfully');
     }
 
-    public function returnDebugsJson()
+    public
+    function returnDebugsJson()
     {
         $debugs = Debug::all();
         return Response::json($debugs, 200);

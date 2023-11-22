@@ -92,6 +92,15 @@ class Address extends Model
         );
     }
 
+    public function regionName()
+    {
+        return $this->hasOneThrough(
+            DictionaryGeo::class,
+            'id',
+            'dictionary_geos_id'
+        );
+    }
+
     public function createdByUser()
     {
         return $this->hasOne(
@@ -99,7 +108,6 @@ class Address extends Model
             'id',
             'created_by_user_id');
     }
-
 
     public function coupledPersons()
     {

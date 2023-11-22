@@ -91,9 +91,9 @@ class Person extends Model
         );
     }
 
-    /*public function personAddresses()
+/*    public function personAddressesRegio()
     {
-        return $this->hasManyThrough(
+        return $this->hasOneThrough(
             Address::class, // we need info from the table 'addresses'
             PersonAddress::class, // here are relation with the table 'persons_addresses' (id, person_id, address_id)
             'person_id', // we search field 'person_id' in the table 'persons_addresses'
@@ -103,18 +103,6 @@ class Person extends Model
         );
     }*/
 
-    /*public function spokenLanguages()
-    {
-
-        return $this->hasManyThrough(
-            DictionaryLanguage::class,
-            PersonLanguage::class,
-            'person_id',
-            'id',
-            'id',
-            'language_id'
-        );
-    }*/
 
     public function spokenLanguages()
     {
@@ -126,14 +114,7 @@ class Person extends Model
             'language_id'
         );
 
-        /*return $this->hasManyThrough(
-            DictionaryLanguage::class,
-            PersonLanguage::class,
-            'person_id',
-            'id',
-            'id',
-            'language_id'
-        );*/
+
     }
 
     public function createdByUser()
@@ -144,7 +125,6 @@ class Person extends Model
             'created_by_user_id'
         );
     }
-
 
 
 }

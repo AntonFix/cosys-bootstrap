@@ -107,18 +107,7 @@
                                     <i class="fa-solid fa-id-card mr-2"></i>
                                     <label for="assigned_with_person_id">Contactpersoon</label>
 
-<!--                                    <select class="form-control form-select"
-                                            name="assigned_with_person_id">
-                                        <option disabled selected value="">Kies een item...</option>
-                                        @foreach ($persons as $person)
-                                            <option value="{{ $person->id }}">
-                                                {{ $person->forename }} {{ $person->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>-->
-
                                     <appointment-person-create>
-
                                     </appointment-person-create>
 
                                     @error('assigned_with_person_id')
